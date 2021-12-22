@@ -22,6 +22,7 @@ class CreateStockHistoriesTable extends Migration
             $table->integer('faktur')->nullable();
             $table->integer('service')->nullable();
             $table->integer('last_stock');
+            $table->enum('status',['uncompleted','completed']);
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();

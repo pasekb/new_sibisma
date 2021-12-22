@@ -4,8 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\SaleDelivery;
+use App\Models\BranchDelivery;
 
 class Manpower extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
+    // Relasi to Sale Deliveries
+    public function saleDeliveryMain(){
+        return $this->hasMany(SaleDelivery::class, 'main_driver');
+    }
+
+    public function saleDeliveryBackup(){
+        return $this->hasMany(SaleDelivery::class, 'backup_driver');
+    }
+
+    public function branchDeliveryMain(){
+        return $this->hasMany(BranchDelivery::class, 'main_driver');
+    }
+
+    public function branchDeliveryBackup(){
+        return $this->hasMany(BranchDelivery::class, 'backup_driver');
+    }
+
+    // Relasi to User
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Relasi to User
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Unit;
 use App\Models\User;
+use App\Models\Stock;
 
-class Color extends Model
+class Opname extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    // Relasi to Unit
-    public function unit(){
-        return $this->hasMany(Unit::class);
+    // Relasi to Stock
+    public function stock(){
+        return $this->belongsTo(Stock::class);
     }
 
     // Relasi to User

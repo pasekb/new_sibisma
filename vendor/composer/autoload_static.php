@@ -535,6 +535,7 @@ class ComposerStaticInit7e6a9d8a7bd6740b8221851113c3819b
         'App\\Models\\Entry' => __DIR__ . '/../..' . '/app/Models/Entry.php',
         'App\\Models\\Leasing' => __DIR__ . '/../..' . '/app/Models/Leasing.php',
         'App\\Models\\Manpower' => __DIR__ . '/../..' . '/app/Models/Manpower.php',
+        'App\\Models\\Opname' => __DIR__ . '/../..' . '/app/Models/Opname.php',
         'App\\Models\\Out' => __DIR__ . '/../..' . '/app/Models/Out.php',
         'App\\Models\\Sale' => __DIR__ . '/../..' . '/app/Models/Sale.php',
         'App\\Models\\SaleDelivery' => __DIR__ . '/../..' . '/app/Models/SaleDelivery.php',

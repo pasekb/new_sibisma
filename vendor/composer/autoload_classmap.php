@@ -25,6 +25,7 @@ return array(
     'App\\Models\\Entry' => $baseDir . '/app/Models/Entry.php',
     'App\\Models\\Leasing' => $baseDir . '/app/Models/Leasing.php',
     'App\\Models\\Manpower' => $baseDir . '/app/Models/Manpower.php',
+    'App\\Models\\Opname' => $baseDir . '/app/Models/Opname.php',
     'App\\Models\\Out' => $baseDir . '/app/Models/Out.php',
     'App\\Models\\Sale' => $baseDir . '/app/Models/Sale.php',
     'App\\Models\\SaleDelivery' => $baseDir . '/app/Models/SaleDelivery.php',
