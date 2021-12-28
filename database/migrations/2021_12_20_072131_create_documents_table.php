@@ -25,7 +25,7 @@ class CreateDocumentsTable extends Migration
             $table->enum('bpkb_status', ['pending','on process','finished']);
             $table->text('document_note')->nullable();
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

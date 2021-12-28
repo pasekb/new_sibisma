@@ -20,7 +20,7 @@ class CreateEntriesTable extends Migration
             $table->string('sender');
             $table->integer('in_qty');
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

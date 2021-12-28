@@ -18,10 +18,10 @@ class CreateDealersTable extends Migration
             $table->string('dealer_code')->unique();
             $table->string('dealer_name');
             $table->text('address');
-            $table->string('qr_code');
+            $table->string('qr_code')->nullable();
             $table->string('phone');
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@ class CreateSaleDeliveriesTable extends Migration
             $table->unsignedInteger('backup_driver');
             $table->enum('status',['prepared','on the way','has arrived']);
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

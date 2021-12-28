@@ -21,7 +21,7 @@ class CreateOpnamesTable extends Migration
             $table->integer('stock_opname');
             $table->integer('difference');
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

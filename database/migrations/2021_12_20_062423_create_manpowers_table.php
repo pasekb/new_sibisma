@@ -28,7 +28,7 @@ class CreateManpowersTable extends Migration
             $table->string('years_of_service')->nullable();
             $table->string('education')->nullable();
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

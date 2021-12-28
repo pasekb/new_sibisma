@@ -20,6 +20,7 @@ class CreateUnitsTable extends Migration
             $table->unsignedInteger('color_id');
             $table->string('year_mc');
             $table->integer('price');
+            $table->text('image');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by');
             $table->timestamps();

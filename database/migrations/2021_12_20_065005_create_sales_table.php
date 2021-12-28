@@ -27,7 +27,7 @@ class CreateSalesTable extends Migration
             $table->enum('status',['pending','delivered']);
             $table->unsignedInteger('leasing_id');
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

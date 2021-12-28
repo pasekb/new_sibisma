@@ -24,7 +24,7 @@ class CreateStockHistoriesTable extends Migration
             $table->integer('last_stock');
             $table->enum('status',['uncompleted','completed']);
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

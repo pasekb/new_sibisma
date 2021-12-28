@@ -22,7 +22,7 @@ class CreateOutsTable extends Migration
             $table->string('frame_no');
             $table->string('engine_no')->nullable();
             $table->unsignedInteger('created_by');
-            $table->unsignedInteger('updated_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }
