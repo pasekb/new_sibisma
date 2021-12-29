@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('access');
             $table->enum('status',['active','inactive']);
             $table->rememberToken();
+            $table->foreignId('current_team_id')->nullable();
+            $table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }
