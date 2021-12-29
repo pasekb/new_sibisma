@@ -15,8 +15,38 @@
             </div>
 
             <div class="mt-4">
+                <x-jet-label for="username" value="{{ __('Username') }}" />
+                <x-jet-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required />
+            </div>
+
+            <div class="mt-4">
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="dealer" value="{{ __('Dealer Code') }}" />
+                <select name="dealer" id="dealer" class="block mt-1 w-full" required>
+                    <option value="group">Group</option>
+                    <option value="AA0101">AA0101</option>
+                    <option value="AA0102">AA0102</option>
+                    <option value="AA0104">AA0104</option>
+                    <option value="AA0105">AA0105</option>
+                    <option value="AA0106">AA0106</option>
+                    <option value="AA0107">AA0107</option>
+                    <option value="AA0108">AA0108</option>
+                    <option value="AA0109">AA0109</option>
+                    <option value="AA0104F">AA0104F</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
+                <x-jet-label for="access" value="{{ __('Access') }}" />
+                <select name="access" id="access" class="block mt-1 w-full" required>
+                    <option value="master">Master</option>
+                    <option value="admin">Administrator</option>
+                    <option value="viewer">Viewer</option>
+                </select>
             </div>
 
             <div class="mt-4">
