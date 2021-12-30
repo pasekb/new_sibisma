@@ -26,7 +26,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="dealer" value="{{ __('Dealer Code') }}" />
-                <select name="dealer" id="dealer" class="block mt-1 w-full" required>
+                <select name="dealer" id="dealer" class="block mt-1 w-full" style="border-radius: 5px; border-color: #d1d1d1;" required>
                     <option value="group">Group</option>
                     <option value="AA0101">AA0101</option>
                     <option value="AA0102">AA0102</option>
@@ -42,7 +42,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="access" value="{{ __('Access') }}" />
-                <select name="access" id="access" class="block mt-1 w-full" required>
+                <select name="access" id="access" class="block mt-1 w-full" style="border-radius: 5px; border-color: #d1d1d1;" required>
                     <option value="master">Master</option>
                     <option value="admin">Administrator</option>
                     <option value="viewer">Viewer</option>
