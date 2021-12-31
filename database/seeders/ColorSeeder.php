@@ -19,6 +19,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Silver',
             'color_code' => '#d8e2e6',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -26,6 +27,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Red',
             'color_code' => '#e31010',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -33,6 +35,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'White',
             'color_code' => '#ffffff',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -40,6 +43,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Blue',
             'color_code' => '#0a0fa8',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -47,6 +51,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Yellow',
             'color_code' => '#f1f50a',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -54,6 +59,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Orange',
             'color_code' => '#f5a30a',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -61,6 +67,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Green',
             'color_code' => '#047a0a',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -68,6 +75,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Grey',
             'color_code' => '#828282',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -75,6 +83,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Black',
             'color_code' => '#000000',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -82,6 +91,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Cyan',
             'color_code' => '#4af3ff',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -89,6 +99,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Pink',
             'color_code' => '#ff99f8',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -96,6 +107,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Gold',
             'color_code' => '#8a8100',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -103,6 +115,7 @@ class ColorSeeder extends Seeder
             'color_name' => 'Tosca',
             'color_code' => '#33d4a1',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
     }

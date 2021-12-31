@@ -21,6 +21,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Teuku Umar No.142, Denpasar',
             'phone' => '0361 232528',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -30,6 +31,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Cokroaminoto No.78, Pemecutan Kaja, Denpasar',
             'phone' => '0361 434775',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -39,6 +41,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Hasanuddin No.74, Pemecutan, Denpasar',
             'phone' => '0361 422660',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -48,6 +51,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Diponegoro No.57, Denpasar',
             'phone' => '0361 238800',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -57,6 +61,7 @@ class DealerSeeder extends Seeder
             'address' => 'JL. Jend Gatot Subroto Tengah No. 21-X, Denpasar',
             'phone' => '0361 410535',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -66,6 +71,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Imam Bonjol No.551C, Pemecutan Klod, Denpasar',
             'phone' => '0361 499389',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -75,6 +81,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Teuku Umar Barat No. 100X Malboro, Denpasar',
             'phone' => '0361 490690',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -84,6 +91,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. WR Supratman No.76, Sumerta, Denpasar',
             'phone' => '0361 243056',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
 
@@ -93,6 +101,7 @@ class DealerSeeder extends Seeder
             'address' => 'Jl. Sunset Road No.162, Legian, Kuta, Kabupaten Badung',
             'phone' => '0361 758140',
             'created_by' => 1,
+            'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
     }

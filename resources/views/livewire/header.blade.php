@@ -31,7 +31,7 @@
                                 <i class="fa fa-search search-icon"></i>
                             </button>
                         </div>
-                        <input type="text" placeholder="Search vehicle..." class="form-control">
+                        <input type="text" placeholder="Cari unit..." class="form-control">
                     </div>
                 </form>
             </div>
@@ -45,6 +45,14 @@
                 </li>
                 <!-- END Search Icon Mobile-->
 
+                <!-- Go to website -->
+                <li class="nav-item dropdown hidden-caret">
+                    <a href="https://yamahabismagroup.com" class="nav-link" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Go to website">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                </li>
+                <!-- END Go to website -->
+
                 <!-- Notification -->
                 <li class="nav-item dropdown hidden-caret">
                     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown"
@@ -54,7 +62,7 @@
                     </a>
                     <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
                         <li>
-                            <div class="dropdown-title">You have 4 new notification</div>
+                            <div class="dropdown-title">User(s) Login</div>
                         </li>
                         <li>
                             <div class="notif-scroll scrollbar-outer">
@@ -74,7 +82,7 @@
                             </div>
                         </li>
                         <li>
-                            <a class="see-all" href="javascript:void(0);">See all notifications<i
+                            <a class="see-all" href="javascript:void(0);">Lihat detail user<i
                                     class="fa fa-angle-right"></i> </a>
                         </li>
                     </ul>
@@ -94,40 +102,40 @@
                         <div class="quick-actions-scroll scrollbar-outer">
                             <div class="quick-actions-items">
                                 <div class="row m-0">
-                                <a class="col-6 col-md-4 p-0" href="#">
+                                    <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
-                                            <i class="flaticon-pen"></i>
-                                            <span class="text">Create Entry Unit</span>
+                                            <i class="flaticon-down-arrow-3"></i>
+                                            <span class="text">Catat Unit Masuk</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
-                                            <i class="flaticon-file-1"></i>
-                                            <span class="text">Generated Report</span>
-                                        </div>
-                                    </a>
-                                    <a class="col-6 col-md-4 p-0" href="#">
-                                        <div class="quick-actions-item">
-                                            <i class="flaticon-pen"></i>
-                                            <span class="text">Create Entry Unit</span>
+                                            <i class="flaticon-up-arrow-2"></i>
+                                            <span class="text">Catat Unit Keluar</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-interface-1"></i>
-                                            <span class="text">Create New Task</span>
+                                            <span class="text">Catat Unit Terjual</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
-                                            <i class="flaticon-list"></i>
-                                            <span class="text">Completed Tasks</span>
+                                            <i class="flaticon-delivery-truck"></i>
+                                            <span class="text">Catat Pengiriman</span>
                                         </div>
                                     </a>
                                     <a class="col-6 col-md-4 p-0" href="#">
                                         <div class="quick-actions-item">
                                             <i class="flaticon-file"></i>
-                                            <span class="text">Create New Invoice</span>
+                                            <span class="text">Catat Dokumen Kendaraan</span>
+                                        </div>
+                                    </a>
+                                    <a class="col-6 col-md-4 p-0" href="#">
+                                        <div class="quick-actions-item">
+                                            <i class="flaticon-file-1"></i>
+                                            <span class="text">Lihat Laporan</span>
                                         </div>
                                     </a>
                                 </div>
@@ -136,33 +144,71 @@
                     </div>
                 </li>
                 <li class="nav-item dropdown hidden-caret">
+                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                         <div class="avatar-sm">
-                            <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="
+                                avatar-img rounded-circle">
                         </div>
                     </a>
+                    @else
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <div class="avatar-sm">
+                            <div class="avatar-img rounded-circle">
+                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                    @endif
+
                     <ul class="dropdown-menu dropdown-user animated fadeIn">
                         <div class="dropdown-user-scroll scrollbar-outer">
                             <li>
                                 <div class="user-box">
-                                    <div class="avatar-lg"><img src="../assets/img/profile.jpg" alt="image profile"
-                                            class="avatar-img rounded"></div>
+                                    <div class="avatar-lg">
+                                        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                                            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="avatar-img rounded">
+                                        @else
+                                            <div class="avatar-img rounded">
+                                                <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                        @endif
+                                    </div>
                                     <div class="u-text">
-                                        <h4>Hizrian</h4>
-                                        <p class="text-muted">hello@example.com</p><a href="profile.html"
+                                        <h4>{{ Auth::user()->name  }}</h4>
+                                        <p class="text-muted">{{ Auth::user()->email }}</p><a
+                                            href="{{ route('profile.show') }}"
                                             class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My Profile</a>
-                                <a class="dropdown-item" href="#">My Balance</a>
-                                <a class="dropdown-item" href="#">Inbox</a>
+                                <a class="dropdown-item" href="{{ route('profile.show') }}">My Profile</a>
+                                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
+                                <a class="dropdown-item" href="{{ route('api-tokens.index') }}">API Tokens</a>
+                                @endif
+                                <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
+                                    <a class="dropdown-item" style="color: red;" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Logout</a>
+                                </form>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Account Setting</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <center>
+                                    <p style="font-size: 11px; margin-bottom: 0px; color: grey;">
+                                        &copy; CRM Bisma <br>
+                                        Est. 2019 | SiBisma v.3.0
+                                    </p>
+                                </center>
                             </li>
                         </div>
                     </ul>
