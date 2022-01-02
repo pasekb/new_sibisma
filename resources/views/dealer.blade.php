@@ -2,6 +2,7 @@
 @section('title','Dealer')
 
 @section('content')
+    <livewire:dealer-create>
     <livewire:dealer-data>
 @endsection
 
@@ -11,7 +12,7 @@
         $('#basic-datatables').DataTable({});
 
         $('#multi-filter-select').DataTable({
-            "pageLength": 10,
+            "pageLength": 20,
             initComplete: function () {
                 this.api().columns().every(function () {
                     var column = this;
