@@ -30,7 +30,7 @@
                             <th>Contact</th>
                             <th>Created By</th>
                             <th>Updated By</th>
-                            <th>Action</th>
+                            <th width="70">Action</th>
                         </tr>
                     </tfoot>
                     <tbody>

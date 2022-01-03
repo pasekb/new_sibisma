@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
+use App\Http\Controllers\ManpowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/show/{id}', [Deale
 Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/edit', [DealerController::class, 'edit'])->name('dealer.edit');
 Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [DealerController::class, 'delete'])->name('dealer.delete');
 // END DEALER
+
+// MANPOWER
+Route::middleware(['auth:sanctum', 'verified'])->resource('manpower', ManpowerController::class);
+// END MANPOWER
