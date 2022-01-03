@@ -22,6 +22,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dealer', function () {
-    return view('dealer');
-})->name('dealer');
+// DEALER
+Route::middleware(['auth:sanctum', 'verified'])->get('/dealer', [DealerController::class, 'index'])->name('dealer');
+Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/store', [DealerController::class, 'store'])->name('dealer.store');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/show/{id}', [DealerController::class, 'show'])->name('dealer.show');
+Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/edit', [DealerController::class, 'edit'])->name('dealer.edit');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [DealerController::class, 'delete'])->name('dealer.delete');
+// END DEALER

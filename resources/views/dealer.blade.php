@@ -2,8 +2,12 @@
 @section('title','Dealer')
 
 @section('content')
-    <livewire:dealer-create>
-    <livewire:dealer-data>
+    @if(Route::is('dealer.show'))
+        @include('component.dealer-edit') 
+    @else
+        @include('component.dealer-create')
+        @include('component.dealer-data')
+    @endif
 @endsection
 
 @push('after-script')

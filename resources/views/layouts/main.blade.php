@@ -6,6 +6,7 @@
         <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
         <link rel="icon" href="{{ asset('img/icon-sibisma.png') }}" type="image/x-icon"/>
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
         <title>{{ config('app.name', 'Sibisma') }}</title>
 
@@ -55,6 +56,7 @@
 
         @stack('before-script')
         <!-- Script -->
+
         <!--   Core JS Files   -->
         <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
@@ -90,8 +92,11 @@
             })
         </script>
 
-        @stack('after-script')
+        <!-- Tanya JS -->
+        <script src="{{ asset('js/tanya.js') }}"></script>
 
+        @include('sweetalert::alert')
         @livewireScripts
+        @stack('after-script')
     </body>
 </html>
