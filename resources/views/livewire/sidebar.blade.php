@@ -63,6 +63,7 @@
                 </li> -->
 
                 @include('menu.dealer')
+                @include('menu.manpower')
 
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#base">

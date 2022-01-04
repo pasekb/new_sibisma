@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\SaleDelivery;
 use App\Models\BranchDelivery;
+use App\Models\Dealer;
 
 class Manpower extends Model
 {
@@ -23,12 +24,19 @@ class Manpower extends Model
         return $this->hasMany(SaleDelivery::class, 'backup_driver');
     }
 
+    // Relasi to Branch Deliveries
+
     public function branchDeliveryMain(){
         return $this->hasMany(BranchDelivery::class, 'main_driver');
     }
 
     public function branchDeliveryBackup(){
         return $this->hasMany(BranchDelivery::class, 'backup_driver');
+    }
+
+    // Relasi to Dealer
+    public function dealer(){
+        return $this->belongsTo(Dealer::class);
     }
 
     // Relasi to User

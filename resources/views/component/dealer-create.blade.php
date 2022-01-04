@@ -20,10 +20,10 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text"
+                            <input id="dealer_code" type="text"
                                 class="form-control input-border-bottom @if(session()->has('message')) is-invalid @endif"
                                 name="dealer_code" value="{{ old('dealer_code') }}" autofocus required>
-                            <label for="inputFloatingLabel" class="placeholder">Dealer Code</label>
+                            <label for="dealer_code" class="placeholder">Dealer Code</label>
                             
                             @if(session()->has('message'))
                             <span class="invalid-feedback">
@@ -35,17 +35,17 @@
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                 name="dealer_name" value="{{ old('dealer_name') }}" required>
-                            <label for="inputFloatingLabel" class="placeholder">Dealer Name</label>
+                            <label for="dealer_name" class="placeholder">Dealer Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="phone" type="text" class="form-control input-border-bottom"
                                 name="phone" value="{{ old('phone') }}" required>
-                            <label for="inputFloatingLabel" class="placeholder">Phone</label>
+                            <label for="phone" class="placeholder">Phone</label>
                         </div>
                     </div>
                 </div>
@@ -53,9 +53,9 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="address" type="text" class="form-control input-border-bottom"
                                 name="address" value="{{ old('address') }}" required>
-                            <label for="inputFloatingLabel" class="placeholder">Address</label>
+                            <label for="address" class="placeholder">Address</label>
                         </div>
                     </div>
                 </div>

@@ -12,30 +12,30 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="dealer_name" type="text" class="form-control input-border-bottom"
                                 name="dealer_name" value="{{ $o->dealer_name }}" autofocus required>
-                            <label for="inputFloatingLabel" class="placeholder">Dealer Name</label>
+                            <label for="dealer_name" class="placeholder">Dealer Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="phone" type="text" class="form-control input-border-bottom"
                                 name="phone" value="{{ $o->phone }}" required>
-                            <label for="inputFloatingLabel" class="placeholder">Phone</label>
+                            <label for="phone" class="placeholder">Phone</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"
+                            <input id="address" type="text" class="form-control input-border-bottom"
                                 name="address" value="{{ $o->address }}" required>
-                            <label for="inputFloatingLabel" class="placeholder">Address</label>
+                            <label for="address" class="placeholder">Address</label>
                         </div>
                     </div>
                 </div>
 
-                <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
+                <button class="btn btn-success" type="submit"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
             </form>
         </div>

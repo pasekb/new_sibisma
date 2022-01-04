@@ -16,7 +16,7 @@ class CreateManpowersTable extends Migration
         Schema::create('manpowers', function (Blueprint $table) {
             $table->id();
             $table->enum('status',['active','mutation','resign']);
-            $table->string('dealer_code');
+            $table->unsignedInteger('dealer_id');
             $table->string('name');
             $table->text('address');
             $table->string('phone');

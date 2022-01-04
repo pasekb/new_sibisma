@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock;
 use App\Models\User;
+use App\Models\Manpower;
 
 class Dealer extends Model
 {
@@ -21,6 +22,11 @@ class Dealer extends Model
     // Relasi to User
     public function createdBy(){
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Relasi to Manpower
+    public function manpower(){
+        return $this->hasOne(Manpower::class);
     }
 
     // Relasi to User

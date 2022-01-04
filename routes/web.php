@@ -33,4 +33,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [Dea
 
 // MANPOWER
 Route::middleware(['auth:sanctum', 'verified'])->resource('manpower', ManpowerController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/manpower/delete/{id}', [DealerController::class, 'delete'])->name('manpower.delete');
 // END MANPOWER
