@@ -8,17 +8,17 @@
     }
 </style>
 @endpush
-<div class="col-md-12">
-    <button class="btn btn-success" id="btnCreate" style="margin-bottom: 20px;"><i
-            class="fa fa-plus"></i>&nbsp;&nbsp;Add New Manpower</button>
-</div>
+
+@push('button')
+<button class="btn btn-success btn-round" id="btnCreate" style="margin-bottom: 20px;"><i class="fa fa-plus"></i>&nbsp;&nbsp; <strong>Add New Manpower</strong> </button>
+@endpush
 
 <div class="col-md-12" id="dataCreate" style="display: none;">
     <div class="card">
-        <div class="card-header bg-dark">
+        <div class="card-header">
             <div class="row">
                 <div class="col-10">
-                    <h4 class="card-title" style="color: white;">Add New Manpower</h4>
+                    <h4 class="card-title">Add New Manpower</h4>
                 </div>
                 <div class="col-2">
                     <h4 class="card-title" style="text-align: right; cursor: pointer; color: red;" id="btnCloseCreate">
@@ -34,12 +34,12 @@
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="dealer_id" name="dealer_id"
                                 autofocus required>
-                                <option>Select Dealer</option>
+                                <option value=""></option>
                                 @foreach($dealer as $o)
                                 <option value="{{ $o->id }}">{{ $o->dealer_name }}</option>
                                 @endforeach
                             </select>
-                            <label for="dealer_id" class="placeholder">Dealer Name</label>
+                            <label for="dealer_id" class="placeholder">Select Dealer</label>
                         </div>
                     </div>
 
@@ -81,11 +81,11 @@
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="gender" name="gender"
                             required>
-                                <option>Select Gender</option>
+                                <option value=""></option>
                                 <option value="L">Male</option>
                                 <option value="P">Female</option>
                             </select>
-                            <label for="gender" class="placeholder">Gender</label>
+                            <label for="gender" class="placeholder">Select Gender</label>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="position" name="position"
                                 required>
-                                <option>Select Position</option>
+                                <option value=""></option>
                                 <option value="Branch Head">Branch Head</option>
                                 <option value="Supervisor">Supervisor</option>
                                 <option value="Sales Counter">Sales Counter</option>
@@ -128,15 +128,15 @@
                                 <option value="Office Boy">Office Boy</option>
                                 <option value="Security">Security</option>
                             </select>
-                            <label for="position" class="placeholder">Position</label>
+                            <label for="position" class="placeholder">Select Position</label>
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <select class="form-control input-border-bottom" id="education" name="education"
                                 required>
-                                <option>Select Education</option>
+                                <option value=""></option>
                                 <option value="SMA">SMA</option>
                                 <option value="D1">D1</option>
                                 <option value="D2">D2</option>
@@ -145,15 +145,7 @@
                                 <option value="S1">S1</option>
                                 <option value="S2">S2</option>
                             </select>
-                            <label for="education" class="placeholder">Education</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
-                        <div class="form-group form-floating-label">
-                            <input id="dpack_name" type="text" class="form-control input-border-bottom"
-                                name="name_dpack" value="{{ old('name_dpack') }}">
-                            <label for="dpack_name" class="placeholder">Dpack Name (optional)</label>
+                            <label for="education" class="placeholder">Select Education</label>
                         </div>
                     </div>
                 </div>

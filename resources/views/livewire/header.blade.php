@@ -69,7 +69,7 @@
                                 <div class="notif-center">
                                     <a href="#">
                                         <div class="notif-img">
-                                            <img src="../assets/img/profile2.jpg" alt="Img Profile">
+                                            <img src="{{ asset('assets/img/profile2.jpg') }}" alt="Img Profile">
                                         </div>
                                         <div class="notif-content">
                                             <span class="block">

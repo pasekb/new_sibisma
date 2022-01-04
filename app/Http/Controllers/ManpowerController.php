@@ -45,7 +45,6 @@ class ManpowerController extends Controller
         $data->name = $req->name;
         $data->address = $req->address;
         $data->phone = $req->phone;
-        $data->name_dpack = $req->name_dpack;
         $data->birthday = $req->birthday;
         $data->gender = $req->gender;
         $data->join_date = $req->join_date;
@@ -65,10 +64,9 @@ class ManpowerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Manpower $manpower)
     {
-        $data = Manpower::findOrFail($id);
-        return view('manpower', compact('data'));
+        return view('manpower', compact('manpower'));
     }
 
     /**
@@ -97,7 +95,7 @@ class ManpowerController extends Controller
             'name' => $req->name,
             'address' => $req->address,
             'phone' => $req->phone,
-            'name_dpack' => $req->birthday,
+            'birthday' => $req->birthday,
             'gender' => $req->gender,
             'join_date' => $req->join_date,
             'position' => $req->position,
@@ -115,9 +113,9 @@ class ManpowerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Manpower $manpower)
     {
-        // 
+        //
     }
 
     public function delete($id){

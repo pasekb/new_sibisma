@@ -3,17 +3,35 @@
     input[type=date]:required:invalid::-webkit-datetime-edit {
         color: transparent;
     }
+
     input[type=date]:focus::-webkit-datetime-edit {
         color: black !important;
     }
+
 </style>
 @endpush
 
-<div class="col-md-12" id="dataCreate">
+@section('page-title','Manpower')
+
+@push('link-bread')
+<li class="nav-item">
+    <a href="{{ route('manpower.index') }}">Data Manpower</a>
+</li>
+<li class="separator">
+    <i class="flaticon-right-arrow"></i>
+</li>
+<li class="nav-item">
+    <a href="#">Edit</a>
+</li>
+@endpush
+
+<div class="col-md-12">
     <div class="card">
-        <div class="card-header bg-dark">
+        <div class="card-header">
             <div class="row">
-                <h4 class="card-title" style="color: white;">Edit Manpower {{ $manpower->name }}</h4>
+                <div class="col-12">
+                    <h4 class="card-title">Edit Manpower {{ $manpower->name }}</h4>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -23,8 +41,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="dealer_id" name="dealer_id"
-                                autofocus required>
+                            <select class="form-control input-border-bottom" id="dealer_id" name="dealer_id" autofocus
+                                required>
                                 <option value="{{ $manpower->dealer_id }}">{{ $manpower->dealer->dealer_name }}</option>
                                 <option>Select Dealer</option>
                                 @foreach($dealer as $o)
@@ -37,16 +55,16 @@
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="name" type="text" class="form-control input-border-bottom"
-                                name="name" value="{{ $manpower->name }}" required>
+                            <input id="name" type="text" class="form-control input-border-bottom" name="name"
+                                value="{{ $manpower->name }}" required>
                             <label for="name" class="placeholder">Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom"
-                                name="address" value="{{ $manpower->address }}" required>
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address"
+                                value="{{ $manpower->address }}" required>
                             <label for="address" class="placeholder">Address</label>
                         </div>
                     </div>
@@ -55,25 +73,25 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="text" class="form-control input-border-bottom"
-                                name="phone" value="{{ $manpower->phone }}" required>
+                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone"
+                                value="{{ $manpower->phone }}" required>
                             <label for="phone" class="placeholder">Phone</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="birthday" type="date" class="form-control input-border-bottom"
-                                name="birthday" value="{{ $manpower->birthday }}" required>
+                            <input id="birthday" type="date" class="form-control input-border-bottom" name="birthday"
+                                value="{{ $manpower->birthday }}" required>
                             <label for="birthday" class="placeholder">Birthday</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="gender" name="gender"
-                            required>
-                                <option value="{{ $manpower->gender }}">{{ $manpower->gender == 'L' ? 'Male' : 'Female' }}</option>
+                            <select class="form-control input-border-bottom" id="gender" name="gender" required>
+                                <option value="{{ $manpower->gender }}">
+                                    {{ $manpower->gender == 'L' ? 'Male' : 'Female' }}</option>
                                 <option>Select Gender</option>
                                 <option value="L">Male</option>
                                 <option value="P">Female</option>
@@ -86,16 +104,15 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="join_date" type="date" class="form-control input-border-bottom"
-                                name="join_date" value="{{ $manpower->join_date }}" required>
+                            <input id="join_date" type="date" class="form-control input-border-bottom" name="join_date"
+                                value="{{ $manpower->join_date }}" required>
                             <label for="join_date" class="placeholder">Join Date</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="position" name="position"
-                                required>
+                            <select class="form-control input-border-bottom" id="position" name="position" required>
                                 <option value="{{ $manpower->position }}">{{ $manpower->position }}</option>
                                 <option>Select Position</option>
                                 <option value="Branch Head">Branch Head</option>
@@ -128,8 +145,7 @@
 
                     <div class="col-md-2">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="education" name="education"
-                                required>
+                            <select class="form-control input-border-bottom" id="education" name="education" required>
                                 <option value="{{ $manpower->education }}">{{ $manpower->education }}</option>
                                 <option>Select Education</option>
                                 <option value="SMA">SMA</option>
@@ -146,9 +162,22 @@
 
                     <div class="col-md-2">
                         <div class="form-group form-floating-label">
-                            <input id="dpack_name" type="text" class="form-control input-border-bottom"
-                                name="name_dpack" value="{{ $manpower->name_dpack }}">
-                            <label for="dpack_name" class="placeholder">Dpack Name (optional)</label>
+                            <select class="form-control input-border-bottom" id="education" name="education" required>
+                                <option value="{{ $manpower->status }}">{{ ucfirst($manpower->status) }}</option>
+                                <option value="">Select Status</option>
+                                <option value="active">On Job</option>
+                                <option value="mutation">Mutation</option>
+                                <option value="resign">Resign</option>
+                            </select>
+                            <label for="education" class="placeholder">Select Status</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <div class="form-group form-floating-label">
+                            <input id="resign_date" type="date" class="form-control input-border-bottom" name="resign_date"
+                                value="{{ $manpower->resign_date }}" required>
+                            <label for="resign_date" class="placeholder">Resign Date</label>
                         </div>
                     </div>
                 </div>
@@ -159,20 +188,3 @@
         </div>
     </div>
 </div>
-
-@push('after-script')
-<script>
-    $(document).ready(function () {
-        $('#btnCreate').click(function () {
-            $(this).css('display', 'none');
-            $('#dataCreate').fadeIn();
-        });
-
-        $('#btnCloseCreate').click(function () {
-            $('#dataCreate').css('display', 'none');
-            $('#btnCreate').fadeIn();
-        });
-    });
-
-</script>
-@endpush

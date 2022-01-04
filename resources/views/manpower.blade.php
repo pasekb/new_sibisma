@@ -3,7 +3,9 @@
 
 @section('content')
     @if(Route::is('manpower.edit'))
-        @include('component.manpower-edit') 
+        @include('component.manpower-edit')
+    @elseif(Route::is('manpower.show'))
+        @include('component.manpower-show')
     @else
         @include('component.manpower-create')
         @include('component.manpower-data')

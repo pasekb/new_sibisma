@@ -8,7 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
-        <title>{{ config('app.name', 'Sibisma') }}</title>
+        <title>@yield('title') | SiBisma</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -20,7 +20,7 @@
         <script>
             WebFont.load({
                 google: {"families":["Lato:300,400,700,900"]},
-                custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css']},
+                custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ asset("assets/css/fonts.min.css") }}']},
                 active: function() {
                     sessionStorage.fonts = true;
                 }
@@ -30,6 +30,15 @@
         <!-- CSS Files -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css') }}">
+
+        <style>
+            .page-header .page-title,
+            .page-header .nav-home a i,
+            .page-header .separator,
+            .page-header .nav-item a{
+                color: #fff;
+            }
+        </style>
 
         @stack('after-css')
 
@@ -45,8 +54,33 @@
             
             <div class="main-panel">
 			    <div class="content">
-				    <div class="page-inner">
-                        <div class="row">
+                    <div class="panel-header bg-primary-gradient">
+                        <div class="page-inner py-5">
+                            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+                                <div>
+                                    <div class="page-header">
+                                        <h4 class="page-title">@yield('page-title')</h4>
+                                        <ul class="breadcrumbs">
+                                            <li class="nav-home">
+                                                <a href="{{ route('dashboard') }}">
+                                                    <i class="flaticon-home"></i>
+                                                </a>
+                                            </li>
+                                            <li class="separator">
+                                                <i class="flaticon-right-arrow"></i>
+                                            </li>
+                                            @stack('link-bread')
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="ml-md-auto py-2 py-md-0">
+                                    @stack('button')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				    <div class="page-inner mt--5">
+                        <div class="row mt--2">
                             @yield('content')
                         </div>
                     </div>
