@@ -64,7 +64,7 @@
 
                 @include('menu.dealer')
                 @include('menu.manpower')
-                @include('menu.motorcycle')
+                @include('menu.datamaster')
                 
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">

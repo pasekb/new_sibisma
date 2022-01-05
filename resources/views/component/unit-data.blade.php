@@ -7,62 +7,66 @@
 </style>
 @endpush
 
-@section('title','Color')
-@section('page-title','Color')
+@section('title','Unit')
+@section('page-title','Unit')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('color.index') }}">Data Color</a>
+    <a href="{{ route('unit.index') }}">Data Unit</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Color Data</h4>
+            <h4 class="card-title">Unit Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <form action="{{ route('color.deleteall') }}" method="post">
+                <form action="{{ route('unit.deleteall') }}" method="post">
                     @csrf
                     <button class="btn btn-danger btn-round btnDelAll"
                         onclick="return tanya('Yakin hapus data terpilih?')"
                         style="margin-bottom: 10px; display: none;"><i class="far fa-trash-alt"></i> Selected</button>
-                    <table id="multi-filter-select" class="display table table-striped table-hover">
+                    <table id="multi-filter-select" class="display table table-striped table-hover"
+                        width="100%">
                         <thead>
                             <tr>
-                                <th>
+                                <th width="120%">
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input checkData" type="checkbox" id="checkAll">
-                                            <span class="form-check-sign">Color Name</span>
+                                            <span class="form-check-sign">Model Name</span>
                                         </label>
                                     </div>
                                 </th>
-                                <th>Color Code</th>
+                                <th>Category</th>
+                                <th>Color</th>
+                                <th>Year</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
-                                <th width="70">Action</th>
+                                <th width="120">Action</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>
+                                <th width="120%">
                                     <div class="form-check">
                                         <label class="form-check-label">
                                             <input class="form-check-input checkData" type="checkbox" id="checkAll">
-                                            <span class="form-check-sign">Color Name</span>
+                                            <span class="form-check-sign">Model Name</span>
                                         </label>
                                     </div>
                                 </th>
-                                <th>Color Code</th>
+                                <th>Category</th>
+                                <th>Color</th>
+                                <th>Year</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
-                                <th width="70">Action</th>
+                                <th width="120">Action</th>
                             </tr>
                         </tfoot>
                         <tbody>
-                            @php($no = 1)
                             @forelse($data as $o)
                             <tr>
                                 <td>
@@ -70,29 +74,38 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input checkData" type="checkbox" name="pilih[]"
                                                 value="{{ $o->id }}">
-                                            <span class="form-check-sign">{{ $o->color_name }}</span>
+                                            <span class="form-check-sign">{{ $o->model_name }}</span>
                                         </label>
                                     </div>
                                 </td>
-                                <td style="background-color: <?php echo $o->color_code ?>50 ;">{{ $o->color_code }}</td>
+                                <td>{{ $o->category }}</td>
+                                <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                                    {{ $o->color->color_name }}
+                                </td>
+                                <td>{{ $o->year_mc }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
                                 <td>
                                     <div class="form-button-action">
-                                        <a href="{{ route('color.edit', $o->id) }}" class="btnAction"
+                                        <a href="{{ route('unit.show', $o->id) }}" class="btnAction"
+                                            data-toggle="tooltip" data-placement="top" title="Detail"
+                                            style="color:orange;"><i class="fa fa-eye"></i></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="{{ route('unit.edit', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Edit"><i
                                                 class="fas fa-edit"></i></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="{{ route('color.delete', $o->id) }}" class="btnAction"
+                                        <a href="{{ route('unit.delete', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                            onclick="return tanya('Yakin hapus color {{ $o->color_name }}?')"><i
+                                            onclick="return tanya('Yakin hapus unit {{ $o->name }}?')"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </div>
+
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" style="text-align: center;">No data available</td>
+                                <td colspan="7" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

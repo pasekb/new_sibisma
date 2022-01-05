@@ -5,21 +5,18 @@
         border: none;
         height: 50px !important;
     }
-
     input[type="color"]::-webkit-color-swatch-wrapper {
         padding: 0;
     }
-
     input[type="color"]::-webkit-color-swatch {
         border: none;
     }
-
 </style>
 @endpush
 
 @push('button')
-<button class="btn btn-success btn-round" id="btnCreate" style="margin-bottom: 20px;"><i
-        class="fa fa-plus"></i>&nbsp;&nbsp; <strong>Add New Color</strong> </button>
+    @section('button-title','Add New Color')
+    @include('component.button-add')
 @endpush
 
 <div class="col-md-12" id="dataCreate" style="display: none;">
@@ -51,8 +48,7 @@
                         <div class="col-md-4">
                             <div class="form-group form-floating-label">
                                 <input id="color_code" type="color" value="#000000"
-                                    class="form-control input-border-bottom" name="color_code[]"
-                                    value="{{ old('color_code') }}" required>
+                                    class="form-control input-border-bottom" name="color_code[]" required>
                                 <label for="color_code" class="placeholder">Select Color</label>
                             </div>
                         </div>

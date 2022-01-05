@@ -1,13 +1,13 @@
 @extends('layouts.main')
 
 @section('content')
-    @if(Route::is('manpower.edit'))
-        @include('component.manpower-edit')
-    @elseif(Route::is('manpower.show'))
-        @include('component.manpower-show')
+    @if(Route::is('unit.edit'))
+        @include('component.unit-edit')
+    @elseif(Route::is('unit.show'))
+        @include('component.unit-show')
     @else
-        @include('component.manpower-create')
-        @include('component.manpower-data')
+        @include('component.unit-create')
+        @include('component.unit-data')
     @endif
 @endsection
 

@@ -1,8 +1,9 @@
 @push('after-css')
 <style>
-    a.btnAction{
+    a.btnAction {
         font-size: 20px;
     }
+
 </style>
 @endpush
 
@@ -44,17 +45,24 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                        @php($no = 1)
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->dealer_name }}</td>
+                            <td>{{ $no++ }}.&nbsp;&nbsp;{{ $o->dealer_name }}</td>
                             <td>{{ $o->address }}</td>
                             <td>{{ $o->phone }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
-                                <a href="{{ route('dealer.edit', $o->id) }}" class="btnAction" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-                                &nbsp; | &nbsp;
-                                <a href="{{ route('dealer.delete', $o->id) }}" class="btnAction" data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;" onclick="return tanya('Yakin hapus dealer {{ $o->dealer_name }}?')"><i class="fas fa-trash-alt"></i></a>
+                                <div class="form-button-action">
+                                    <a href="{{ route('dealer.edit', $o->id) }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('dealer.delete', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
+                                        onclick="return tanya('Yakin hapus dealer {{ $o->dealer_name }}?')"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </div>
                             </td>
                         </tr>
                         @empty

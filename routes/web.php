@@ -42,14 +42,17 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/manpower/delete/{id}', [M
 // COLOR
 Route::middleware(['auth:sanctum', 'verified'])->resource('color', ColorController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/color/delete/{id}', [ColorController::class, 'delete'])->name('color.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/color/deleteall', [ColorController::class, 'deleteall'])->name('color.deleteall');
 // END COLOR
 
 // UNIT
 Route::middleware(['auth:sanctum', 'verified'])->resource('unit', UnitController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/unit/delete/{id}', [UnitController::class, 'delete'])->name('unit.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/unit/deleteall', [UnitController::class, 'deleteall'])->name('unit.deleteall');
 // END UNIT
 
 // LEASING
 Route::middleware(['auth:sanctum', 'verified'])->resource('leasing', LeasingController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/leasing/delete/{id}', [LeasingController::class, 'delete'])->name('leasing.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/leasing/deleteall', [LeasingController::class, 'deleteall'])->name('leasing.deleteall');
 // END LEASING

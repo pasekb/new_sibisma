@@ -29,6 +29,11 @@
     animation-duration: 1s;
 }
 
+.fadeOutBawah{
+    animation-name: fadeOutBawah;
+    animation-duration: 1s;
+}
+
 /* Animation */
 @keyframes fadeInAtas {
     from{
@@ -87,6 +92,18 @@
     to{
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutBawah {
+    from{
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to{
+        opacity: 0;
+        transform: translateY(25px);
     }
 }
 

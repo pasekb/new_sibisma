@@ -38,14 +38,13 @@ class ColorController extends Controller
      */
     public function store(Request $req)
     {
-        $arr_data = $req->color_name;
-        foreach($arr_data as $data){
-            $data = new Color();
-            $data->color_name = $req->color_name;
-            $data->color_code = $req->color_code;
-            $data->created_by = Auth::user()->id;
-            $data->updated_by = Auth::user()->id;
-            $data->save();
+        for ($i=0; $i < count($req->color_name); $i++) { 
+            Color::insert([
+                'color_name' => $req->color_name[$i],
+                'color_code' => $req->color_code[$i],
+                'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
+            ]);
         }
         toast('Data color berhasil disimpan','success');
         return redirect()->route('color.index');
@@ -70,7 +69,7 @@ class ColorController extends Controller
      */
     public function edit(Color $color)
     {
-        //
+        return view('color', compact('color'));
     }
 
     /**
@@ -82,7 +81,13 @@ class ColorController extends Controller
      */
     public function update(Request $req, Color $color)
     {
-        //
+        Color::where('id',$color->id)->update([
+            'color_name' => $req->color_name,
+            'color_code' => $req->color_code,
+            'updated_by' => Auth::user()->id,
+        ]);
+        toast('Data manpower berhasil diubah','success');
+        return redirect()->back();
     }
 
     /**
@@ -94,5 +99,17 @@ class ColorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        Color::find($id)->delete();
+        toast('Data color berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function deleteall(Request $req){
+        Color::whereIn('id',$req->pilih)->delete();
+        toast('Data color berhasil dihapus','success');
+        return redirect()->back();
     }
 }

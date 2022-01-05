@@ -55,7 +55,7 @@
             
             <div class="main-panel">
 			    <div class="content">
-                    <div class="panel-header bg-primary-gradient">
+                    <div class="panel-header bg-info-gradient text-white bubble-shadow">
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
@@ -74,7 +74,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="ml-md-auto py-2 py-md-0">
+                                <div class="ml-md-auto py-2 py-md-0" style="z-index: 9999;">
                                     @stack('button')
                                 </div>
                             </div>

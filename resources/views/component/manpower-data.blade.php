@@ -23,7 +23,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="multi-filter-select" class="display table table-striped table-hover">
+                <table id="multi-filter-select" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -56,17 +56,21 @@
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
-                                <a href="{{ route('manpower.show', $o->id) }}" class="btnAction" data-toggle="tooltip"
-                                    data-placement="top" title="Detail" style="color:orange;"><i
-                                        class="fa fa-eye"></i></a>
-                                &nbsp; | &nbsp;
-                                <a href="{{ route('manpower.edit', $o->id) }}" class="btnAction" data-toggle="tooltip"
-                                    data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
-                                &nbsp; | &nbsp;
-                                <a href="{{ route('manpower.delete', $o->id) }}" class="btnAction" data-toggle="tooltip"
-                                    data-placement="top" title="Delete" style="color:red;"
-                                    onclick="return tanya('Yakin hapus manpower {{ $o->name }}?')"><i
-                                        class="fas fa-trash-alt"></i></a>
+                                <div class="form-button-action">
+                                    <a href="{{ route('manpower.show', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Detail"
+                                        style="color:orange;"><i class="fa fa-eye"></i></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('manpower.edit', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                            class="fas fa-edit"></i></a>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="{{ route('manpower.delete', $o->id) }}" class="btnAction"
+                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
+                                        onclick="return tanya('Yakin hapus manpower {{ $o->name }}?')"><i
+                                            class="fas fa-trash-alt"></i></a>
+                                </div>
+
                             </td>
                         </tr>
                         @empty

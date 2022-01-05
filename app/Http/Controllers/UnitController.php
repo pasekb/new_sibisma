@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Unit;
+use App\Models\Color;
+use Auth;
+
 
 class UnitController extends Controller
 {
@@ -14,7 +18,9 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $data = Unit::all();
+        $color = Color::all();
+        return view('unit', compact('data','color'));
     }
 
     /**
@@ -33,9 +39,35 @@ class UnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        $req->validate([
+            'image' => 'image|mimes:jpeg,png,jpg',
+        ]);
+
+        $data = new Unit;
+        $data->model_name = $req->model_name;
+        $data->category = $req->category;
+        $data->color_id = $req->color_id;
+        $data->year_mc = $req->year_mc;
+        $data->price = $req->price;
+        $data->created_by = Auth::user()->id;
+        $data->updated_by = Auth::user()->id;
+        if ($req->image == '') {
+            $data->save();
+            toast('Data unit berhasil disimpan','success');
+            return redirect()->back();
+        } else {
+            $img = $req->file('image');
+            $img_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/motorcycle';
+            $img->move($dir_img,$img_file);
+            $data->image = $img_file;
+            $data->save();
+            toast('Data unit berhasil disimpan','success');
+            return redirect()->back();
+        }
+        
     }
 
     /**
@@ -44,7 +76,7 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Unit $unit)
     {
         //
     }
@@ -55,7 +87,7 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Unit $unit)
     {
         //
     }
@@ -67,7 +99,7 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, Unit $unit)
     {
         //
     }
@@ -81,5 +113,17 @@ class UnitController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        Unit::find($id)->delete();
+        toast('Data unit berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function deleteall(Request $req){
+        Unit::whereIn('id',$req->pilih)->delete();
+        toast('Data unit berhasil dihapus','success');
+        return redirect()->back();
     }
 }
