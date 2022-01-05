@@ -7,6 +7,7 @@
 </style>
 @endpush
 
+@section('title','Manpower')
 @section('page-title','Manpower')
 
 @push('link-bread')

@@ -30,6 +30,7 @@
         <!-- CSS Files -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/animation.css') }}">
 
         <style>
             .page-header .page-title,

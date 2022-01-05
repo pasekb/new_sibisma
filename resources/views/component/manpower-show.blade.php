@@ -11,6 +11,7 @@
 </style>
 @endpush
 
+@section('title','Detail Manpower')
 @section('page-title','Manpower')
 
 @push('link-bread')
@@ -66,7 +67,7 @@
                 </div>
                 <div class="col">
                     <div class="number">Birthday</div>
-                    <div class="title">{{ $manpower->birthday }}</div>
+                    <div class="title">{{ \Carbon\Carbon::parse($manpower->birthday)->format('jS F Y') }}</div>
                 </div>
                 <div class="col">
                     <div class="number">Gender</div>

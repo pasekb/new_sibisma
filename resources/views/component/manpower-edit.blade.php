@@ -11,6 +11,7 @@
 </style>
 @endpush
 
+@section('title','Edit Manpower')
 @section('page-title','Manpower')
 
 @push('link-bread')
@@ -30,7 +31,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="card-title">Edit Manpower {{ $manpower->name }}</h4>
+                    <h4 class="card-title">Edit {{ $manpower->name }}</h4>
                 </div>
             </div>
         </div>
@@ -160,24 +161,28 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-4" id="statusManpower">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="education" name="education" required>
+                            <select class="form-control input-border-bottom" id="status" name="status" required>
                                 <option value="{{ $manpower->status }}">{{ ucfirst($manpower->status) }}</option>
-                                <option value="">Select Status</option>
-                                <option value="active">On Job</option>
+                                <option disabled>Select Status</option>
+                                <option value="active">Active</option>
                                 <option value="mutation">Mutation</option>
                                 <option value="resign">Resign</option>
                             </select>
-                            <label for="education" class="placeholder">Select Status</label>
+                            <label for="status" class="placeholder">Select Status</label>
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-2" style="display: none;" id="resignDate">
                         <div class="form-group form-floating-label">
                             <input id="resign_date" type="date" class="form-control input-border-bottom" name="resign_date"
-                                value="{{ $manpower->resign_date }}" required>
+                                value="{{ $manpower->resign_date }}">
                             <label for="resign_date" class="placeholder">Resign Date</label>
+
+                            <span class="invalid-feedback">
+                                <strong><span id="error-msg"></span></strong>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -188,3 +193,53 @@
         </div>
     </div>
 </div>
+
+@push('after-script')
+    <script>
+        // Show input resign date when status is resign
+        $(document).ready(function(){
+            $('#statusManpower').on('change', function(){
+                let status = $('#statusManpower select').val();
+                if (status == 'resign') {
+                    $('#statusManpower').removeClass('col-md-4');
+                    $('#statusManpower').addClass('col-md-2');
+                    $('#resignDate').addClass('fadeInKanan');
+                    $('#resignDate').css('display','block');
+                }else{
+                    $('#statusManpower').removeClass();
+                    $('#statusManpower').addClass('col-md-4');
+                    $('#resignDate').css('display','none');
+                }
+            });
+        });
+
+        // Form validation for resign date
+        $(document).ready(function(){
+            $('form').submit(function(e){
+                let status = $('#statusManpower select').val();
+                let resignDate = $('#resign_date').val();
+
+                if (status == 'resign' && resignDate == '') {
+                    e.preventDefault();
+                    $('#resign_date').addClass('is-invalid');
+                    $('#error-msg').text('field required');
+                } else if (status != 'resign') {
+                    $('#resign_date').val('');
+                    $('form').submit();
+                } else {
+                    $('form').submit();
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            let status = $('#statusManpower select').val();
+            if (status == 'resign') {
+                $('#statusManpower').removeClass('col-md-4');
+                $('#statusManpower').addClass('col-md-2');
+                $('#resignDate').addClass('fadeInKanan');
+                $('#resignDate').css('display','block');
+            }
+        });
+    </script>
+@endpush

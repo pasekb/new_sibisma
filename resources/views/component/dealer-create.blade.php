@@ -1,16 +1,16 @@
-<div class="col-md-12">
-    <button class="btn btn-success" id="btnDealerCreate" style="margin-bottom: 20px;"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New Dealer</button>
-</div>
+@push('button')
+<button class="btn btn-success btn-round" id="btnCreate" style="margin-bottom: 20px;"><i class="fa fa-plus"></i>&nbsp;&nbsp; <strong>Add New Dealer</strong> </button>
+@endpush
 
-<div class="col-md-12" id="dealerCreate" style="display: none;">
+<div class="col-md-12" id="dataCreate" style="display: none;">
     <div class="card">
-        <div class="card-header bg-dark">
+        <div class="card-header">
             <div class="row">
                 <div class="col-10">
-                    <h4 class="card-title" style="color: white;">Add New Dealer</h4>
+                    <h4 class="card-title">Add New Dealer</h4>
                 </div>
                 <div class="col-2">
-                    <h4 class="card-title" style="text-align: right; cursor: pointer; color: red;" id="btnCloseDealerCreate"><i class="fas fa-times-circle"></i></h4>
+                    <h4 class="card-title" style="text-align: right; cursor: pointer; color: red;" id="btnCloseCreate"><i class="fas fa-times-circle"></i></h4>
                 </div>
             </div>
         </div>
@@ -70,14 +70,14 @@
 @push('after-script')
     <script>
         $(document).ready(function(){
-            $('#btnDealerCreate').click(function(){
+            $('#btnCreate').click(function(){
                 $(this).css('display','none');
-                $('#dealerCreate').fadeIn();
+                $('#dataCreate').fadeIn();
             });
 
-            $('#btnCloseDealerCreate').click(function(){
-                $('#dealerCreate').css('display','none');
-                $('#btnDealerCreate').fadeIn();
+            $('#btnCloseCreate').click(function(){
+                $('#dataCreate').css('display','none');
+                $('#btnCreate').fadeIn();
             });
         });
     </script>

@@ -2,7 +2,7 @@
 @section('title','Dealer')
 
 @section('content')
-    @if(Route::is('dealer.show'))
+    @if(Route::is('dealer.edit'))
         @include('component.dealer-edit') 
     @else
         @include('component.dealer-create')

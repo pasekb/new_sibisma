@@ -1,11 +1,26 @@
+@section('title','Edit Dealer')
+@section('page-title','Dealer')
+
+@push('link-bread')
+<li class="nav-item">
+    <a href="{{ route('dealer') }}">Data Dealer</a>
+</li>
+<li class="separator">
+    <i class="flaticon-right-arrow"></i>
+</li>
+<li class="nav-item">
+    <a href="#">Edit</a>
+</li>
+@endpush
+
 @forelse($data as $o)
 <div class="col-md-12" id="dealerCreate">
     <div class="card">
-        <div class="card-header bg-dark">
-            <h4 class="card-title" style="color: white;">Edit Dealer {{ $o->dealer_code }}</h4>
+        <div class="card-header">
+            <h4 class="card-title">Edit Dealer {{ $o->dealer_code }}</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('dealer.edit') }}" method="post">
+            <form action="{{ route('dealer.update') }}" method="post">
                 @csrf
                 
                 <input type="hidden" name="id" value="{{ $o->id }}">

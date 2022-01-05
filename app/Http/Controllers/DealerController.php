@@ -32,12 +32,12 @@ class DealerController extends Controller
         }
     }
 
-    public function show($id){
+    public function edit($id){
         $data = Dealer::where('id',$id)->get();
         return view('dealer', compact('data'));
     }
 
-    public function edit(Request $req){
+    public function update(Request $req){
         Dealer::find($req->id)->update([
             'dealer_name' => $req->dealer_name,
             'phone' => $req->phone,
@@ -45,7 +45,7 @@ class DealerController extends Controller
             'updated_by' => Auth::user()->id,
         ]);
         toast('Data dealer berhasil diubah','success');
-        return redirect()->route('dealer');
+        return redirect()->back();
     }
 
     public function delete($id){

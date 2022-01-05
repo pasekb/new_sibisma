@@ -5,6 +5,16 @@
     }
 </style>
 @endpush
+
+@section('title','Dealer')
+@section('page-title','Dealer')
+
+@push('link-bread')
+<li class="nav-item">
+    <a href="{{ route('dealer') }}">Data Dealer</a>
+</li>
+@endpush
+
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
@@ -42,7 +52,7 @@
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
-                                <a href="{{ route('dealer.show', $o->id) }}" class="btnAction" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('dealer.edit', $o->id) }}" class="btnAction" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-edit"></i></a>
                                 &nbsp; | &nbsp;
                                 <a href="{{ route('dealer.delete', $o->id) }}" class="btnAction" data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;" onclick="return tanya('Yakin hapus dealer {{ $o->dealer_name }}?')"><i class="fas fa-trash-alt"></i></a>
                             </td>

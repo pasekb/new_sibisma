@@ -1,5 +1,4 @@
 @extends('layouts.main')
-@section('title','Manpower')
 
 @section('content')
     @if(Route::is('manpower.edit'))

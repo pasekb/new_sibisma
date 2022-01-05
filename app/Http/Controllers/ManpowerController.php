@@ -98,6 +98,8 @@ class ManpowerController extends Controller
             'birthday' => $req->birthday,
             'gender' => $req->gender,
             'join_date' => $req->join_date,
+            'resign_date' => $req->resign_date,
+            'status' => $req->status,
             'position' => $req->position,
             'years_of_service' => $req->yos,
             'education' => $req->education,
