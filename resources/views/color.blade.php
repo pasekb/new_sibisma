@@ -1,11 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
-    @if(Route::is('dealer.edit'))
-        @include('component.dealer-edit') 
+    @if(Route::is('color.edit'))
+        @include('component.color-edit') 
     @else
-        @include('component.dealer-create')
-        @include('component.dealer-data')
+        @include('component.color-create')
+        @include('component.color-data')
     @endif
 @endsection
 

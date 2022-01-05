@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DealerController;
 use App\Http\Controllers\ManpowerController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\LeasingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +38,18 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [Dea
 Route::middleware(['auth:sanctum', 'verified'])->resource('manpower', ManpowerController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/manpower/delete/{id}', [ManpowerController::class, 'delete'])->name('manpower.delete');
 // END MANPOWER
+
+// COLOR
+Route::middleware(['auth:sanctum', 'verified'])->resource('color', ColorController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/color/delete/{id}', [ColorController::class, 'delete'])->name('color.delete');
+// END COLOR
+
+// UNIT
+Route::middleware(['auth:sanctum', 'verified'])->resource('unit', UnitController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/unit/delete/{id}', [UnitController::class, 'delete'])->name('unit.delete');
+// END UNIT
+
+// LEASING
+Route::middleware(['auth:sanctum', 'verified'])->resource('leasing', LeasingController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/leasing/delete/{id}', [LeasingController::class, 'delete'])->name('leasing.delete');
+// END LEASING
