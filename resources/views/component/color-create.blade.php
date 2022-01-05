@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('color.store') }}" method="post">
+            <form action="{{ route('color.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="wrapperInput">
                     <div class="row inputan">
@@ -127,12 +127,14 @@
             </div>
             `
         $('#addRow').on('click', function () {
-            $('.wrapperInput').append(field);
+            $('.wrapperInput').append(field).hide().fadeIn();
         });
 
         $('.wrapperInput').on('click', '.removeRow', function(e){
             e.preventDefault();
-            $(this).parent('inputan').remove();
+            $(this).parents('.inputan').fadeOut(function(){
+                $(this).remove();
+            });
         });
     });
 

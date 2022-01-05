@@ -38,12 +38,15 @@ class ColorController extends Controller
      */
     public function store(Request $req)
     {
-        $data = new Color;
-        $data->color_name = $req->color_name;
-        $data->color_code = $req->color_code;
-        $data->created_by = Auth::user()->id;
-        $data->updated_by = Auth::user()->id;
-        $data->save();
+        $arr_data = $req->color_name;
+        foreach($arr_data as $data){
+            $data = new Color();
+            $data->color_name = $req->color_name;
+            $data->color_code = $req->color_code;
+            $data->created_by = Auth::user()->id;
+            $data->updated_by = Auth::user()->id;
+            $data->save();
+        }
         toast('Data color berhasil disimpan','success');
         return redirect()->route('color.index');
     }
