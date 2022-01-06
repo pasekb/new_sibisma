@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Leasing;
 
 class LeasingController extends Controller
 {
@@ -14,7 +15,8 @@ class LeasingController extends Controller
      */
     public function index()
     {
-        //
+        $data = Leasing::all();
+        return view('leasing', compact('data'));
     }
 
     /**
@@ -33,9 +35,18 @@ class LeasingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $req)
     {
-        //
+        for ($i=0; $i < count($req->leasing_code); $i++) { 
+            Color::insert([
+                'leasing_code' => $req->leasing_code[$i],
+                'leasing_name' => $req->leasing_name[$i],
+                'created_by' => Auth::user()->id,
+                'updated_by' => Auth::user()->id,
+            ]);
+        }
+        toast('Data leasing berhasil disimpan','success');
+        return redirect()->route('leasing.index');
     }
 
     /**
@@ -44,7 +55,7 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Leasing $leasing)
     {
         //
     }
@@ -55,9 +66,9 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Leasing $leasing)
     {
-        //
+        return view('leasing', compact('leasing'));
     }
 
     /**
@@ -67,9 +78,15 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, Leasing $leasing)
     {
-        //
+        Color::where('id',$leasing->id)->update([
+            'leasing_code' => $req->leasing_code[$i],
+            'leasing_name' => $req->leasing_name[$i],
+            'updated_by' => Auth::user()->id,
+        ]);
+        toast('Data leasing berhasil diubah','success');
+        return redirect()->back();
     }
 
     /**
@@ -81,5 +98,17 @@ class LeasingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        Leasing::find($id)->delete();
+        toast('Data leasing berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function deleteall(Request $req){
+        Leasing::whereIn('id',$req->pilih)->delete();
+        toast('Data leasing berhasil dihapus','success');
+        return redirect()->back();
     }
 }

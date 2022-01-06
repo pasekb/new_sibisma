@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="form-group form-floating-label">
-                            <input id="address" type="number" class="form-control input-border-bottom" name="year_mc"
+                            <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
                                 value="{{ $unit->year_mc }}" required>
                             <label for="year_mc" class="placeholder">Year MC</label>
                         </div>

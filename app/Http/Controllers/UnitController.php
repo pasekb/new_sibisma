@@ -109,8 +109,11 @@ class UnitController extends Controller
         $data->year_mc = $req->year_mc;
         $data->price = $req->price;
         if ($req->hasfile('image')) {
-            $img_prev = $req->img_prev;
-            unlink('img/motorcycle'.$img_prev);
+            if ($data->image != '') {
+                $img_prev = $req->img_prev;
+                unlink('img/motorcycle/'.$img_prev);
+            }
+
             $img = $req->file('image');
             $img_file = time()."_".$img->getClientOriginalName();
             $dir_img = 'img/motorcycle';
