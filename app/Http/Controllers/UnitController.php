@@ -78,7 +78,7 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        return view('unit', compact('unit'));
     }
 
     /**
@@ -89,7 +89,8 @@ class UnitController extends Controller
      */
     public function edit(Unit $unit)
     {
-        //
+        $color = Color::all();
+        return view('unit', compact('unit','color'));
     }
 
     /**
@@ -101,7 +102,29 @@ class UnitController extends Controller
      */
     public function update(Request $req, Unit $unit)
     {
-        //
+        $data = Unit::find($unit->id);
+        $data->model_name = $req->model_name;
+        $data->category = $req->category;
+        $data->color_id = $req->color_id;
+        $data->year_mc = $req->year_mc;
+        $data->price = $req->price;
+        if ($req->hasfile('image')) {
+            $img_prev = $req->img_prev;
+            unlink('img/motorcycle'.$img_prev);
+            $img = $req->file('image');
+            $img_file = time()."_".$img->getClientOriginalName();
+            $dir_img = 'img/motorcycle';
+            $img->move($dir_img,$img_file);
+
+            $data->image = $img_file;
+            $data->save();
+            toast('Data unit berhasil disimpan','success');
+            return redirect()->back();
+        }else{
+            $data->save();
+            toast('Data unit berhasil disimpan','success');
+            return redirect()->back();
+        }
     }
 
     /**
