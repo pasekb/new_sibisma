@@ -43,7 +43,7 @@
                                     </a>
                                 </h3>
                                 <p></p>
-                                <a href="javascript:void(0);" class="btn btn-primary btn-rounded btn-sm" id="btnImage">{{ $unit->image == '' ? 'Add Image' : 'Change Image'}}</a>
+                                <a href="javascript:void(0);" class="btn btn-primary btn-rounded btn-sm" id="btnImage" style="color: #fff;">{{ $unit->image == '' ? 'Add Image' : 'Change Image'}}</a>
                             </div>
                         </div>
                     </div>

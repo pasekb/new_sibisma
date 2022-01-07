@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Leasing;
+use Illuminate\Support\Facades\Auth;
 
 class LeasingController extends Controller
 {
@@ -38,7 +39,7 @@ class LeasingController extends Controller
     public function store(Request $req)
     {
         for ($i=0; $i < count($req->leasing_code); $i++) { 
-            Color::insert([
+            Leasing::insert([
                 'leasing_code' => $req->leasing_code[$i],
                 'leasing_name' => $req->leasing_name[$i],
                 'created_by' => Auth::user()->id,
@@ -80,9 +81,9 @@ class LeasingController extends Controller
      */
     public function update(Request $req, Leasing $leasing)
     {
-        Color::where('id',$leasing->id)->update([
-            'leasing_code' => $req->leasing_code[$i],
-            'leasing_name' => $req->leasing_name[$i],
+        Leasing::where('id',$leasing->id)->update([
+            'leasing_code' => $req->leasing_code,
+            'leasing_name' => $req->leasing_name,
             'updated_by' => Auth::user()->id,
         ]);
         toast('Data leasing berhasil diubah','success');
