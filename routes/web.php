@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('page');
 })->name('dashboard');
 
 // DEALER

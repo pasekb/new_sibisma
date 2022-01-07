@@ -16,7 +16,7 @@
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
-        <span style="background-color: <?php echo $stock->unit->color->color_code ?>;
+            <span style="background-color: <?php echo $stock->unit->color->color_code ?>;
         width: 10px; height: 50%; 
         display: inline-block;
         position: absolute;
@@ -56,7 +56,8 @@
                                     <div class="row">
                                         <div class="col-5">
                                             <div class="icon-big text-center">
-                                                <i class="fas fa-motorcycle" style="color: <?php echo $stock->unit->color->color_code ?>;"></i>
+                                                <i class="fas fa-motorcycle"
+                                                    style="color: <?php echo $stock->unit->color->color_code == '#FFFFFF' || '#fff' || 'white' ? '#000' : $stock->unit->color->color_code ?>;"></i>
                                             </div>
                                         </div>
                                         <div class="col-7 col-stats">
@@ -102,7 +103,8 @@
                         </p>
                     </div>
 
-                    <div class="form-group form-group-default" style="background-color: <?php echo $stock->unit->color->color_code ?>50;">
+                    <div class="form-group form-group-default"
+                        style="background-color: <?php echo $stock->unit->color->color_code ?>50;">
                         <label>Color</label>
                         <p type="text" class="form-control" style="margin-bottom: -4px;">
                             {{ $stock->unit->color->color_name }}
