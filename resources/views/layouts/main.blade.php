@@ -27,6 +27,9 @@
             });
         </script>
 
+        <!-- Select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
         <!-- CSS Files -->
         <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css') }}">
@@ -74,7 +77,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="ml-md-auto py-2 py-md-0" style="z-index: 9999;">
+                                <div class="ml-md-auto py-2 py-md-0" style="z-index: 99;">
                                     @stack('button')
                                 </div>
                             </div>
@@ -117,6 +120,9 @@
         <script src="{{ asset('assets/js/plugin/jqvmap/jquery.vmap.min.js') }}"></script>
         <script src="{{ asset('assets/js/plugin/jqvmap/maps/jquery.vmap.world.js') }}"></script>
 
+        <!-- Select2 -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
         <!-- Sweet Alert -->
         <script src="{{ asset('assets/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
@@ -132,6 +138,13 @@
 
         <!-- Tanya JS -->
         <script src="{{ asset('js/tanya.js') }}"></script>
+
+        <!-- Select2 -->
+        <script>
+            $(document).ready(function() {
+                $('.selectBasic').select2();
+            });
+        </script>
 
         @include('sweetalert::alert')
         @livewireScripts

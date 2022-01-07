@@ -6,6 +6,7 @@ use App\Http\Controllers\ManpowerController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\LeasingController;
+use App\Http\Controllers\StockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +28,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 // DEALER
-Route::middleware(['auth:sanctum', 'verified'])->get('/dealer', [DealerController::class, 'index'])->name('dealer');
-Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/store', [DealerController::class, 'store'])->name('dealer.store');
-Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/edit/{id}', [DealerController::class, 'edit'])->name('dealer.edit');
-Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/update', [DealerController::class, 'update'])->name('dealer.update');
+Route::middleware(['auth:sanctum', 'verified'])->resource('dealer', DealerController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [DealerController::class, 'delete'])->name('dealer.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/dealer/deleteall', [DealerController::class, 'deleteall'])->name('dealer.deleteall');
 // END DEALER
 
 // MANPOWER
@@ -56,3 +55,9 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('leasing', LeasingCont
 Route::middleware(['auth:sanctum', 'verified'])->get('/leasing/delete/{id}', [LeasingController::class, 'delete'])->name('leasing.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/leasing/deleteall', [LeasingController::class, 'deleteall'])->name('leasing.deleteall');
 // END LEASING
+
+// STOCL
+Route::middleware(['auth:sanctum', 'verified'])->resource('stock', StockController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/stock/delete/{id}', [StockController::class, 'delete'])->name('stock.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [StockController::class, 'deleteall'])->name('stock.deleteall');
+// END STOCL

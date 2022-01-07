@@ -65,6 +65,7 @@
                 @include('menu.dealer')
                 @include('menu.manpower')
                 @include('menu.datamaster')
+                @include('menu.stock')
                 
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">

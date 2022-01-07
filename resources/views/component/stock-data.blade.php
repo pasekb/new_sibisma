@@ -7,23 +7,23 @@
 </style>
 @endpush
 
-@section('title','Unit')
-@section('page-title','Unit')
+@section('title','Stock')
+@section('page-title','Stock')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('unit.index') }}">Data Unit</a>
+    <a href="{{ route('stock.index') }}">Data Stock</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Unit Data</h4>
+            <h4 class="card-title">Stock Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <form action="{{ route('unit.deleteall') }}" method="post">
+                <form action="{{ route('stock.deleteall') }}" method="post">
                     @csrf
                     <button class="btn btn-danger btn-round btnDelAll"
                         onclick="return tanya('Yakin hapus data terpilih?')"
@@ -43,6 +43,8 @@
                                 <th>Category</th>
                                 <th>Color</th>
                                 <th>Year</th>
+                                <th>Qty</th>
+                                <th>Dealer</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
                                 <th width="120">Action</th>
@@ -61,6 +63,8 @@
                                 <th>Category</th>
                                 <th>Color</th>
                                 <th>Year</th>
+                                <th>Qty</th>
+                                <th>Dealer</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
                                 <th width="120">Action</th>
@@ -74,30 +78,28 @@
                                         <label class="form-check-label">
                                             <input class="form-check-input checkData" type="checkbox" name="pilih[]"
                                                 value="{{ $o->id }}">
-                                            <span class="form-check-sign">{{ $o->model_name }}</span>
+                                            <span class="form-check-sign">{{ $o->unit->model_name }}</span>
                                         </label>
                                     </div>
                                 </td>
-                                <td>{{ $o->category }}</td>
-                                <td style="background-color: <?php echo $o->color->color_code ?>50 ;">
-                                    {{ $o->color->color_name }}
+                                <td>{{ $o->unit->category }}</td>
+                                <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
+                                    {{ $o->unit->color->color_name }}
                                 </td>
-                                <td>{{ $o->year_mc }}</td>
+                                <td>{{ $o->unit->year_mc }}</td>
+                                <td>{{ $o->qty }}</td>
+                                <td>{{ $o->dealer->dealer_name }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
                                 <td>
                                     <div class="form-button-action">
-                                        <a href="{{ route('unit.show', $o->id) }}" class="btnAction"
+                                        <a href="{{ route('stock.show', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Detail"
                                             style="color:orange;"><i class="fa fa-eye"></i></a>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="{{ route('unit.edit', $o->id) }}" class="btnAction"
-                                            data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                class="fas fa-edit"></i></a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a href="{{ route('unit.delete', $o->id) }}" class="btnAction"
+                                        <a href="{{ route('stock.delete', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                            onclick="return tanya('Yakin hapus unit {{ $o->name }}?')"><i
+                                            onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }}?')"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </div>
 
@@ -105,7 +107,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" style="text-align: center;">No data available</td>
+                                <td colspan="9" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

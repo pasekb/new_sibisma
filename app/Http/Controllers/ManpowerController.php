@@ -19,7 +19,7 @@ class ManpowerController extends Controller
     {
         $data = Manpower::all();
         $dealer = Dealer::all();
-        return view('manpower', compact('data','dealer'));
+        return view('page', compact('data','dealer'));
     }
 
     /**
@@ -66,7 +66,7 @@ class ManpowerController extends Controller
      */
     public function show(Manpower $manpower)
     {
-        return view('manpower', compact('manpower'));
+        return view('page', compact('manpower'));
     }
 
     /**
@@ -78,7 +78,7 @@ class ManpowerController extends Controller
     public function edit(Manpower $manpower)
     {
         $dealer = Dealer::all();
-        return view('manpower', compact('manpower','dealer'));
+        return view('page', compact('manpower','dealer'));
     }
 
     /**

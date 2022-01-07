@@ -9,12 +9,35 @@ use Auth;
 
 class DealerController extends Controller
 {
-    public function index(){
-        $data = Dealer::orderBy('dealers.dealer_code','asc')->get();
-        return view('dealer', compact('data'));
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $data = Dealer::all();
+        return view('page', compact('data'));
     }
 
-    public function store(Request $req){
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $req)
+    {
         $cek = Dealer::where('dealer_code', $req->dealer_code)->count();
         if ($cek > 0) {
             return redirect()->back()->withInput()->with('message','Kode dealer sudah ada!');
@@ -32,12 +55,37 @@ class DealerController extends Controller
         }
     }
 
-    public function edit($id){
-        $data = Dealer::where('id',$id)->get();
-        return view('dealer', compact('data'));
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Dealer $dealer)
+    {
+        //
     }
 
-    public function update(Request $req){
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Dealer $dealer)
+    {
+        return view('page', compact('dealer'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $req, Dealer $dealer)
+    {
         Dealer::find($req->id)->update([
             'dealer_name' => $req->dealer_name,
             'phone' => $req->phone,
@@ -48,9 +96,26 @@ class DealerController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
     public function delete($id){
         Dealer::find($id)->delete();
         toast('Data dealer terhapus','success');
+        return redirect()->back();
+    }
+
+    public function deleteall(Request $req){
+        Dealer::whereIn('id',$req->pilih)->delete();
+        toast('Data dealer berhasil dihapus','success');
         return redirect()->back();
     }
 }

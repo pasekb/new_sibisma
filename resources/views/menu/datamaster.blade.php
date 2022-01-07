@@ -1,4 +1,4 @@
-<li class="nav-item {{ Route::is('unit.index') || Route::is('unit.show') || Route::is('unit.edit') || Route::is('color.index') || Route::is('color.show') || Route::is('color.edit') ? 'active' : '' }}">
+<li class="nav-item {{ Route::is('unit.*') || Route::is('color.*') || Route::is('leasing.*') ? 'active' : '' }}">
     <a data-toggle="collapse" href="#base">
         <i class="fas fa-database"></i>
         <p>Data Master</p>

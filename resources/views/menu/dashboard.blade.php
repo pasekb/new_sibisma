@@ -1,4 +1,4 @@
-<li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+<li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
     <a href="{{ route('dashboard') }}">
         <i class="far fa-chart-bar"></i>
         <p>Dashboard</p>

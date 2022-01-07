@@ -20,7 +20,7 @@ class UnitController extends Controller
     {
         $data = Unit::all();
         $color = Color::all();
-        return view('unit', compact('data','color'));
+        return view('page', compact('data','color'));
     }
 
     /**
@@ -78,7 +78,7 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        return view('unit', compact('unit'));
+        return view('page', compact('unit'));
     }
 
     /**
@@ -90,7 +90,7 @@ class UnitController extends Controller
     public function edit(Unit $unit)
     {
         $color = Color::all();
-        return view('unit', compact('unit','color'));
+        return view('page', compact('unit','color'));
     }
 
     /**

@@ -181,4 +181,13 @@ class User extends Authenticatable
     public function historyU(){
         return $this->hasMany(StockHistory::class, 'updated_by');
     }
+
+    // Relasi to created, updated Stock
+    public function stockC(){
+        return $this->hasMany(Stock::class, 'created_by');
+    }
+
+    public function stockU(){
+        return $this->hasMany(Stock::class, 'updated_by');
+    }
 }

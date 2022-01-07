@@ -17,7 +17,7 @@ class ColorController extends Controller
     public function index()
     {
         $data = Color::all();
-        return view('color', compact('data'));
+        return view('page', compact('data'));
     }
 
     /**
@@ -69,7 +69,7 @@ class ColorController extends Controller
      */
     public function edit(Color $color)
     {
-        return view('color', compact('color'));
+        return view('page', compact('color'));
     }
 
     /**

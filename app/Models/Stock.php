@@ -34,4 +34,14 @@ class Stock extends Model
     public function opname(){
         return $this->hasMany(Opname::class);
     }
+
+    // Relasi to User
+    public function createdBy(){
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    // Relasi to User
+    public function updatedBy(){
+        return $this->belongsTo(User::class, 'updated_by');
+    }
 }

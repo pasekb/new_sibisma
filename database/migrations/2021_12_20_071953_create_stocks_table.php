@@ -18,6 +18,8 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('unit_id');
             $table->unsignedInteger('dealer_id');
             $table->integer('qty');
+            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();
         });
     }

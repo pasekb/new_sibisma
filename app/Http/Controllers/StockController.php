@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Leasing;
+use App\Models\Dealer;
+use App\Models\Stock;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
 
-class LeasingController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +18,10 @@ class LeasingController extends Controller
      */
     public function index()
     {
-        $data = Leasing::all();
-        return view('page', compact('data'));
+        $dealer = Dealer::all();
+        $unit = Unit::all();
+        $data = Stock::all();
+        return view('page', compact('data','dealer','unit'));
     }
 
     /**
@@ -38,16 +42,19 @@ class LeasingController extends Controller
      */
     public function store(Request $req)
     {
-        for ($i=0; $i < count($req->leasing_code); $i++) { 
-            Leasing::insert([
-                'leasing_code' => $req->leasing_code[$i],
-                'leasing_name' => $req->leasing_name[$i],
-                'created_by' => Auth::user()->id,
-                'updated_by' => Auth::user()->id,
-            ]);
+        $data = new Stock;
+        $data->unit_id = $req->unit_id;
+        $data->dealer_id = $req->dealer_id;
+        $data->created_by = Auth::user()->id;
+        $data->updated_by = Auth::user()->id;
+        if ($req->qty == '') {
+            $data->qty = 0;
+        } else {
+            $data->qty = $req->qty;
         }
-        toast('Data leasing berhasil disimpan','success');
-        return redirect()->route('leasing.index');
+        $data->save();
+        toast('Data stock berhasil disimpan','success');
+        return redirect()->back();
     }
 
     /**
@@ -56,9 +63,9 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Leasing $leasing)
+    public function show(Stock $stock)
     {
-        //
+        return view('page', compact('stock'));
     }
 
     /**
@@ -67,9 +74,9 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Leasing $leasing)
+    public function edit(Stock $stock)
     {
-        return view('page', compact('leasing'));
+        // 
     }
 
     /**
@@ -79,15 +86,9 @@ class LeasingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, Leasing $leasing)
+    public function update(Request $request, Stock $stock)
     {
-        Leasing::where('id',$leasing->id)->update([
-            'leasing_code' => $req->leasing_code,
-            'leasing_name' => $req->leasing_name,
-            'updated_by' => Auth::user()->id,
-        ]);
-        toast('Data leasing berhasil diubah','success');
-        return redirect()->back();
+        // 
     }
 
     /**
@@ -102,14 +103,14 @@ class LeasingController extends Controller
     }
 
     public function delete($id){
-        Leasing::find($id)->delete();
-        toast('Data leasing berhasil dihapus','success');
+        Stock::find($id)->delete();
+        toast('Data stock berhasil dihapus','success');
         return redirect()->back();
     }
 
     public function deleteall(Request $req){
-        Leasing::whereIn('id',$req->pilih)->delete();
-        toast('Data leasing berhasil dihapus','success');
+        Stock::whereIn('id',$req->pilih)->delete();
+        toast('Data stock berhasil dihapus','success');
         return redirect()->back();
     }
 }
