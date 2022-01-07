@@ -1,6 +1,6 @@
 @push('button')
-@section('button-title','Add New Stock')
-@include('component.button-add')
+    @section('button-title','Add New Stock')
+    @include('component.button-add')
 @endpush
 
 <div class="col-md-12" id="dataCreate" style="display: none;">

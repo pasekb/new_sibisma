@@ -4,7 +4,7 @@
         <p>Data Master</p>
         <span class="caret"></span>
     </a>
-    <div class="collapse {{ Route::is('unit.index') || Route::is('unit.show') || Route::is('unit.edit') || Route::is('color.index') || Route::is('color.show') || Route::is('color.edit') ? 'show' : '' }}" id="base">
+    <div class="collapse {{ Route::is('unit.*') || Route::is('color.*') || Route::is('leasing.*') ? 'show' : '' }}" id="base">
         <ul class="nav nav-collapse">
             <li class="{{ Route::is('unit.index') ? 'active' : '' }}">
                 <a href="{{ route('unit.index') }}">

@@ -54,6 +54,7 @@
 
             <ul class="nav nav-primary">
                 @include('menu.dashboard')
+                @include('menu.manage-stock')
                 
                 <!-- <li class="nav-section">
                     <span class="sidebar-mini-icon">

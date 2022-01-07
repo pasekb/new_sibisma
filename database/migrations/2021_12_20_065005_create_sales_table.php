@@ -17,7 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->date('sale_date');
             $table->unsignedInteger('stock_id');
-            $table->integer('NIK')->nullable();
+            $table->integer('nik')->nullable();
             $table->string('customer_name')->nullable();
             $table->string('phone')->nullable();
             $table->text('address')->nullable();

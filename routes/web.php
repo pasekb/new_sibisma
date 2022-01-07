@@ -56,8 +56,21 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/leasing/delete/{id}', [Le
 Route::middleware(['auth:sanctum', 'verified'])->post('/leasing/deleteall', [LeasingController::class, 'deleteall'])->name('leasing.deleteall');
 // END LEASING
 
-// STOCL
+// STOCK
 Route::middleware(['auth:sanctum', 'verified'])->resource('stock', StockController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/stock/delete/{id}', [StockController::class, 'delete'])->name('stock.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [StockController::class, 'deleteall'])->name('stock.deleteall');
-// END STOCL
+// END STOCK
+
+// SALE
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale', function () {
+    return view('page');
+})->name('sale.index');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/entry', function () {
+    return view('page');
+})->name('entry.index');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/out', function () {
+    return view('page');
+})->name('out.index');

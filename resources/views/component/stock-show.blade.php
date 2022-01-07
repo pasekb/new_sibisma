@@ -30,6 +30,102 @@
         </div>
         <div class="card-body">
             <div class="row">
+                <div class="col-12">
+                    <div class="row row-card-no-pd">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="fas fa-motorcycle"
+                                                    style="color: <?php echo ($stock->unit->color->color_code == '#FFFFFF') || ($stock->unit->color->color_code == '#ffffff') || ($stock->unit->color->color_code == '#fff') || ($stock->unit->color->color_code == 'white') ? '#000' : $stock->unit->color->color_code ?>;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Stocks</p>
+                                                <h4 class="card-title">{{ $stock->qty }}<span class="card-category">
+                                                        Unit(s)</span></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="fas fa-tint" style="color: <?php echo ($stock->unit->color->color_code == '#FFFFFF') || ($stock->unit->color->color_code == '#ffffff') || ($stock->unit->color->color_code == '#fff') || ($stock->unit->color->color_code == 'white') ? '#000' : $stock->unit->color->color_code ?>;"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Other Colors</p>
+                                                @forelse($otherColors as $o)
+                                                <span class="card-category" style="background-color: <?php echo $o->unit->color->color_code ?>50; padding: 5px; display: <?php echo $o->unit->color->color_name == $stock->unit->color->color_name ? 'none' : 'inline-block' ?>; transform: skewX(-12deg); font-size: 10px; margin-bottom: 3px;">{{ $o->unit->color->color_name }}</span>
+                                                @empty
+                                                <p class="card-category">No other color</p>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="fas fa-warehouse"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Other Dealers</p>
+                                                @forelse($otherDealers as $o)
+                                                <span class="card-category" style="display: <?php echo $o->dealer->dealer_name == $stock->dealer->dealer_name ? 'none' : 'block' ?>;">- {{ $o->dealer->dealer_name }}</span>
+                                                @empty
+                                                <p class="card-category">No other dealer</p>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="card card-stats card-round">
+                                <div class="card-body ">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="icon-big text-center">
+                                                <i class="fas fa-cogs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="col-7 col-stats">
+                                            <div class="numbers">
+                                                <p class="card-category">Other Assembly Year</p>
+                                                @forelse($otherDealers as $o)
+                                                <span class="card-category" style="display: <?php echo $o->unit->year_mc == $stock->unit->year_mc ? 'none' : 'block' ?>;">- {{ $o->unit->year_mc }}</span>
+                                                @empty
+                                                <p class="card-category">No other assembly year</p>
+                                                @endforelse
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="card card-post card-round">
                         <img class="card-img-top"
@@ -49,48 +145,6 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="row row-card-no-pd mt--2">
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-5">
-                                            <div class="icon-big text-center">
-                                                <i class="fas fa-motorcycle"
-                                                    style="color: <?php echo $stock->unit->color->color_code == '#FFFFFF' || '#fff' || 'white' ? '#000' : $stock->unit->color->color_code ?>;"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-7 col-stats">
-                                            <div class="numbers">
-                                                <p class="card-category">Stocks</p>
-                                                <h4 class="card-title">{{ $stock->qty }} Unit(s)</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <div class="card card-stats card-round">
-                                <div class="card-body ">
-                                    <div class="row">
-                                        <div class="col-5">
-                                            <div class="icon-big text-center">
-                                                <i class="flaticon-coins text-success"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-7 col-stats">
-                                            <div class="numbers">
-                                                <p class="card-category">Revenue</p>
-                                                <h4 class="card-title">$ 1,345</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group form-group-default">
                         <label>Model Name</label>
                         <p type="text" class="form-control" style="margin-bottom: -4px;">{{ $stock->unit->model_name }}

@@ -2,7 +2,7 @@
 
 @section('content')
     @if(Route::is('dashboard'))
-        @include('component.dashboard-data')
+        <livewire:dashboard>
 
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
@@ -61,6 +61,9 @@
             @include('component.stock-create')
             @include('component.stock-data')
         @endif
+
+    @elseif(Route::is('sale.*'))
+        @include('component.sale-data')
     @endif
     
 @endsection
