@@ -102,7 +102,6 @@
                                             onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }}?')"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </div>
-
                                 </td>
                             </tr>
                             @empty

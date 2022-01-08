@@ -8,6 +8,7 @@ use App\Models\Sale;
 use App\Models\Leasing;
 use App\Models\Stock;
 use Carbon\Carbon;
+use Auth;
 
 class SaleController extends Controller
 {
@@ -21,7 +22,7 @@ class SaleController extends Controller
         $stock = Stock::all();
         $leasing = Leasing::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        $data = Sale::where('sale_date',$today)->orderBy('sale_date','desc')->get();
+        $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
         return view('page', compact('stock','leasing','today','data'));
     }
 
@@ -52,8 +53,8 @@ class SaleController extends Controller
         $data->address = $req->address;
         $data->sale_qty = 1;
         $data->frame_no = $req->frame_no;
-        $data->engine = $req->engine_no;
-        $data->leasing_id = $req->nono;
+        $data->engine_no = $req->engine_no;
+        $data->leasing_id = $req->leasing_id;
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
         $data->save();

@@ -17,34 +17,38 @@
                 <table class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
+                            <th>No</th>
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Frame No</th>
                             <th>Created By</th>
-                            <th>Updated By</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>No</th>
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Frame No</th>
                             <th>Created By</th>
-                            <th>Updated By</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
+                        @php($no = 1)
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->model_name }}</td>
-                            <td style="background-color: <?php echo $o->color->color_code ?>50 ;">
-                                {{ $o->color->color_name }}
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $o->stock->unit->model_name }}</td>
+                            <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
+                                {{ $o->stock->unit->color->color_name }}
                             </td>
-                            <td>{{ $o->year_mc }}</td>
+                            <td>{{ $o->stock->unit->year_mc }}</td>
+                            <td>{{ $o->frame_no }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
-                            <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('sale.delete', $o->id) }}" class="btnAction"

@@ -29,17 +29,15 @@
             <form action="{{ route('sale.store') }}" method="post">
                 @csrf
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="sale_date" type="date" class="form-control input-border-bottom"
                                 name="sale_date" value="{{ $today }}" required>
                             <label for="sale_date" class="placeholder">Date *</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="stock_id" name="stock_id" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
@@ -49,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="color" type="text" class="form-control input-border-bottom" name="color"
                                 placeholder="Color *">
@@ -57,25 +55,25 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
                                 placeholder="Year MC *">
                             <label for="year_mc" class="placeholder"></label>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="on_hand" type="number" class="form-control input-border-bottom" name="on_hand"
                                 placeholder="Stock On Hand *">
                             <label for="on_hand" class="placeholder">Stock On Hand *</label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="leasing_id" name="leasing_id" required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
@@ -85,31 +83,31 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" required>
                             <label for="frame_no" class="placeholder">Frame No. *</label>
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" placeholder="Engine No.">
                             <label for="engine_no" class="placeholder"></label>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-2">
+                <div class="row">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="nik" type="number" class="form-control input-border-bottom" name="nik"
                                 placeholder="Customer's NIK">
                             <label for="nik" class="placeholder"></label>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name"
                                 placeholder="Customer's Name">
@@ -117,7 +115,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="phone" type="text" class="form-control input-border-bottom" name="phone"
                                 placeholder="Customer's Phone">
@@ -125,7 +123,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom" name="address"
                                 placeholder="Customer's Address">

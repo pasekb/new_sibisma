@@ -149,7 +149,7 @@
 <script>
     $(document).on('click', '.klik', function (e) {
         let code = $(this).attr('data-colorcode');
-        $('#unit_id').val($(this).attr('data-id'));
+        $('#stock_id').val($(this).attr('data-id'));
         $('#model_name').val($(this).attr('data-model'));
         $('#color').val($(this).attr('data-color'));
         $('#year_mc').val($(this).attr('data-yearmc'));
