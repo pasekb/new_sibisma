@@ -236,7 +236,7 @@
             var momentNow = moment();
             $('#date').html(momentNow.format('dddd').substring(0,3) + ', '
                             + momentNow.format('D MMM YYYY'));
-            $('#time').html(momentNow.format('hh:mm:ss') + ' | ');
+            $('#time').html(momentNow.format('HH:mm:ss') + ' | ');
         }, 100);
     });
 </script>

@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [Stock
 Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale/delete/{id}', [SaleController::class, 'delete'])->name('sale.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleController::class, 'deleteall'])->name('sale.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->post('/sale/history', [SaleController::class, 'history'])->name('sale.history');
 // END SALE
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/entry', function () {

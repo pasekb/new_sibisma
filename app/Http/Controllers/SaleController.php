@@ -22,8 +22,20 @@ class SaleController extends Controller
         $stock = Stock::all();
         $leasing = Leasing::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $month = Carbon::now('GMT+8')->format('m');
         $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
-        return view('page', compact('stock','leasing','today','data'));
+
+        // Total Sales
+        $totalSales = Sale::where('sale_date',$today)->sum('sale_qty');
+        // Ratio Percentage
+        $monthSales = Sale::whereMonth('sale_date',$month)->sum('sale_qty');
+        $stockQty = Stock::sum('qty');
+        $ratioPercent = ($monthSales/$stockQty)*100;
+        $ratioPercent = number_format($ratioPercent,0);
+        $ratio = $stockQty/$monthSales;
+        $ratio = number_format($ratio, 2);
+        // dd($ratioPercent);
+        return view('page', compact('stock','leasing','today','data','totalSales','ratioPercent','ratio'));
     }
 
     /**
@@ -44,6 +56,10 @@ class SaleController extends Controller
      */
     public function store(Request $req)
     {
+        $stock = Stock::find($req->stock_id);
+        $stockQty = $stock->sum('qty');
+        $calQty = $stockQty - 1;
+        // dd([$stock],[$stockQty],[$calQty]);
         $data = new Sale;
         $data->sale_date = $req->sale_date;
         $data->stock_id = $req->stock_id;
@@ -58,6 +74,11 @@ class SaleController extends Controller
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
         $data->save();
+
+        // Update Stok
+        $stock->qty = $calQty;
+        $stock->save();
+
         toast('Data sale berhasil disimpan','success');
         return redirect()->back();
     }

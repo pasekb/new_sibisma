@@ -9,6 +9,11 @@
 </style>
 @endpush
 
+@push('button')
+    @section('button-title','Sales History')
+    @include('component.button-history')
+@endpush
+
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
@@ -70,6 +75,10 @@
                             <input id="on_hand" type="number" class="form-control input-border-bottom" name="on_hand"
                                 placeholder="Stock On Hand *">
                             <label for="on_hand" class="placeholder">Stock On Hand *</label>
+
+                            <span class="invalid-feedback">
+                                <strong><span id="error-msg"></span></strong>
+                            </span>
                         </div>
                     </div>
 
@@ -142,3 +151,23 @@
 @section('modal-title','Data Stock')
 @include('component.modal-data')
 @include('component.modal-leasing')
+
+@push('after-script')
+<script>
+    $(document).ready(function(){
+        $('form').submit(function(e){
+            let onHand = $('#on_hand').val();
+            let stock = onHand - 1;
+            console.log(onHand);
+            console.log(stock);
+            if (stock < 0) {
+                e.preventDefault();
+                $('#on_hand').addClass('is-invalid');
+                $('#error-msg').text('out of stock!');
+            } else {
+                $('form').submit();
+            }
+        });
+    });
+</script>
+@endpush
