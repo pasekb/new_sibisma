@@ -56,7 +56,7 @@
                         </tbody>
                         <!-- ELSE IF -->
                         @elseif(Route::is('sale.*'))
-
+                        
                         <thead>
                             <tr>
                                 <th>Model Name</th>

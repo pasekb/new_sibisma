@@ -26,7 +26,7 @@ class StockController extends Controller
         }
         $unit = Unit::whereNotIn('id',$unit_id)->get();
         $data = Stock::all();
-        // dd($unit);
+        // dd($data);
         return view('page', compact('data','dealer','unit'));
     }
 
@@ -81,8 +81,14 @@ class StockController extends Controller
         ->where('units.model_name', $stock->unit->model_name)
         ->groupBy('dealer_id')
         ->get();
-        // dd($otherColors);
-        return view('page', compact('stock','otherColors','otherDealers'));
+
+        $otherYears = Stock::join('units','units.id','=','stocks.unit_id')
+        ->join('dealers','dealers.id','=','stocks.dealer_id')
+        ->where('units.model_name', $stock->unit->model_name)
+        ->groupBy('year_mc')
+        ->get();
+        // dd($otherYears);
+        return view('page', compact('stock','otherColors','otherDealers','otherYears'));
     }
 
     /**

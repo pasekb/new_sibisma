@@ -1,3 +1,14 @@
+@push('after-css')
+<style>
+    input[type=date]:required:invalid::-webkit-datetime-edit {
+        color: transparent;
+    }
+    input[type=date]:focus::-webkit-datetime-edit {
+        color: black !important;
+    }
+</style>
+@endpush
+
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
@@ -15,8 +26,18 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="" method="post">
+            <form action="{{ route('sale.store') }}" method="post">
                 @csrf
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="sale_date" type="date" class="form-control input-border-bottom"
+                                name="sale_date" value="{{ $today }}" required>
+                            <label for="sale_date" class="placeholder">Date *</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
@@ -28,7 +49,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="color" type="text" class="form-control input-border-bottom" name="color"
                                 placeholder="Color *">
@@ -36,7 +57,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group form-floating-label">
                             <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
                                 placeholder="Year MC *">
@@ -56,24 +77,29 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" required>
-                            <label for="frame_no" class="placeholder">Frame No. *</label>
+                            <input type="hidden" id="leasing_id" name="leasing_id" required>
+                            <input id="leasing_code" type="text" class="form-control input-border-bottom"
+                                name="leasing_code" data-toggle="modal"
+                                data-target=".modalLeasing" required>
+                            <label for="leasing_code" class="placeholder">Select Leasing *</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="leasing_id" name="leasing_id" required>
-                                <option value=""></option>
-                                @foreach($leasing as $o)
-                                <option value="{{ $o->id }}">{{ $o->leasing_code }}</option>
-                                @endforeach
-                            </select>
-                            <label for="leasing_id" class="placeholder">Select Leasing *</label>
+                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" required>
+                            <label for="frame_no" class="placeholder">Frame No. *</label>
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-2">
+                        <div class="form-group form-floating-label">
+                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" placeholder="Engine No.">
+                            <label for="engine_no" class="placeholder"></label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
                         <div class="form-group form-floating-label">
                             <input id="nik" type="number" class="form-control input-border-bottom" name="nik"
                                 placeholder="Customer's NIK">
@@ -117,20 +143,4 @@
 
 @section('modal-title','Data Stock')
 @include('component.modal-data')
-
-@push('after-script')
-<script>
-    $(document).ready(function () {
-        $('#btnCreate').click(function () {
-            $(this).css('display', 'none');
-            $('#dataCreate').fadeIn();
-        });
-
-        $('#btnCloseCreate').click(function () {
-            $('#dataCreate').css('display', 'none');
-            $('#btnCreate').fadeIn();
-        });
-    });
-</script>
-@endpush
-
+@include('component.modal-leasing')

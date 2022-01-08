@@ -37,7 +37,7 @@
                                 autofocus required>
                                 <option value=""></option>
                                 @foreach($dealer as $o)
-                                <option value="{{ $o->id }}">{{ $o->dealer_name }} , {{ $o->dealer_code }}</option>
+                                <option value="{{ $o->id }}">{{ $o->dealer_name }}</option>
                                 @endforeach
                             </select>
                             <label for="dealer_id" class="placeholder">Select Dealer</label>

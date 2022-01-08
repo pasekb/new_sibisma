@@ -65,11 +65,15 @@
                                         <div class="col-7 col-stats">
                                             <div class="numbers">
                                                 <p class="card-category">Other Colors</p>
-                                                @forelse($otherColors as $o)
-                                                <span class="card-category" style="background-color: <?php echo $o->unit->color->color_code ?>50; padding: 5px; display: <?php echo $o->unit->color->color_name == $stock->unit->color->color_name ? 'none' : 'inline-block' ?>; transform: skewX(-12deg); font-size: 10px; margin-bottom: 3px;">{{ $o->unit->color->color_name }}</span>
-                                                @empty
-                                                <p class="card-category">No other color</p>
-                                                @endforelse
+                                                @if($otherColors->count() <= 1)
+                                                    <p class="card-category">No other color</p>
+                                                @else
+                                                    @forelse($otherColors as $o)
+                                                    <span class="card-category" style="background-color: <?php echo $o->unit->color->color_code ?>50; padding: 5px; display: <?php echo $o->unit->color->color_name == $stock->unit->color->color_name ? 'none' : 'inline-block' ?>; transform: skewX(-12deg); font-size: 10px; margin-bottom: 3px;">{{ $o->unit->color->color_name }}</span>
+                                                    @empty
+                                                    <p class="card-category">No other color</p>
+                                                    @endforelse
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -88,11 +92,15 @@
                                         <div class="col-7 col-stats">
                                             <div class="numbers">
                                                 <p class="card-category">Other Dealers</p>
-                                                @forelse($otherDealers as $o)
-                                                <span class="card-category" style="display: <?php echo $o->dealer->dealer_name == $stock->dealer->dealer_name ? 'none' : 'block' ?>;">- {{ $o->dealer->dealer_name }}</span>
-                                                @empty
-                                                <p class="card-category">No other dealer</p>
-                                                @endforelse
+                                                @if($otherDealers->count() <= 1)
+                                                    <p class="card-category">No other dealer</p>
+                                                @else
+                                                    @forelse($otherDealers as $o)
+                                                    <span class="card-category" style="display: <?php echo $o->dealer->dealer_name == $stock->dealer->dealer_name ? 'none' : 'block' ?>;">- {{ $o->dealer->dealer_name }}</span>
+                                                    @empty
+                                                    <p class="card-category">No other dealer</p>
+                                                    @endforelse
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -111,11 +119,15 @@
                                         <div class="col-7 col-stats">
                                             <div class="numbers">
                                                 <p class="card-category">Other Assembly Year</p>
-                                                @forelse($otherDealers as $o)
-                                                <span class="card-category" style="display: <?php echo $o->unit->year_mc == $stock->unit->year_mc ? 'none' : 'block' ?>;">- {{ $o->unit->year_mc }}</span>
-                                                @empty
-                                                <p class="card-category">No other assembly year</p>
-                                                @endforelse
+                                                @if($otherYears->count() <= 1)
+                                                    <p class="card-category">No other assembly year</p>
+                                                @else
+                                                    @forelse($otherYears as $o)
+                                                    <span class="card-category" style="display: <?php echo $o->unit->year_mc == $stock->unit->year_mc ? 'none' : 'block' ?>;">- {{ $o->unit->year_mc }}</span>
+                                                    @empty
+                                                    <p class="card-category">No other assembly year</p>
+                                                    @endforelse
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

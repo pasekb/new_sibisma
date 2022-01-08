@@ -45,6 +45,16 @@
                 </li>
                 <!-- END Search Icon Mobile-->
 
+                <!-- Realtime DateTime -->
+                <li class="nav-item dropdown hidden-caret">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-clock"></i>
+                        <span id="time"></span>
+                        <span id="date"></span>
+                    </a>
+                </li>
+                <!-- END Realtime DateTime -->
+
                 <!-- Go to website -->
                 <li class="nav-item dropdown hidden-caret">
                     <a href="https://yamahabismagroup.com" class="nav-link" target="_blank" data-toggle="tooltip" data-placement="bottom" title="Go to website">
@@ -218,3 +228,16 @@
     </nav>
     <!-- End Navbar -->
 </div>
+
+@push('after-script')
+<script>
+    $(document).ready(function() {
+        var interval = setInterval(function() {
+            var momentNow = moment();
+            $('#date').html(momentNow.format('dddd').substring(0,3) + ', '
+                            + momentNow.format('D MMM YYYY'));
+            $('#time').html(momentNow.format('hh:mm:ss') + ' | ');
+        }, 100);
+    });
+</script>
+@endpush

@@ -1,10 +1,10 @@
 <li class="nav-item {{ Route::is('entry.*') || Route::is('sale.*') || Route::is('out.*') ? 'active' : '' }}">
-    <a data-toggle="collapse" href="#base">
+    <a data-toggle="collapse" href="#manageStock">
         <i class="fas fa-pen-alt"></i>
         <p>Manage Stock</p>
         <span class="caret"></span>
     </a>
-    <div class="collapse {{ Route::is('entry.*') || Route::is('sale.*') || Route::is('out.*') ? 'show' : '' }}" id="base">
+    <div class="collapse {{ Route::is('entry.*') || Route::is('sale.*') || Route::is('out.*') ? 'show' : '' }}" id="manageStock">
         <ul class="nav nav-collapse">
             <li class="{{ Route::is('entry.index') ? 'active' : '' }}">
                 <a href="{{ route('entry.index') }}">

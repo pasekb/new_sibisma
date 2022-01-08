@@ -62,7 +62,9 @@
             @include('component.stock-data')
         @endif
 
+    <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
+        @include('component.sale-create')
         @include('component.sale-data')
     @endif
     

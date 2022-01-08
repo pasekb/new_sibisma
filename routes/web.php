@@ -7,6 +7,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\LeasingController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,9 +64,10 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [Stock
 // END STOCK
 
 // SALE
-Route::middleware(['auth:sanctum', 'verified'])->get('/sale', function () {
-    return view('page');
-})->name('sale.index');
+Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale/delete/{id}', [SaleController::class, 'delete'])->name('sale.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleController::class, 'deleteall'])->name('sale.deleteall');
+// END SALE
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/entry', function () {
     return view('page');

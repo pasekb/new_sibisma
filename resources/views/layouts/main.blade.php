@@ -139,6 +139,9 @@
         <!-- Tanya JS -->
         <script src="{{ asset('js/tanya.js') }}"></script>
 
+        <!-- Moment -->
+        <script src="{{ asset('js/moment.js') }}"></script>
+
         <!-- Select2 -->
         <script>
             $(document).ready(function() {
