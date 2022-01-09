@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\BranchDelivery;
 use App\Models\User;
 use App\Models\Stock;
+use App\Models\Dealer;
 
 class Out extends Model
 {
@@ -17,6 +18,11 @@ class Out extends Model
     // Relasi to Branch Delivery
     public function branchDelivery(){
         return $this->hasOne(BranchDelivery::class);
+    }
+
+    // Relasi to Dealer
+    public function dealer(){
+        return $this->belongsTo(Dealer::class);
     }
 
     // Relasi to Stock

@@ -17,7 +17,7 @@ class CreateOutsTable extends Migration
             $table->id();
             $table->date('out_date');
             $table->unsignedInteger('stock_id');
-            $table->string('destination');
+            $table->unsignedInteger('dealer_id');
             $table->integer('out_qty');
             $table->string('frame_no');
             $table->string('engine_no')->nullable();

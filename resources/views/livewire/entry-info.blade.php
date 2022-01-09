@@ -25,7 +25,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h5><b>Sales vs Last Month</b></h5>
+                    <h5><b>Entry vs Last Month</b></h5>
                     <p class="text-muted">{{ \Carbon\Carbon::parse($lastMonth)->format('M Y') }} vs {{ \Carbon\Carbon::parse($today)->format('M Y') }}</p>
                 </div>
                 <h3 class="text-success fw-bold">{{ $vsLM >= 0 ? '+'.$vsLM : $vsLM }}%</h3>
@@ -47,7 +47,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h5><b>Sales vs Last Year</b></h5>
+                    <h5><b>Entry vs Last Year</b></h5>
                     <p class="text-muted">{{ \Carbon\Carbon::parse($lastYear)->format('M Y') }} vs {{ \Carbon\Carbon::parse($today)->format('M Y') }}</p>
                 </div>
                 <h3 class="text-danger fw-bold">{{ $vsLY >= 0 ? '+'.$vsLY : $vsLY }}%</h3>

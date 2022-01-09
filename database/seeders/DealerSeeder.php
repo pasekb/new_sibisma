@@ -104,5 +104,15 @@ class DealerSeeder extends Seeder
             'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
         ]);
+
+        Dealer::insert([
+            'dealer_code' => 'YIMM',
+            'dealer_name' => 'Yamaha Indonesia Motor MFG',
+            'address' => 'Jl. Dr. KRT Radjiman Widyodiningrat No.KM. 23, RW.4, Rw. Terate, Kota Jakarta Timur',
+            'phone' => '(021) 4612222',
+            'created_by' => 1,
+            'updated_by' => 1,
+            'created_at' => Carbon::now('GMT+8'),
+        ]);
     }
 }

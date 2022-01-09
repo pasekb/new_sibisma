@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Stock;
 use App\Models\User;
+use App\Models\Dealer;
 
 class Entry extends Model
 {
@@ -16,6 +17,11 @@ class Entry extends Model
     // Relasi to Stock
     public function stock(){
         return $this->belongsTo(Stock::class);
+    }
+
+    // Relasi to Dealer
+    public function dealer(){
+        return $this->belongsTo(Dealer::class);
     }
 
     // Relasi to User
