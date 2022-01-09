@@ -55,7 +55,7 @@
                             @endforelse
                         </tbody>
                         <!-- ELSE IF -->
-                        @elseif(Route::is('sale.*'))
+                        @elseif(Route::is('sale.*') || Route::is('entry.*'))
                         
                         <thead>
                             <tr>
@@ -93,6 +93,7 @@
                             </tr>
                             @endforelse
                         </tbody>
+                        
                         <!-- ELSE -->
                         @else
 
@@ -145,7 +146,7 @@
         $('#color_code').css('background', code);
     });
 </script>
-@elseif(Route::is('sale.*'))
+@elseif(Route::is('sale.*') || Route::is('entry.*'))
 <script>
     $(document).on('click', '.klik', function (e) {
         let code = $(this).attr('data-colorcode');

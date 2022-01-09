@@ -9,6 +9,7 @@ use App\Http\Controllers\LeasingController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\EntryController;
 
 /*
 |--------------------------------------------------------------------------

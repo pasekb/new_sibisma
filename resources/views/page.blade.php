@@ -68,6 +68,12 @@
         <livewire:sale-info>
         @include('component.sale-data')
 
+    <!-- Entry Page -->
+    @elseif(Route::is('entry.*'))
+        @include('component.entry-create')
+        <livewire:entry-info>
+        @include('component.entry-data')
+
     <!-- Log Page -->
     @elseif(Route::is('log.*'))
         @include('component.log-data')

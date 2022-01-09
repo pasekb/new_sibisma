@@ -17,7 +17,7 @@ class CreateEntriesTable extends Migration
             $table->id();
             $table->date('entry_date');
             $table->unsignedInteger('stock_id');
-            $table->string('sender');
+            $table->unsignedInteger('dealer_id');
             $table->integer('in_qty');
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
