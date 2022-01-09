@@ -22,20 +22,9 @@ class SaleController extends Controller
         $stock = Stock::all();
         $leasing = Leasing::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        $month = Carbon::now('GMT+8')->format('m');
         $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
 
-        // Total Sales
-        $totalSales = Sale::where('sale_date',$today)->sum('sale_qty');
-        // Ratio Percentage
-        $monthSales = Sale::whereMonth('sale_date',$month)->sum('sale_qty');
-        $stockQty = Stock::sum('qty');
-        $ratioPercent = ($monthSales/$stockQty)*100;
-        $ratioPercent = number_format($ratioPercent,0);
-        $ratio = $stockQty/$monthSales;
-        $ratio = number_format($ratio, 2);
-        // dd($ratioPercent);
-        return view('page', compact('stock','leasing','today','data','totalSales','ratioPercent','ratio'));
+        return view('page', compact('stock','leasing','today','data'));
     }
 
     /**
@@ -56,31 +45,48 @@ class SaleController extends Controller
      */
     public function store(Request $req)
     {
-        $stock = Stock::find($req->stock_id);
-        $stockQty = $stock->sum('qty');
-        $calQty = $stockQty - 1;
-        // dd([$stock],[$stockQty],[$calQty]);
-        $data = new Sale;
-        $data->sale_date = $req->sale_date;
-        $data->stock_id = $req->stock_id;
-        $data->nik = $req->nik;
-        $data->customer_name = $req->customer_name;
-        $data->phone = $req->phone;
-        $data->address = $req->address;
-        $data->sale_qty = 1;
-        $data->frame_no = $req->frame_no;
-        $data->engine_no = $req->engine_no;
-        $data->leasing_id = $req->leasing_id;
-        $data->created_by = Auth::user()->id;
-        $data->updated_by = Auth::user()->id;
-        $data->save();
+        // Get Stok ID from Input
+        $stockId = $req->stock_id;
 
-        // Update Stok
-        $stock->qty = $calQty;
-        $stock->save();
+        // Get Latest Stok from Stock Table
+        $latestStock = Stock::where('id',$stockId)->sum('qty');
 
-        toast('Data sale berhasil disimpan','success');
-        return redirect()->back();
+        // Get Sold QTY
+        $soldQty = 1;
+
+        // Update Stock
+        $updateStock = $latestStock - $soldQty;
+
+        $frame = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+
+        if ($frame > 0) {
+            alert()->warning('Warning','Frame number already sold!');
+            return redirect()->back()->with('auto', true)->withInput($req->input());
+        } else {
+            $data = new Sale;
+            $data->sale_date = $req->sale_date;
+            $data->stock_id = $req->stock_id;
+            $data->nik = $req->nik;
+            $data->customer_name = $req->customer_name;
+            $data->phone = $req->phone;
+            $data->address = $req->address;
+            $data->sale_qty = 1;
+            $data->frame_no = $req->frame_no;
+            $data->engine_no = $req->engine_no;
+            $data->leasing_id = $req->leasing_id;
+            $data->created_by = Auth::user()->id;
+            $data->updated_by = Auth::user()->id;
+            $data->save();
+
+            // Update Stock Table
+            $stock = Stock::where('id',$stockId)->first();
+            $stock->qty = $updateStock;
+            $stock->updated_by = Auth::user()->id;
+            $stock->save();
+
+            toast('Data sale berhasil disimpan','success');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -129,7 +135,25 @@ class SaleController extends Controller
     }
 
     public function delete($id){
+        // Get Stok ID from Sale Table
+        $stockId = Sale::where('id',$id)->pluck('stock_id');
+
+        // Get Latest Stok from Stock Table
+        $latestStock = Stock::where('id',$stockId)->sum('qty');
+
+        // Get Deleted QTY
+        $delQty = Sale::where('id',$id)->sum('sale_qty');
+
+        // Update Stock
+        $updateStock = $latestStock + $delQty;
+        // dd($updateStock);
         Sale::find($id)->delete();
+
+        // Update Stock Table
+        $stock = Stock::where('id',$stockId)->first();
+        $stock->qty = $updateStock;
+        $stock->updated_by = Auth::user()->id;
+        $stock->save();
         toast('Data sale berhasil dihapus','success');
         return redirect()->back();
     }

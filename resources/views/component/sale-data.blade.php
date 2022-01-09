@@ -1,3 +1,12 @@
+@push('after-css')
+<style>
+    a.btnAction {
+        font-size: 20px;
+    }
+
+</style>
+@endpush
+
 @section('title','Sales')
 @section('page-title','Sales')
 
@@ -60,7 +69,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" style="text-align: center;">No data available</td>
+                            <td colspan="7" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

@@ -37,24 +37,24 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="sale_date" type="date" class="form-control input-border-bottom"
-                                name="sale_date" value="{{ $today }}" required>
+                                name="sale_date" value="{{ Session::has('input') ? Session::get('input.sale_date') : $today }}" value="{{ old('sale_date') }}" required>
                             <label for="sale_date" class="placeholder">Date *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="stock_id" name="stock_id" required>
+                            <input type="hidden" id="stock_id" name="stock_id" value="{{ old('stock_id') }}" required>
                             <input id="model_name" type="text" class="form-control input-border-bottom"
                                 name="model_name" data-toggle="modal"
-                                data-target=".modalData" required>
+                                data-target=".modalData" value="{{ old('model_name') }}" required>
                             <label for="model_name" class="placeholder">Select Stock *</label>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="color" type="text" class="form-control input-border-bottom" name="color"
+                            <input id="color" type="text" class="form-control input-border-bottom" name="color" value="{{ old('color') }}"
                                 placeholder="Color *">
                             <label for="color" class="placeholder"></label>
                         </div>
@@ -62,7 +62,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc"
+                            <input id="year_mc" type="number" class="form-control input-border-bottom" name="year_mc" value="{{ old('year_mc') }}"
                                 placeholder="Year MC *">
                             <label for="year_mc" class="placeholder"></label>
                         </div>
@@ -72,9 +72,9 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="on_hand" type="number" class="form-control input-border-bottom" name="on_hand"
-                                placeholder="Stock On Hand *">
-                            <label for="on_hand" class="placeholder">Stock On Hand *</label>
+                            <input id="on_hand" type="text" class="form-control input-border-bottom" name="on_hand" value="{{ old('on_hand') }}"
+                                placeholder="Stock On Hand *" readonly>
+                            <label for="on_hand" class="placeholder"></label>
 
                             <span class="invalid-feedback">
                                 <strong><span id="error-msg"></span></strong>
@@ -84,9 +84,9 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="leasing_id" name="leasing_id" required>
+                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
                             <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" data-toggle="modal"
+                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
                                 data-target=".modalLeasing" required>
                             <label for="leasing_code" class="placeholder">Select Leasing *</label>
                         </div>
@@ -94,14 +94,19 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="frame_no" type="text" class="form-control input-border-bottom" name="frame_no" required>
+                            <input id="frame_no" type="text" class="form-control input-border-bottom {{ Session::has('auto') ? 'is-invalid' : '' }}" name="frame_no" value="{{ old('frame_no') }}" @if(Session::has('auto')) autofocus="autofocus" onclick="this.select()" @endif style="text-transform: uppercase;" required>
                             <label for="frame_no" class="placeholder">Frame No. *</label>
+                            @if(Session::has('auto'))
+                                <span class="invalid-feedback">
+                                    <strong>frame no. already sold!</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" placeholder="Engine No.">
+                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}" placeholder="Engine No.">
                             <label for="engine_no" class="placeholder"></label>
                         </div>
                     </div>
@@ -110,7 +115,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="nik" type="number" class="form-control input-border-bottom" name="nik"
+                            <input id="nik" type="number" class="form-control input-border-bottom" name="nik" value="{{ old('nik') }}"
                                 placeholder="Customer's NIK">
                             <label for="nik" class="placeholder"></label>
                         </div>
@@ -118,7 +123,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name"
+                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name" value="{{ old('customer_name') }}"
                                 placeholder="Customer's Name">
                             <label for="customer_name" class="placeholder"></label>
                         </div>
@@ -126,7 +131,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone"
+                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}"
                                 placeholder="Customer's Phone">
                             <label for="phone" class="placeholder"></label>
                         </div>
@@ -134,7 +139,7 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address"
+                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}"
                                 placeholder="Customer's Address">
                             <label for="address" class="placeholder"></label>
                         </div>
@@ -168,6 +173,18 @@
                 $('form').submit();
             }
         });
+    });
+
+    $('#on_hand').keypress(function(e){
+        e.preventDefault();
+    });
+
+    $('#on_hand').keydown(function(e){
+        e.preventDefault();
+    });
+
+    document.addEventListener('contextmenu', function(e){
+        e.preventDefault();
     });
 </script>
 @endpush

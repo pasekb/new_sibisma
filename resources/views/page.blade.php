@@ -64,9 +64,14 @@
 
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
-        @include('component.sale-info')
         @include('component.sale-create')
+        <livewire:sale-info>
         @include('component.sale-data')
+
+    <!-- Log Page -->
+    @elseif(Route::is('log.*'))
+        @include('component.log-data')
+        
     @endif
     
 @endsection
