@@ -55,7 +55,7 @@ class ManpowerController extends Controller
         $data->updated_by = Auth::user()->id;
         $data->save();
         toast('Data manpower berhasil disimpan','success');
-        return redirect()->route('manpower.index');
+        return redirect()->route('manpower.index')->with('display', true);;
     }
 
     /**

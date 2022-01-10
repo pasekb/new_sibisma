@@ -17,6 +17,7 @@
 <div class="col-md-12" id="dataCreate">
     <div class="card">
         <div class="card-header">
+            <livewire:widget-stock-qty>
             <span id="color_code" style="
                 width: 10px; height: 50%; 
                 display: inline-block;
@@ -91,7 +92,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="in_qty" type="number" class="form-control input-border-bottom" name="in_qty" value="{{ old('in_qty') }}" required>
-                            <label for="in_qty" class="placeholder">Qty</label>
+                            <label for="in_qty" class="placeholder" required>Qty *</label>
                         </div>
                     </div>
                 </div>

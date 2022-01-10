@@ -40,6 +40,7 @@
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
+                                @csrf
                                     <a onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                         <span class="link-collapse" style="color: red;">Logout</span>

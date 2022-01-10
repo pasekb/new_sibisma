@@ -10,6 +10,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
+use App\Http\Controllers\OutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,11 +80,16 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/entry/deleteall', [Entry
 Route::middleware(['auth:sanctum', 'verified'])->post('/entry/history', [EntryController::class, 'history'])->name('entry.history');
 // END ENTRY
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/out', function () {
-    return view('page');
-})->name('out.index');
+// OUT
+Route::middleware(['auth:sanctum', 'verified'])->resource('out', OutController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/out/delete/{id}', [OutController::class, 'delete'])->name('out.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/out/deleteall', [OutController::class, 'deleteall'])->name('out.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->post('/out/history', [OutController::class, 'history'])->name('out.history');
+// END OUT
 
+// HISTORY
 Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockController::class, 'ratio'])->name('stock.ratio');
+// END HISTORY
 
 // LOG
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);

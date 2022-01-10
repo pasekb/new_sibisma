@@ -20,7 +20,7 @@ class EntryController extends Controller
     public function index()
     {
         $stock = Stock::all();
-        $dealer = Dealer::all();
+        $dealer = Dealer::orderBy('id','asc')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $data = Entry::where('entry_date',$today)->orderBy('id','desc')->get();
 
@@ -57,37 +57,23 @@ class EntryController extends Controller
         // Update Stock
         $updateStock = $latestStock + $entryQty;
 
-        // Bukan FRAME
-        $frame = Entry::where('frame_no',$req->frame_no)->count('frame_no');
+        $data = new Entry;
+        $data->entry_date = $req->entry_date;
+        $data->stock_id = $req->stock_id;
+        $data->dealer_id = $req->dealer_id;
+        $data->in_qty = $req->in_qty;
+        $data->created_by = Auth::user()->id;
+        $data->updated_by = Auth::user()->id;
+        $data->save();
 
-        if ($frame > 0) {
-            alert()->warning('Warning','Frame number already sold!');
-            return redirect()->back()->with('auto', true)->withInput($req->input());
-        } else {
-            $data = new Entry;
-            $data->sale_date = $req->sale_date;
-            $data->stock_id = $req->stock_id;
-            $data->nik = $req->nik;
-            $data->customer_name = $req->customer_name;
-            $data->phone = $req->phone;
-            $data->address = $req->address;
-            $data->sale_qty = 1;
-            $data->frame_no = $req->frame_no;
-            $data->engine_no = $req->engine_no;
-            $data->leasing_id = $req->leasing_id;
-            $data->created_by = Auth::user()->id;
-            $data->updated_by = Auth::user()->id;
-            $data->save();
+        // Update Stock Table
+        $stock = Stock::where('id',$stockId)->first();
+        $stock->qty = $updateStock;
+        $stock->updated_by = Auth::user()->id;
+        $stock->save();
 
-            // Update Stock Table
-            $stock = Stock::where('id',$stockId)->first();
-            $stock->qty = $updateStock;
-            $stock->updated_by = Auth::user()->id;
-            $stock->save();
-
-            toast('Data sale berhasil disimpan','success');
-            return redirect()->back();
-        }
+        toast('Data entry berhasil disimpan','success');
+        return redirect()->back();
     }
 
     /**
@@ -133,5 +119,35 @@ class EntryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        // Get Stock ID from Entry Table
+        $stockId = Entry::where('id',$id)->pluck('stock_id');
+
+        // Get Latest Stock from Stock Table
+        $latestStock = Stock::where('id',$stockId)->sum('qty');
+
+        // Get Deleted QTY
+        $delQty = Entry::where('id',$id)->sum('in_qty');
+
+        // Update Stock
+        $updateStock = $latestStock - $delQty;
+        // dd($updateStock);
+        Entry::find($id)->delete();
+
+        // Update Stock Table
+        $stock = Stock::where('id',$stockId)->first();
+        $stock->qty = $updateStock;
+        $stock->updated_by = Auth::user()->id;
+        $stock->save();
+        toast('Data entry berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function deleteall(Request $req){
+        Entry::whereIn('id',$req->pilih)->delete();
+        toast('Data entry berhasil dihapus','success');
+        return redirect()->back();
     }
 }

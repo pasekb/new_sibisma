@@ -74,6 +74,12 @@
         <livewire:entry-info>
         @include('component.entry-data')
 
+    <!-- Out Page -->
+    @elseif(Route::is('out.*'))
+        @include('component.out-create')
+        <livewire:out-info>
+        @include('component.out-data')
+
     <!-- Log Page -->
     @elseif(Route::is('log.*'))
         @include('component.log-data')

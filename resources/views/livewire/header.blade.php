@@ -209,6 +209,7 @@
                                 <a class="dropdown-item" href="{{ route('api-tokens.index') }}">API Tokens</a>
                                 @endif
                                 <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
+                                @csrf
                                     <a class="dropdown-item" style="color: red;" onclick="event.preventDefault();
                                                 this.closest('form').submit();">Logout</a>
                                 </form>

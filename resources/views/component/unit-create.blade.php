@@ -3,7 +3,7 @@
     @include('component.button-add')
 @endpush
 
-<div class="col-md-12" id="dataCreate" style="display: none;">
+<div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
     <div class="card">
         <div class="card-header">
             <div class="row">

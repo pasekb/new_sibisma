@@ -3,11 +3,11 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Sale;
+use App\Models\Out;
 use App\Models\Stock;
 use Carbon\Carbon;
 
-class SaleInfo extends Component
+class OutInfo extends Component
 {
     public function render()
     {
@@ -17,68 +17,69 @@ class SaleInfo extends Component
         $lastMonth = $tgl->subMonth()->format('Y-m');
         $lastYear = Carbon::now('GMT+8')->format('Y') - 1;
         
-        // Total Sales
-        $totalSales = Sale::where('sale_date',$today)->sum('sale_qty');
+        // Total Out
+        $totalOut = Out::where('out_date',$today)->sum('out_qty');
 
         // Ratio Percentage
-        $monthSales = Sale::whereMonth('sale_date',$month)->sum('sale_qty');
+        $monthOut = Out::whereMonth('out_date',$month)->sum('out_qty');
         $stockQty = Stock::sum('qty');
 
         if ($stockQty <= 0) {
             $ratioPercent = 0*100;
         } else {
-            $ratioPercent = ($monthSales/($stockQty + $monthSales))*100;
+            $ratioPercent = ($monthOut/($stockQty + $monthOut))*100;
         }
         
         $ratioPercent = number_format($ratioPercent,0);
 
-        if ($monthSales <= 0 && $stockQty <= 0) {
+        if ($monthOut <= 0 && $stockQty <= 0) {
             $ratio = 0;
-        }elseif($monthSales <= 0 || $stockQty <= 0){
-            if ($monthSales <= 0) {
+        }elseif($monthOut <= 0 || $stockQty <= 0){
+            if ($monthOut <= 0) {
                 $ratio = $stockQty/$stockQty;
             } else {
-                $ratio = $monthSales/$monthSales;
+                $ratio = $monthOut/$monthOut;
             }
         } else {
-            $ratio = $stockQty/$monthSales;
+            $ratio = $stockQty/$monthOut;
         }
         
         $ratio = number_format($ratio, 2);
 
         // vs LM
-        $LM = Sale::whereMonth('sale_date',$lastMonth)->sum('sale_qty');
-        if($LM <= 0 && $monthSales <= 0){
+        $LM = Out::whereMonth('out_date',$lastMonth)->sum('out_qty');
+        if($LM <= 0 && $monthOut <= 0){
             $vsLMach = 0;
-        }elseif ($LM <= 0 || $monthSales <= 0) {
+        }elseif ($LM <= 0 || $monthOut <= 0) {
             if ($LM <= 0) {
-                $vsLMach = ($monthSales/$monthSales);
+                $vsLMach = ($monthOut/$monthOut);
             } else {
                 $vsLMach = ($LM/$LM);
             }
         } else {
-            $vsLMach = ($monthSales/$LM)*100;
+            $vsLMach = ($monthOut/$LM)*100;
         }
 
         $vsLM = ($vsLMach-1)*100;
 
         // vs LY
-        $LY = Sale::whereMonth('sale_date',$lastYear)->sum('sale_qty');
-        if($LY <= 0 && $monthSales <= 0){
+        $LY = Out::whereMonth('out_date',$lastYear)->sum('out_qty');
+        if($LY <= 0 && $monthOut <= 0){
             $vsLYach = 0;
-        }elseif ($LY <= 0 || $monthSales <= 0) {
+        }elseif ($LY <= 0 || $monthOut <= 0) {
             if ($LY <= 0) {
-                $vsLYach = ($monthSales/$monthSales);
+                $vsLYach = ($monthOut/$monthOut);
             } else {
                 $vsLYach = ($LY/$LY);
             }
         } else {
-            $vsLYach = ($monthSales/$LY)*100;
+            $vsLYach = ($monthOut/$LY)*100;
         }
 
         $vsLY = ($vsLYach-1)*100;
 
         // dd($ratioPercent);
-        return view('livewire.sale-info', compact('totalSales','ratioPercent','ratio','today','lastMonth','lastYear','vsLM','vsLMach','vsLY','vsLYach'));
+
+        return view('livewire.out-info', compact('totalOut','ratioPercent','ratio','today','lastMonth','lastYear','vsLM','vsLMach','vsLY','vsLYach'));
     }
 }

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dealer;
 use Illuminate\Http\Request;
-use App\Models\Sale;
-use App\Models\Leasing;
+use App\Models\Out;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Auth;
 
-class SaleController extends Controller
+class OutController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class SaleController extends Controller
     public function index()
     {
         $stock = Stock::all();
-        $leasing = Leasing::all();
+        $dealer = Dealer::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
+        $data = Out::where('out_date',$today)->orderBy('id','desc')->get();
 
-        return view('page', compact('stock','leasing','today','data'));
+        return view('page', compact('stock','dealer','today','data'));
     }
 
     /**
@@ -51,29 +51,25 @@ class SaleController extends Controller
         // Get Latest Stok from Stock Table
         $latestStock = Stock::where('id',$stockId)->sum('qty');
 
-        // Get Sold QTY
-        $soldQty = 1;
+        // Get Out QTY
+        $outQty = 1;
 
         // Update Stock
-        $updateStock = $latestStock - $soldQty;
+        $updateStock = $latestStock - $outQty;
 
-        $frame = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+        $frame = Out::where('frame_no',$req->frame_no)->count('frame_no');
 
         if ($frame > 0) {
-            alert()->warning('Warning','Frame number already sold!');
+            alert()->warning('Warning','Frame number already out!');
             return redirect()->back()->with('auto', true)->withInput($req->input());
         } else {
-            $data = new Sale;
-            $data->sale_date = $req->sale_date;
+            $data = new Out;
+            $data->out_date = $req->out_date;
             $data->stock_id = $req->stock_id;
-            $data->nik = $req->nik;
-            $data->customer_name = $req->customer_name;
-            $data->phone = $req->phone;
-            $data->address = $req->address;
-            $data->sale_qty = 1;
+            $data->dealer_id = $req->dealer_id;
+            $data->out_qty = 1;
             $data->frame_no = strtoupper($req->frame_no);
             $data->engine_no = $req->engine_no;
-            $data->leasing_id = $req->leasing_id;
             $data->created_by = Auth::user()->id;
             $data->updated_by = Auth::user()->id;
             $data->save();
@@ -84,7 +80,7 @@ class SaleController extends Controller
             $stock->updated_by = Auth::user()->id;
             $stock->save();
 
-            toast('Data sale berhasil disimpan','success');
+            toast('Data out berhasil disimpan','success');
             return redirect()->back();
         }
     }
@@ -135,32 +131,32 @@ class SaleController extends Controller
     }
 
     public function delete($id){
-        // Get Stock ID from Sale Table
-        $stockId = Sale::where('id',$id)->pluck('stock_id');
+        // Get Stock ID from Out Table
+        $stockId = Out::where('id',$id)->pluck('stock_id');
 
         // Get Latest Stock from Stock Table
         $latestStock = Stock::where('id',$stockId)->sum('qty');
 
         // Get Deleted QTY
-        $delQty = Sale::where('id',$id)->sum('sale_qty');
+        $delQty = Out::where('id',$id)->sum('out_qty');
 
         // Update Stock
         $updateStock = $latestStock + $delQty;
         // dd($updateStock);
-        Sale::find($id)->delete();
+        Out::find($id)->delete();
 
         // Update Stock Table
         $stock = Stock::where('id',$stockId)->first();
         $stock->qty = $updateStock;
         $stock->updated_by = Auth::user()->id;
         $stock->save();
-        toast('Data sale berhasil dihapus','success');
+        toast('Data Out berhasil dihapus','success');
         return redirect()->back();
     }
 
     public function deleteall(Request $req){
-        Sale::whereIn('id',$req->pilih)->delete();
-        toast('Data sale berhasil dihapus','success');
+        Out::whereIn('id',$req->pilih)->delete();
+        toast('Data Out berhasil dihapus','success');
         return redirect()->back();
     }
 }
