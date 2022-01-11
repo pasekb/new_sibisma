@@ -11,6 +11,10 @@
         padding: 5px 12px;
         text-align: center;
         border-radius: 0 3px 0 40px;
+
+        box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
+        -webkit-box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
+        -moz-box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
     }
 </style>
 @endpush

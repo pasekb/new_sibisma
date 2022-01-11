@@ -91,6 +91,10 @@
         @include('component.opname-create')
         @include('component.opname-data')
 
+    <!-- Report -->
+    @elseif(Route::is('report.stock-history'))
+        @include('component.stock-history')
+
     <!-- Log Page -->
     @elseif(Route::is('log.*'))
         @include('component.log-data')

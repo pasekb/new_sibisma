@@ -12,6 +12,7 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\OutController;
 use App\Http\Controllers\OpnameController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,10 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockCont
 Route::middleware(['auth:sanctum', 'verified'])->resource('opname', OpnameController::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [OpnameController::class, 'history'])->name('opname.history');
 // END OPNAME
+
+// REPORT
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history', [ReportController::class, 'stockHistory'])->name('report.stock-history');
+// END REPORT
 
 // LOG
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);

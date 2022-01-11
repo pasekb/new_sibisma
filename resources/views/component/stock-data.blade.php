@@ -19,6 +19,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+            <livewire:widget-stock-qty>
             <h4 class="card-title">Stock Data</h4>
         </div>
         <div class="card-body">

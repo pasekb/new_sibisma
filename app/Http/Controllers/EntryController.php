@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Entry;
+use App\Models\Sale;
+use App\Models\Out;
 use App\Models\Dealer;
 use App\Models\Stock;
+use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
 
@@ -71,6 +74,43 @@ class EntryController extends Controller
         $stock->qty = $updateStock;
         $stock->updated_by = Auth::user()->id;
         $stock->save();
+
+        /** ============== Create Or Update Stock History ============== */ 
+        $isSale = Sale::where('sale_date',$req->entry_date)->count();
+        $isOut = Out::where('out_date',$req->entry_date)->count();
+        $isEntry = Entry::where('entry_date',$req->entry_date)->count();
+
+        // Count first stock
+        $stock = Stock::sum('qty');
+        $in = Entry::where('entry_date',$req->entry_date)->sum('in_qty');
+        $out = Out::where('out_date',$req->entry_date)->sum('out_qty');
+        $sale = Sale::where('sale_date',$req->entry_date)->sum('sale_qty');
+
+        $firstStock = $stock - ($in + $out + $sale);
+
+        if ($isSale > 0 || $isOut > 0 || $isEntry > 0) {
+            // If one of them have records -> Update History
+            $his = StockHistory::where('history_date',$req->entry_date)->first();
+            $his->in_qty = $in;
+            $his->out_qty = $out;
+            $his->sale_qty = $sale;
+            $his->last_stock = $stock;
+            $his->updated_by = Auth::user()->id;
+            $his->save();
+        } else {
+            // If no record by input date in DB -> Create History
+            $his = new StockHistory;
+            $his->history_date = $req->entry_date;
+            $his->first_stock = $firstStock;
+            $his->in_qty = $in;
+            $his->out_qty = $out;
+            $his->sale_qty = $sale;
+            $his->last_stock = $stock;
+            $his->created_by = Auth::user()->id;
+            $his->updated_by = Auth::user()->id;
+            $his->save();
+        }
+        /** ============== END Create Or Update Stock History ============== */ 
 
         toast('Data entry berhasil disimpan','success');
         return redirect()->back();

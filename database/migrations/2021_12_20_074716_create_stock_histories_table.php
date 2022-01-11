@@ -16,8 +16,10 @@ class CreateStockHistoriesTable extends Migration
         Schema::create('stock_histories', function (Blueprint $table) {
             $table->id();
             $table->date('history_date');
+            $table->unsignedInteger('dealer_id');
             $table->integer('first_stock');
             $table->integer('in_qty');
+            $table->integer('out_qty');
             $table->integer('sale_qty');
             $table->integer('faktur')->nullable();
             $table->integer('service')->nullable();

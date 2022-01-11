@@ -69,6 +69,7 @@
                 @include('menu.datamaster')
                 @include('menu.stock')
                 @include('menu.opname')
+                @include('menu.report')
                 @include('menu.log')
                 
                 <li class="nav-item">
