@@ -83,8 +83,12 @@ class EntryController extends Controller
         // Count first stock
         $stock = Stock::sum('qty');
         $in = Entry::where('entry_date',$req->entry_date)->sum('in_qty');
+        $in = ($in == 0) ? $in = 0 : (int)$in ;
         $out = Out::where('out_date',$req->entry_date)->sum('out_qty');
+        $out = ($out == 0) ? $out = 0 : (int)$out ;
         $sale = Sale::where('sale_date',$req->entry_date)->sum('sale_qty');
+        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+
 
         $firstStock = $stock - ($in + $out + $sale);
 
@@ -101,6 +105,7 @@ class EntryController extends Controller
             // If no record by input date in DB -> Create History
             $his = new StockHistory;
             $his->history_date = $req->entry_date;
+            $his->dealer_id = $req->dealer_id;
             $his->first_stock = $firstStock;
             $his->in_qty = $in;
             $his->out_qty = $out;

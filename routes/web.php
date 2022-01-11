@@ -100,6 +100,8 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [Opname
 
 // REPORT
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history', [ReportController::class, 'stockHistory'])->name('report.stock-history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/delete/{id}', [SaleController::class, 'deleteHistory'])->name('report.delete');
 // END REPORT
 
 // LOG

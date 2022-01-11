@@ -27,72 +27,57 @@
                 <table id="multi-filter-select" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
-                            <th width="120%">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input checkData" type="checkbox" id="checkAll">
-                                        <span class="form-check-sign">Model Name</span>
-                                    </label>
-                                </div>
-                            </th>
                             <th>Date</th>
                             <th>Dealer</th>
-                            <th>Year</th>
-                            <th>Qty</th>
-                            <th>Dealer</th>
+                            <th>First Stock</th>
+                            <th>In Stock</th>
+                            <th>Out Stock</th>
+                            <th>Sale Stock</th>
+                            <th>Last Stock</th>
                             <th>Created By</th>
                             <th>Updated By</th>
-                            <th width="120">Action</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th width="120%">
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input checkData" type="checkbox" id="checkAll">
-                                        <span class="form-check-sign">Model Name</span>
-                                    </label>
-                                </div>
-                            </th>
-                            <th>Category</th>
-                            <th>Color</th>
-                            <th>Year</th>
-                            <th>Qty</th>
+                            <th>Date</th>
                             <th>Dealer</th>
+                            <th>First Stock</th>
+                            <th>In Stock</th>
+                            <th>Out Stock</th>
+                            <th>Sale Stock</th>
+                            <th>Last Stock</th>
                             <th>Created By</th>
                             <th>Updated By</th>
-                            <th width="120">Action</th>
+                            <th>Action</th>
                         </tr>
                     </tfoot>
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>
-                                <div class="form-check">
-                                    <label class="form-check-label">
-                                        <input class="form-check-input checkData" type="checkbox" name="pilih[]"
-                                            value="{{ $o->id }}">
-                                        <span class="form-check-sign">{{ $o->unit->model_name }}</span>
-                                    </label>
-                                </div>
-                            </td>
-                            <td>{{ $o->unit->category }}</td>
-                            <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                                {{ $o->unit->color->color_name }}
-                            </td>
-                            <td>{{ $o->unit->year_mc }}</td>
-                            <td>{{ $o->qty }}</td>
+                            <td>{{ $o->history_date }}</td>
                             <td>{{ $o->dealer->dealer_name }}</td>
+                            <td>{{ $o->first_stock }}</td>
+                            <td>{{ $o->in_qty }}</td>
+                            <td>{{ $o->out_qty }}</td>
+                            <td>{{ $o->sale_qty }}</td>
+                            <td>{{ $o->last_stock }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('stock.show', $o->id) }}" class="btnAction" data-toggle="tooltip"
-                                        data-placement="top" title="Detail" style="color:orange;"><i
-                                            class="fa fa-eye"></i></a>
+                                    <a href="{{ route('report.update-status', $o->id, $o->status) }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top" title="Change Status"
+                                        onclick="return tanya('Ubah status History?')">
+                                        @if($o->status == 'uncompleted') 
+                                        <i class="fas fa-toggle-on" style="color:green;"></i>
+                                        @else
+                                        <i class="fas fa-toggle-off" style="color:grey;"></i>
+                                        @endif
+                                    </a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('stock.delete', $o->id) }}" class="btnAction"
+                                    <a href="{{ route('report.delete', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                         onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
@@ -101,7 +86,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" style="text-align: center;">No data available</td>
+                            <td colspan="10" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>
