@@ -11,6 +11,7 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\OutController;
+use App\Http\Controllers\OpnameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,11 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/out/history', [OutContro
 // HISTORY
 Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockController::class, 'ratio'])->name('stock.ratio');
 // END HISTORY
+
+// OPNAME
+Route::middleware(['auth:sanctum', 'verified'])->resource('opname', OpnameController::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [OpnameController::class, 'history'])->name('opname.history');
+// END OPNAME
 
 // LOG
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);

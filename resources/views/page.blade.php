@@ -85,6 +85,11 @@
         <livewire:out-l-m>
         <livewire:out-l-y>
         @include('component.out-data')
+    
+    <!-- Opname Page -->
+    @elseif(Route::is('opname.*'))
+        @include('component.opname-create')
+        @include('component.opname-data')
 
     <!-- Log Page -->
     @elseif(Route::is('log.*'))
