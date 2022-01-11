@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Dealer;
 use Illuminate\Http\Request;
 use App\Models\Out;
+use App\Models\Sale;
 use App\Models\Stock;
 use Carbon\Carbon;
 use Auth;
@@ -57,9 +58,10 @@ class OutController extends Controller
         // Update Stock
         $updateStock = $latestStock - $outQty;
 
-        $frame = Out::where('frame_no',$req->frame_no)->count('frame_no');
+        $frameOut = Out::where('frame_no',$req->frame_no)->count('frame_no');
+        $frameSale = Sale::where('frame_no',$req->frame_no)->count('frame_no');
 
-        if ($frame > 0) {
+        if ($frameOut > 0 || $frameSale > 0) {
             alert()->warning('Warning','Frame number already out!');
             return redirect()->back()->with('auto', true)->withInput($req->input());
         } else {

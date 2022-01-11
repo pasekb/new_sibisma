@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sale;
+use App\Models\Out;
 use App\Models\Leasing;
 use App\Models\Stock;
 use Carbon\Carbon;
@@ -57,9 +58,10 @@ class SaleController extends Controller
         // Update Stock
         $updateStock = $latestStock - $soldQty;
 
-        $frame = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+        $frameSale = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+        $frameOut = Out::where('frame_no',$req->frame_no)->count('frame_no');
 
-        if ($frame > 0) {
+        if ($frameSale > 0 || $frameOut > 0) {
             alert()->warning('Warning','Frame number already sold!');
             return redirect()->back()->with('auto', true)->withInput($req->input());
         } else {

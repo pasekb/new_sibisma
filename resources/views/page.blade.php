@@ -65,19 +65,25 @@
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
         @include('component.sale-create')
-        <livewire:sale-info>
+        <livewire:ratio-stock>
+        <livewire:sale-l-m>
+        <livewire:sale-l-y>
         @include('component.sale-data')
 
     <!-- Entry Page -->
     @elseif(Route::is('entry.*'))
         @include('component.entry-create')
-        <livewire:entry-info>
+        <livewire:ratio-stock>
+        <livewire:entry-l-m>
+        <livewire:entry-l-y>
         @include('component.entry-data')
 
     <!-- Out Page -->
     @elseif(Route::is('out.*'))
         @include('component.out-create')
-        <livewire:out-info>
+        <livewire:ratio-stock>
+        <livewire:out-l-m>
+        <livewire:out-l-y>
         @include('component.out-data')
 
     <!-- Log Page -->
