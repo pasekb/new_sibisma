@@ -68,6 +68,7 @@
                 @include('menu.datamaster')
                 @include('menu.stock')
                 @include('menu.log')
+                @include('menu.dokumen')
                 
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#sidebarLayouts">

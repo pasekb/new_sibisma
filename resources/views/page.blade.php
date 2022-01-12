@@ -24,6 +24,17 @@
             @include('component.manpower-data')
         @endif
 
+        <!-- Dokumen Page -->
+    @elseif(Route::is('document.*'))
+        {{-- @include('component.dokumen-create') --}}
+        @if(Route::is('document.show'))
+            @include('component.dokumen-show')
+        @elseif(Route::is('document.edit'))
+            @include('component.dokumen-edit')    
+        @else
+            @include('component.dokumen-data')
+    @endif
+
     <!-- Unit Page -->
     @elseif(Route::is('unit.*'))
         @if(Route::is('unit.edit'))

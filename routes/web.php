@@ -10,6 +10,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
+use App\Http\Controllers\DokumenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,3 +90,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockCont
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogController::class, 'deleteall'])->name('log.deleteall');
 // END LOG
+
+// DOKUMEN
+Route::middleware(['auth:sanctum', 'verified'])->resource('document', DokumenController::class);
+// END DOKUMEN

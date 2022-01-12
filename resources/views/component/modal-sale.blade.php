@@ -13,10 +13,10 @@
                 <div class="table-responsive">
                     <table id="modal-filter-select" class="display table table-striped table-hover" width="100%">
                         <!-- IF -->
-                        @if(Route::is('stock.*'))
+                        @if(Route::is('sale.*'))
                         <thead>
                             <tr>
-                                <th>Model Name</th>
+                                <th>Model Sale</th>
                                 <th>Category</th>
                                 <th>Color</th>
                                 <th>Year</th>
@@ -59,45 +59,6 @@
                         
                         <thead>
                             <tr>
-                                <th>Model Name</th>
-                                <th>Color</th>
-                                <th>Qty</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Model Name</th>
-                                <th>Color</th>
-                                <th>Qty</th>
-                                <th>Year</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @forelse($stock as $o)
-                            <tr data-id="{{ $o->id }}" data-model="{{ $o->unit->model_name }}"
-                                data-color="{{ $o->unit->color->color_name }}"
-                                data-colorcode="{{ $o->unit->color->color_code }}" data-yearmc="{{ $o->unit->year_mc }}"
-                                data-onhand="{{ $o->qty }}"
-                                class="klik">
-                                <td>{{ $o->unit->model_name }}</td>
-                                <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                                    {{ $o->unit->color->color_name }}
-                                </td>
-                                <td>{{ $o->qty }}</td>
-                                <td>{{ $o->unit->year_mc }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="4" style="text-align: center;">No data available</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                        <!-- ELSE IF -->
-                        @elseif(Route::is('document.*'))
-                        
-                        <thead>
-                            <tr>
                                 <th>customer</th>
                                 <th>model</th>
                                 <th>color</th>
@@ -116,15 +77,11 @@
                         </tfoot>
                         <tbody>
                             @forelse($sale as $o)
-                            <tr data-id="{{ $o->id}}" 
-                                data-customer="{{ $o->customer_name }}"
-                                data-phone="{{ $o->phone}}"
-                                data-address="{{ $o->address}}"
+                            <tr data-id="{{ $o->id}}" data-customer="{{ $o->customer_name }}"
                                 data-model="{{$o->stock->unit->model_name}}"
                                 data-color="{{ $o->stock->unit->color->color_name }}"
                                 data-yearmc="{{ $o->stock->unit->year_mc }}"
                                 data-frame="{{ $o->frame_no }}"
-                                data-engine="{{$o->engine_no}}"
                                 class="klik">
                                 <td>{{ $o->customer_name }}</td>
                                 <td>{{ $o->stock->unit->color->color_name }}</td>
@@ -196,30 +153,16 @@
 @elseif(Route::is('sale.*') || Route::is('entry.*'))
 <script>
     $(document).on('click', '.klik', function (e) {
-        let code = $(this).attr('data-colorcode');
-        $('#stock_id').val($(this).attr('data-id'));
-        $('#model_name').val($(this).attr('data-model'));
-        $('#color').val($(this).attr('data-color'));
-        $('#year_mc').val($(this).attr('data-yearmc'));
-        $('#on_hand').val($(this).attr('data-onhand'));
-        $('.modalData').modal('hide');
         
-        $('#color_code').css('background', code);
-    });
-</script>
-@elseif(Route::is('document.*'))
-<script>
-    $(document).on('click', '.klik', function (e) {
         $('#sale_id').val($(this).attr('data-id'));
-        $('#customer_name').val($(this).attr('data-customer'));
-        $('#phone').val($(this).attr('data-phone'));
-        $('#address').val($(this).attr('data-address'));
         $('#model_name').val($(this).attr('data-model'));
+        $('#customer_name').val($(this).attr('data-customer'));
         $('#color').val($(this).attr('data-color'));
         $('#year_mc').val($(this).attr('data-yearmc'));
         $('#frame_no').val($(this).attr('data-frame'));
-        $('#engine_no').val($(this).attr('data-engine'));
         $('.modalData').modal('hide');
+        
+        
     });
 </script>
 @endif

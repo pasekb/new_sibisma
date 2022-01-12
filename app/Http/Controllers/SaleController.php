@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Leasing;
 use App\Models\Stock;
+use App\Models\Document;
 use Carbon\Carbon;
 use Auth;
 
@@ -59,6 +60,8 @@ class SaleController extends Controller
 
         $frame = Sale::where('frame_no',$req->frame_no)->count('frame_no');
 
+        
+
         if ($frame > 0) {
             alert()->warning('Warning','Frame number already sold!');
             return redirect()->back()->with('auto', true)->withInput($req->input());
@@ -84,8 +87,27 @@ class SaleController extends Controller
             $stock->updated_by = Auth::user()->id;
             $stock->save();
 
+            $cekframe = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+
+            if($cekframe > 0)
+            {
+
+            $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
+            
+            $data = new Document;
+            $data->sale_id = $saleId;
+            $data->stck = $req->stck;
+            $data->stnk = $req->stnk;
+            $data->bpkb = $req->bpkb;
+            $data->document_note = $req->document_note;
+            $data->created_by = Auth::user()->id;
+            $data->updated_by = Auth::user()->id;
+            $data->save();
+        
             toast('Data sale berhasil disimpan','success');
             return redirect()->back();
+
+            } 
         }
     }
 
