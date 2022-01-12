@@ -56,7 +56,7 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->history_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($o->history_date)->format('l, j M Y') }}</td>
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->first_stock }}</td>
                             <td>{{ $o->in_qty }}</td>
@@ -65,22 +65,20 @@
                             <td>{{ $o->last_stock }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
+                            <td>{{ $o->status }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('report.update-status', $o->id, $o->status) }}" class="btnAction" data-toggle="tooltip"
-                                        data-placement="top" title="Change Status"
-                                        onclick="return tanya('Ubah status History?')">
+                                    <a href="{{ url('report/change/'.$o->id.'/'.$o->status.'') }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="{{ $o->status == 'uncompleted' ? 'Active' : 'Completed' }}"
+                                        onclick="return tanya(`Anda akan mengubah status history menjadi {{ $o->status == 'uncompleted' ? 'Completed' : 'Uncompleted' }}, lanjutkan?`)">
+
                                         @if($o->status == 'uncompleted') 
                                         <i class="fas fa-toggle-on" style="color:green;"></i>
                                         @else
                                         <i class="fas fa-toggle-off" style="color:grey;"></i>
                                         @endif
                                     </a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="{{ route('report.delete', $o->id) }}" class="btnAction"
-                                        data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                        onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }}?')"><i
-                                            class="fas fa-trash-alt"></i></a>
                                 </div>
                             </td>
                         </tr>

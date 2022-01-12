@@ -60,6 +60,22 @@ class EntryController extends Controller
         // Update Stock
         $updateStock = $latestStock + $entryQty;
 
+        /** ============== Create Or Update Stock History ============== */ 
+        $isSale = Sale::where('sale_date',$req->entry_date)->count();
+        $isOut = Out::where('out_date',$req->entry_date)->count();
+        $isEntry = Entry::where('entry_date',$req->entry_date)->count();
+
+        // Count first stock
+        $stock = Stock::sum('qty');
+        $in = Entry::where('entry_date',$req->entry_date)->sum('in_qty');
+        $in = ($in == 0) ? $in = 0 : (int)$in ;
+        $out = Out::where('out_date',$req->entry_date)->sum('out_qty');
+        $out = ($out == 0) ? $out = 0 : (int)$out ;
+        $sale = Sale::where('sale_date',$req->entry_date)->sum('sale_qty');
+        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+        $firstStock = $stock - ($in + $out + $sale);
+        /** ============== END Create Or Update Stock History ============== */ 
+
         $data = new Entry;
         $data->entry_date = $req->entry_date;
         $data->stock_id = $req->stock_id;
@@ -75,45 +91,56 @@ class EntryController extends Controller
         $stock->updated_by = Auth::user()->id;
         $stock->save();
 
-        /** ============== Create Or Update Stock History ============== */ 
-        $isSale = Sale::where('sale_date',$req->entry_date)->count();
-        $isOut = Out::where('out_date',$req->entry_date)->count();
-        $isEntry = Entry::where('entry_date',$req->entry_date)->count();
+        /** ============== END Create Or Update Stock History ============== */ 
 
-        // Count first stock
-        $stock = Stock::sum('qty');
-        $in = Entry::where('entry_date',$req->entry_date)->sum('in_qty');
-        $in = ($in == 0) ? $in = 0 : (int)$in ;
-        $out = Out::where('out_date',$req->entry_date)->sum('out_qty');
-        $out = ($out == 0) ? $out = 0 : (int)$out ;
-        $sale = Sale::where('sale_date',$req->entry_date)->sum('sale_qty');
-        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+        // Get QTY after update
+        $entry_qty = Entry::where('entry_date',$req->entry_date)->sum('in_qty');
+        $lastStock = Stock::sum('qty');
 
-
-        $firstStock = $stock - ($in + $out + $sale);
-
-        if ($isSale > 0 || $isOut > 0 || $isEntry > 0) {
-            // If one of them have records -> Update History
+        if ($isEntry > 0 && $isOut > 0 && $isSale > 0) {
+            // If that variables has records -> Update History
             $his = StockHistory::where('history_date',$req->entry_date)->first();
-            $his->in_qty = $in;
+            $his->in_qty = $entry_qty;
             $his->out_qty = $out;
             $his->sale_qty = $sale;
-            $his->last_stock = $stock;
+            $his->last_stock = $lastStock;
+            $his->updated_by = Auth::user()->id;
+            $his->save();
+        } elseif($isEntry > 0 || $isOut > 0 || $isSale > 0) {
+            // If one of them have records -> Update History
+            $his = StockHistory::where('history_date',$req->entry_date)->first();
+            $his->in_qty = $entry_qty;
+            $his->out_qty = $out;
+            $his->sale_qty = $sale;
+            $his->last_stock = $lastStock;
             $his->updated_by = Auth::user()->id;
             $his->save();
         } else {
             // If no record by input date in DB -> Create History
-            $his = new StockHistory;
-            $his->history_date = $req->entry_date;
-            $his->dealer_id = $req->dealer_id;
-            $his->first_stock = $firstStock;
-            $his->in_qty = $in;
-            $his->out_qty = $out;
-            $his->sale_qty = $sale;
-            $his->last_stock = $stock;
-            $his->created_by = Auth::user()->id;
-            $his->updated_by = Auth::user()->id;
-            $his->save();
+            $cek = StockHistory::where('history_date',$req->entry_date)->count();
+            if ($cek > 0) {
+                // if Stock history's table contain data with the same date -> Update History
+                $his = StockHistory::where('history_date',$req->entry_date)->first();
+                $his->in_qty = $entry_qty;
+                $his->out_qty = $out;
+                $his->sale_qty = $sale;
+                $his->last_stock = $lastStock;
+                $his->updated_by = Auth::user()->id;
+                $his->save();
+            } else {
+                // if no record by date in stock history's table -> Create History
+                $his = new StockHistory;
+                $his->history_date = $req->entry_date;
+                $his->dealer_id = $req->dealer_id;
+                $his->first_stock = $firstStock;
+                $his->in_qty = $entry_qty;
+                $his->out_qty = $out;
+                $his->sale_qty = $sale;
+                $his->last_stock = $lastStock;
+                $his->created_by = Auth::user()->id;
+                $his->updated_by = Auth::user()->id;
+                $his->save();
+            }
         }
         /** ============== END Create Or Update Stock History ============== */ 
 
@@ -178,6 +205,19 @@ class EntryController extends Controller
 
         // Update Stock
         $updateStock = $latestStock - $delQty;
+
+        /** ============== Create Or Update Stock History ============== */
+        $entry_date = Entry::where('id',$id)->pluck('entry_date');
+        // Count first stock
+        $stock = Stock::sum('qty');
+        $in = Entry::where('entry_date',$entry_date)->sum('in_qty');
+        $in = ($in == 0) ? $in = 0 : (int)$in ;
+        $out = Out::where('out_date',$entry_date)->sum('out_qty');
+        $out = ($out == 0) ? $out = 0 : (int)$out ;
+        $sale = Sale::where('sale_date',$entry_date)->sum('sale_qty');
+        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+        /** ============== END Create Or Update Stock History ============== */ 
+
         // dd($updateStock);
         Entry::find($id)->delete();
 
@@ -186,6 +226,24 @@ class EntryController extends Controller
         $stock->qty = $updateStock;
         $stock->updated_by = Auth::user()->id;
         $stock->save();
+
+        /** ============== END Create Or Update Stock History ============== */ 
+
+        // Get QTY after update
+        $entry_qty = Entry::where('entry_date',$entry_date)->sum('in_qty');
+        $entry_qty = ($entry_qty == 0) ? $entry_qty = 0 : (int)$entry_qty ;
+        $lastStock = Stock::sum('qty');
+
+        // Update Stock History
+        $his = StockHistory::where('history_date',$entry_date)->first();
+        $his->in_qty = $entry_qty;
+        $his->out_qty = $out;
+        $his->sale_qty = $sale;
+        $his->last_stock = $lastStock;
+        $his->updated_by = Auth::user()->id;
+        $his->save();
+        /** ============== END Create Or Update Stock History ============== */ 
+
         toast('Data entry berhasil dihapus','success');
         return redirect()->back();
     }
