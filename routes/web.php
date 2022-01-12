@@ -33,6 +33,12 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('page');
 })->name('dashboard');
 
+// USER
+Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
+// END USER
+
 // DEALER
 Route::middleware(['auth:sanctum', 'verified'])->resource('dealer', DealerController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/dealer/delete/{id}', [DealerController::class, 'delete'])->name('dealer.delete');
