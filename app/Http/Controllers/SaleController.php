@@ -9,6 +9,7 @@ use App\Models\Sale;
 use App\Models\Out;
 use App\Models\Leasing;
 use App\Models\Stock;
+use App\Models\Document;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
@@ -103,8 +104,27 @@ class SaleController extends Controller
             $stock->qty = $updateStock;
             $stock->updated_by = Auth::user()->id;
             $stock->save();
+            
+            /** ============== Create Documents ============== */ 
+            $cekframe = Sale::where('frame_no',$req->frame_no)->count('frame_no');
 
-            /** ============== END Create Or Update Stock History ============== */ 
+            if($cekframe > 0){
+
+              $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
+
+              $data = new Document;
+              $data->sale_id = $saleId;
+              $data->stck = $req->stck;
+              $data->stnk = $req->stnk;
+              $data->bpkb = $req->bpkb;
+              $data->document_note = $req->document_note;
+              $data->created_by = Auth::user()->id;
+              $data->updated_by = Auth::user()->id;
+              $data->save();
+            }
+            /** ============== END Create Documents ============== */ 
+              
+            /** ============== Create Or Update Stock History ============== */ 
 
             // Get QTY after update
             $sale_qty = Sale::where('sale_date',$req->sale_date)->sum('sale_qty');
@@ -156,9 +176,11 @@ class SaleController extends Controller
                 }
             }
             /** ============== END Create Or Update Stock History ============== */ 
-
+          
             toast('Data sale berhasil disimpan','success');
             return redirect()->back();
+
+            } 
         }
     }
 

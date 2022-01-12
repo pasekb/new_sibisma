@@ -10,6 +10,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\OutController;
 use App\Http\Controllers\OpnameController;
 use App\Http\Controllers\ReportController;
@@ -113,3 +114,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{statu
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);
 Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogController::class, 'deleteall'])->name('log.deleteall');
 // END LOG
+
+// DOKUMEN
+Route::middleware(['auth:sanctum', 'verified'])->resource('document', DokumenController::class);
+// END DOKUMEN
