@@ -27,17 +27,34 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            @forelse($dealer as $o)
-                            <tr data-id="{{ $o->id }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
-                                <td>{{ $o->id }}</td>
-                                <td>{{ $o->dealer_code }}</td>
-                                <td>{{ $o->dealer_name }}</td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="2" style="text-align: center;">No data available</td>
-                            </tr>
-                            @endforelse
+                            @if(Route::is('user.*'))
+                                <tr data-code="group" data-name="Bisma Group" class="pilih">
+                                    <td style="text-align: center;" colspan="3">Bisma Group</td>
+                                </tr>
+                                @forelse($dealer as $o)
+                                <tr data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                    <td>{{ $o->id }}</td>
+                                    <td>{{ $o->dealer_code }}</td>
+                                    <td>{{ $o->dealer_name }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">No data available</td>
+                                </tr>
+                                @endforelse
+                            @else
+                                @forelse($dealer as $o)
+                                <tr data-id="{{ $o->id }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                    <td>{{ $o->id }}</td>
+                                    <td>{{ $o->dealer_code }}</td>
+                                    <td>{{ $o->dealer_name }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">No data available</td>
+                                </tr>
+                                @endforelse
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -51,11 +68,21 @@
 </div>
 
 @push('after-script')
-<script>
-    $(document).on('click', '.pilih', function (e) {
-        $('#dealer_id').val($(this).attr('data-id'));
-        $('#dealer_name').val($(this).attr('data-name'));
-        $('.modalDealer').modal('hide');
-    });
-</script>
+    @if(Route::is('user.*'))
+    <script>
+        $(document).on('click', '.pilih', function (e) {
+            $('#dealer_code').val($(this).attr('data-code'));
+            $('#dealer_name').val($(this).attr('data-name'));
+            $('.modalDealer').modal('hide');
+        });
+    </script>
+    @else
+    <script>
+        $(document).on('click', '.pilih', function (e) {
+            $('#dealer_id').val($(this).attr('data-id'));
+            $('#dealer_name').val($(this).attr('data-name'));
+            $('.modalDealer').modal('hide');
+        });
+    </script>
+    @endif
 @endpush

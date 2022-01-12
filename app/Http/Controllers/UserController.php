@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Dealer;
 
 class UserController extends Controller
 {
@@ -18,7 +19,8 @@ class UserController extends Controller
     {
         
         $data = User::all();
-        return view('page',compact('data'));
+        $dealer = Dealer::orderBy('id','asc')->get();
+        return view('page',compact('data','dealer'));
     }
 
     /**
@@ -51,7 +53,7 @@ class UserController extends Controller
         $data->save();
 
         toast('User berhasil dibuat','success');
-        return redirect()->back();
+        return redirect()->back()->with('display', true);
     }
 
     /**
@@ -73,7 +75,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('page', compact('user'));
+        $dealer = Dealer::orderBy('id','asc')->get();
+        return view('page', compact('user','dealer'));
     }
 
     /**
@@ -85,16 +88,18 @@ class UserController extends Controller
      */
     public function update(Request $req, User $user)
     {
-        $data = Unit::find($user->id);
+        $data = User::find($user->id);
         $data->first_name = $req->first_name;
         $data->last_name = $req->last_name;
         $data->name = $req->first_name.' '.$req->last_name;
         $data->dealer_code = $req->dealer_code;
         $data->email = $req->email;
         $data->username = $req->username;
-        $data->password = bcrypt($req->confirm_pass);
         $data->access = $req->access;
         $data->save();
+
+        toast('User berhasil diubah','success');
+        return redirect()->back();
     }
 
     /**
@@ -106,6 +111,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function changeStatus($id, $status){
+        $data = User::where('id',$id)->first();
+        if ($status == 'active') {
+            $data->status = 'inactive';
+        } else {
+            $data->status = 'active';
+        }
+        
+        $data->save();
+        toast('Status berhasil diubah','success');
+        return redirect()->back();
     }
 
     public function deleteall(Request $req){

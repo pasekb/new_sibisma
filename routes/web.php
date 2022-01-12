@@ -14,6 +14,7 @@ use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\OutController;
 use App\Http\Controllers\OpnameController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -118,3 +119,9 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogCont
 // DOKUMEN
 Route::middleware(['auth:sanctum', 'verified'])->resource('document', DokumenController::class);
 // END DOKUMEN
+
+// USER
+Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/user/change/{id}/{status}', [UserController::class, 'changeStatus'])->name('user.update-status');
+// END USER

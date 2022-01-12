@@ -109,7 +109,18 @@
     <!-- Log Page -->
     @elseif(Route::is('log.*'))
         @include('component.log-data')
-        
+
+    <!-- User Page -->
+    @elseif(Route::is('user.*'))
+        @if(Route::is('user.edit'))
+            @include('component.user-edit')
+        @elseif(Route::is('user.show'))
+            @include('component.user-show')
+        @else
+            @include('component.user-create')
+            @include('component.user-data')
+        @endif
+    
     @endif
     
 @endsection
@@ -118,6 +129,8 @@
 <script>
     $(document).ready(function () {
         $('#basic-datatables').DataTable({});
+
+        $('#basic-table-position').DataTable({});
 
         $('#multi-filter-select').DataTable({
             "pageLength": 20,

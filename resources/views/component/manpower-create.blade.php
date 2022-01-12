@@ -33,14 +33,11 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="dealer_id" name="dealer_id"
-                                autofocus required>
-                                <option value=""></option>
-                                @foreach($dealer as $o)
-                                <option value="{{ $o->id }}">{{ $o->dealer_name }}</option>
-                                @endforeach
-                            </select>
-                            <label for="dealer_id" class="placeholder">Select Dealer</label>
+                            <input type="hidden" id="dealer_id" name="dealer_id" value="{{ old('dealer_id') }}" required>
+                            <input id="dealer_name" type="text" class="form-control input-border-bottom"
+                                    name="dealer_name" value="{{ old('dealer_name') }}" data-toggle="modal"
+                                    data-target=".modalDealer" required>
+                            <label for="dealer_name" class="placeholder">Select Dealer *</label>
                         </div>
                     </div>
 
@@ -80,13 +77,11 @@
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="gender" name="gender"
-                            required>
-                                <option value=""></option>
-                                <option value="L">Male</option>
-                                <option value="P">Female</option>
-                            </select>
-                            <label for="gender" class="placeholder">Select Gender</label>
+                            <input id="gender" type="hidden" name="gender" value="{{ old('gender') }}" required>
+                            <input id="gender_name" type="text" class="form-control input-border-bottom"
+                                    name="gender_name" value="{{ old('gender_name') }}" data-toggle="modal"
+                                    data-target=".modalGender" required>
+                            <label for="gender_name" class="placeholder">Select Gender *</label>
                         </div>
                     </div>
                 </div>
@@ -102,51 +97,19 @@
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="position" name="position"
-                                required>
-                                <option value=""></option>
-                                <option value="Branch Head">Branch Head</option>
-                                <option value="Supervisor">Supervisor</option>
-                                <option value="Sales Counter">Sales Counter</option>
-                                <option value="Salesman">Salesman</option>
-                                <option value="Service Advisor">Service Advisor</option>
-                                <option value="Chief Mechanic">Chief Mechanic</option>
-                                <option value="Mechanic">Mechanic</option>
-                                <option value="Mechanic Helper">Mechanic Helper</option>
-                                <option value="Service Counter">Service Counter</option>
-                                <option value="Workshop Head">Workshop Head</option>
-                                <option value="Sparepart Counter">Sparepart Counter</option>
-                                <option value="Cashier">Cashier</option>
-                                <option value="Administration">Administration</option>
-                                <option value="Invoice Admin">Invoice Admin</option>
-                                <option value="Tax Admin">Tax Admin</option>
-                                <option value="Sparepart Admin">Sparepart Admin</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Accounting">Accounting</option>
-                                <option value="CRM">CRM</option>
-                                <option value="Warehouse Staff">Warehouse Staff</option>
-                                <option value="Driver">Driver</option>
-                                <option value="Office Boy">Office Boy</option>
-                                <option value="Security">Security</option>
-                            </select>
-                            <label for="position" class="placeholder">Select Position</label>
+                            <input id="position" type="text" class="form-control input-border-bottom"
+                                    name="position" value="{{ old('position') }}" data-toggle="modal"
+                                    data-target=".modalPosition" required>
+                            <label for="position" class="placeholder">Select Position *</label>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
-                            <select class="form-control input-border-bottom" id="education" name="education"
-                                required>
-                                <option value=""></option>
-                                <option value="SMA">SMA</option>
-                                <option value="D1">D1</option>
-                                <option value="D2">D2</option>
-                                <option value="D3">D3</option>
-                                <option value="D4">D4</option>
-                                <option value="S1">S1</option>
-                                <option value="S2">S2</option>
-                            </select>
-                            <label for="education" class="placeholder">Select Education</label>
+                            <input id="education" type="text" class="form-control input-border-bottom"
+                                    name="education" value="{{ old('education') }}" data-toggle="modal"
+                                    data-target=".modalEducation" required>
+                            <label for="education" class="placeholder">Select Education *</label>
                         </div>
                     </div>
                 </div>
@@ -157,6 +120,11 @@
         </div>
     </div>
 </div>
+
+@include('component.modal-dealer')
+@include('component.modal-position')
+@include('component.modal-education')
+@include('component.modal-gender')
 
 @push('after-script')
 <script>

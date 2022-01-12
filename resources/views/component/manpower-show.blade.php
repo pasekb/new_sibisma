@@ -45,7 +45,7 @@
                     @elseif($manpower->status == 'mutation')
                         <span class="badge badge-pill badge-dark"><i class="fas fa-sign-out-alt"></i> Mutation</span>
                     @else
-                        <span class="badge badge-pill badge-danger"><i class="fas fa-times"></i> Mutation</span>
+                        <span class="badge badge-pill badge-danger"><i class="fas fa-times"></i> Resign</span>
                     @endif
                 </div>
                 <div class="job">{{ $manpower->position }} at {{ $manpower->dealer->dealer_name }}</div>

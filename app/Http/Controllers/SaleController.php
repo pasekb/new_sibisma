@@ -110,20 +110,20 @@ class SaleController extends Controller
 
             if($cekframe > 0){
 
-              $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
+                $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
 
-              $data = new Document;
-              $data->sale_id = $saleId;
-              $data->stck = $req->stck;
-              $data->stnk = $req->stnk;
-              $data->bpkb = $req->bpkb;
-              $data->document_note = $req->document_note;
-              $data->created_by = Auth::user()->id;
-              $data->updated_by = Auth::user()->id;
-              $data->save();
+                $data = new Document;
+                $data->sale_id = $saleId;
+                $data->stck = $req->stck;
+                $data->stnk = $req->stnk;
+                $data->bpkb = $req->bpkb;
+                $data->document_note = $req->document_note;
+                $data->created_by = Auth::user()->id;
+                $data->updated_by = Auth::user()->id;
+                $data->save();
             }
             /** ============== END Create Documents ============== */ 
-              
+            
             /** ============== Create Or Update Stock History ============== */ 
 
             // Get QTY after update
@@ -176,13 +176,12 @@ class SaleController extends Controller
                 }
             }
             /** ============== END Create Or Update Stock History ============== */ 
-          
+        
             toast('Data sale berhasil disimpan','success');
             return redirect()->back();
-
-            } 
         }
     }
+    
 
     /**
      * Display the specified resource.
@@ -282,6 +281,17 @@ class SaleController extends Controller
         
         toast('Data sale berhasil dihapus','success');
         return redirect()->back();
+    }
+
+    public function history($start = null, $end = null){
+        if ($start && $end) {
+            $data = Sale::whereBetween('sale_date', [$start, $end])->get();
+        } else {
+            $data = Sale::orderBy('sale_date', 'desc')->get();
+        }
+
+        return view('sale-history', compact('data', 'start', 'end'));
+        
     }
 
     public function deleteall(Request $req){
