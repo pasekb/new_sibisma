@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Manpower;
 use App\Models\Entry;
 use App\Models\Out;
+use App\Models\StockHistory;
 
 class Dealer extends Model
 {
@@ -29,6 +30,11 @@ class Dealer extends Model
     // Relasi to Out
     public function out(){
         return $this->hasMany(Out::class);
+    }
+
+    // Relasi to Stok History
+    public function history(){
+        return $this->hasMany(StockHistory::class);
     }
 
     // Relasi to User

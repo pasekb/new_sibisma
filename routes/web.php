@@ -11,6 +11,9 @@ use App\Http\Controllers\SaleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\EntryController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\OutController;
+use App\Http\Controllers\OpnameController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +33,12 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('page');
 })->name('dashboard');
+
+// USER
+Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
+// END USER
 
 // DEALER
 Route::middleware(['auth:sanctum', 'verified'])->resource('dealer', DealerController::class);
@@ -80,11 +89,26 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/entry/deleteall', [Entry
 Route::middleware(['auth:sanctum', 'verified'])->post('/entry/history', [EntryController::class, 'history'])->name('entry.history');
 // END ENTRY
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/out', function () {
-    return view('page');
-})->name('out.index');
+// OUT
+Route::middleware(['auth:sanctum', 'verified'])->resource('out', OutController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/out/delete/{id}', [OutController::class, 'delete'])->name('out.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/out/deleteall', [OutController::class, 'deleteall'])->name('out.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->post('/out/history', [OutController::class, 'history'])->name('out.history');
+// END OUT
 
+// HISTORY
 Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockController::class, 'ratio'])->name('stock.ratio');
+// END HISTORY
+
+// OPNAME
+Route::middleware(['auth:sanctum', 'verified'])->resource('opname', OpnameController::class);
+Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [OpnameController::class, 'history'])->name('opname.history');
+// END OPNAME
+
+// REPORT
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history', [ReportController::class, 'stockHistory'])->name('report.stock-history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
+// END REPORT
 
 // LOG
 Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);

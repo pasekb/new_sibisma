@@ -51,7 +51,7 @@ class DealerController extends Controller
             $data->updated_by = Auth::user()->id;
             $data->save();
             toast('Data dealer berhasil disimpan','success');
-            return redirect()->route('dealer');
+            return redirect()->route('dealer')->with('display', true);;
         }
     }
 

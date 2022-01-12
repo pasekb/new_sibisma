@@ -56,7 +56,7 @@ class UnitController extends Controller
         if ($req->image == '') {
             $data->save();
             toast('Data unit berhasil disimpan','success');
-            return redirect()->back();
+            return redirect()->back()->with('display', true);
         } else {
             $img = $req->file('image');
             $img_file = time()."_".$img->getClientOriginalName();
@@ -65,7 +65,7 @@ class UnitController extends Controller
             $data->image = $img_file;
             $data->save();
             toast('Data unit berhasil disimpan','success');
-            return redirect()->back();
+            return redirect()->back()->with('display', true);
         }
         
     }

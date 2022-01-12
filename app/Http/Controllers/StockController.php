@@ -24,7 +24,7 @@ class StockController extends Controller
         foreach($stock as $o){
             array_push($unit_id,$o->unit_id);
         }
-        $unit = Unit::whereNotIn('id',$unit_id)->get();
+        $unit = Unit::all();
         $data = Stock::all();
         // dd($data);
         return view('page', compact('data','dealer','unit'));
@@ -48,19 +48,26 @@ class StockController extends Controller
      */
     public function store(Request $req)
     {
-        $data = new Stock;
-        $data->unit_id = $req->unit_id;
-        $data->dealer_id = $req->dealer_id;
-        $data->created_by = Auth::user()->id;
-        $data->updated_by = Auth::user()->id;
-        if ($req->qty == '') {
-            $data->qty = 0;
+        // Checking Stock
+        $cek = Stock::where([['unit_id',$req->unit_id],['dealer_id',$req->dealer_id]])->count();
+        if ($cek > 0) {
+            alert()->warning('Warning','Unit is already at '.$req->dealer_name.'');
+            return redirect()->back()->with('display', true)->withInput($req->input());
         } else {
-            $data->qty = $req->qty;
+            $data = new Stock;
+            $data->unit_id = $req->unit_id;
+            $data->dealer_id = $req->dealer_id;
+            $data->created_by = Auth::user()->id;
+            $data->updated_by = Auth::user()->id;
+            if ($req->qty == '') {
+                $data->qty = 0;
+            } else {
+                $data->qty = $req->qty;
+            }
+            $data->save();
+            toast('Data stock berhasil disimpan','success');
+            return redirect()->back()->with('display', true);
         }
-        $data->save();
-        toast('Data stock berhasil disimpan','success');
-        return redirect()->back();
     }
 
     /**

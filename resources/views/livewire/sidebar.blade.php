@@ -40,6 +40,7 @@
                             </li>
                             <li>
                                 <form action="{{ route('logout') }}" method="post" style="cursor: pointer;">
+                                @csrf
                                     <a onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                         <span class="link-collapse" style="color: red;">Logout</span>
@@ -67,6 +68,8 @@
                 @include('menu.manpower')
                 @include('menu.datamaster')
                 @include('menu.stock')
+                @include('menu.opname')
+                @include('menu.report')
                 @include('menu.log')
                 @include('menu.dokumen')
                 

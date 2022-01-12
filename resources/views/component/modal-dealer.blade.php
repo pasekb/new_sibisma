@@ -11,24 +11,25 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table id="basic-datatables" class="display table table-striped table-hover" width="100%">
+                    <table class="display table table-striped table-hover" width="100%">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Dealer Code</th>
                                 <th>Dealer Name</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                            <tr>
+                                <th>#</th>
                                 <th>Dealer Code</th>
                                 <th>Dealer Name</th>
-                            </tr>
                             </tr>
                         </tfoot>
                         <tbody>
                             @forelse($dealer as $o)
-                            <tr data-id="{{ $o->id }}" data-name="{{ $o->dealer_name }}" class="pilih">
+                            <tr data-id="{{ $o->id }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                <td>{{ $o->id }}</td>
                                 <td>{{ $o->dealer_code }}</td>
                                 <td>{{ $o->dealer_name }}</td>
                             </tr>

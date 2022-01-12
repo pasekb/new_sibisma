@@ -16,6 +16,16 @@ class DealerSeeder extends Seeder
     public function run()
     {
         Dealer::insert([
+            'dealer_code' => 'YIMM',
+            'dealer_name' => 'Yamaha Indonesia Motor MFG',
+            'address' => 'Jl. Dr. KRT Radjiman Widyodiningrat No.KM. 23, RW.4, Rw. Terate, Kota Jakarta Timur',
+            'phone' => '(021) 4612222',
+            'created_by' => 1,
+            'updated_by' => 1,
+            'created_at' => Carbon::now('GMT+8'),
+        ]);
+
+        Dealer::insert([
             'dealer_code' => 'AA0101',
             'dealer_name' => 'Bisma Sentral',
             'address' => 'Jl. Teuku Umar No.142, Denpasar',
@@ -40,6 +50,16 @@ class DealerSeeder extends Seeder
             'dealer_name' => 'Bisma Hasanuddin',
             'address' => 'Jl. Hasanuddin No.74, Pemecutan, Denpasar',
             'phone' => '0361 422660',
+            'created_by' => 1,
+            'updated_by' => 1,
+            'created_at' => Carbon::now('GMT+8'),
+        ]);
+
+        Dealer::insert([
+            'dealer_code' => 'AA0104-01',
+            'dealer_name' => 'Bisma Dalung',
+            'address' => 'Jl. Raya Padang Luwih No.17, Dalung, Badung',
+            'phone' => '0813 3863 5112',
             'created_by' => 1,
             'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),
@@ -100,16 +120,6 @@ class DealerSeeder extends Seeder
             'dealer_name' => 'Bisma Sunset Road',
             'address' => 'Jl. Sunset Road No.162, Legian, Kuta, Kabupaten Badung',
             'phone' => '0361 758140',
-            'created_by' => 1,
-            'updated_by' => 1,
-            'created_at' => Carbon::now('GMT+8'),
-        ]);
-
-        Dealer::insert([
-            'dealer_code' => 'YIMM',
-            'dealer_name' => 'Yamaha Indonesia Motor MFG',
-            'address' => 'Jl. Dr. KRT Radjiman Widyodiningrat No.KM. 23, RW.4, Rw. Terate, Kota Jakarta Timur',
-            'phone' => '(021) 4612222',
             'created_by' => 1,
             'updated_by' => 1,
             'created_at' => Carbon::now('GMT+8'),

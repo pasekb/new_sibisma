@@ -7,19 +7,19 @@
 </style>
 @endpush
 
-@section('title','Entry')
-@section('page-title','Entry')
+@section('title','Out')
+@section('page-title','Out')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('entry.index') }}">Data Entry</a>
+    <a href="{{ route('sale.index') }}">Data Out</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Entry Data</h4>
+            <h4 class="card-title">Out Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,8 +30,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
-                            <th>Sender</th>
-                            <th>Qty</th>
+                            <th>Frame No</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -42,8 +41,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
-                            <th>Sender</th>
-                            <th>Qty</th>
+                            <th>Frame No</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -58,21 +56,20 @@
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
-                            <td>{{ $o->dealer->dealer_name }}</td>
-                            <td>{{ $o->in_qty }}</td>
+                            <td>{{ $o->frame_no }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
-                                    <a href="{{ route('entry.delete', $o->id) }}" class="btnAction"
+                                    <a href="{{ route('out.delete', $o->id) }}" class="btnAction"
                                         data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                        onclick="return tanya('Yakin hapus entry {{ $o->stock->unit->model_name }}?')"><i
+                                        onclick="return tanya('Yakin hapus out {{ $o->stock->unit->model_name }}?')"><i
                                             class="fas fa-trash-alt"></i></a>
                                 </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" style="text-align: center;">No data available</td>
+                            <td colspan="7" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>
