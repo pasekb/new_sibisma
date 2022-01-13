@@ -67,9 +67,9 @@ class BranchDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(BranchDelivery $branchdelivery)
     {
-        //
+        return view('page', compact('branchdelivery'));
     }
 
     /**
@@ -104,5 +104,23 @@ class BranchDeliveryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        BranchDelivery::find($id)->delete();
+        toast('Data branch delivery berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = BranchDelivery::orderBy('branch_delivery_date','desc')->get();
+            
+        } else {
+            $data = BranchDelivery::whereBetween('branch_delivery_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
     }
 }

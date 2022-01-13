@@ -147,13 +147,25 @@
 
     <!-- Sale Delivery Page -->
     @elseif(Route::is('sale-delivery.*'))
-        @include('component.sale-delivery-create')
-        @include('component.sale-delivery-data')
+        @if(Route::is('sale-delivery.history'))
+            @include('component.search-box')
+            @include('component.sale-delivery-history')
+        @elseif(Route::is('sale-delivery.show'))
+            @include('component.sale-delivery-show')
+        @else
+            @include('component.sale-delivery-create')
+            @include('component.sale-delivery-data')
+        @endif
 
     <!-- Branch Delivery Page -->
     @elseif(Route::is('branch-delivery.*'))
-        @include('component.branch-delivery-create')
-        @include('component.branch-delivery-data')
+        @if(Route::is('branch-delivery.history'))
+            @include('component.search-box')
+            @include('component.branch-delivery-history')
+        @else
+            @include('component.branch-delivery-create')
+            @include('component.branch-delivery-data')
+        @endif
     
     @endif
     

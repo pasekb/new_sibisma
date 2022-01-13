@@ -67,9 +67,9 @@ class SaleDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SaleDelivery $saledelivery)
     {
-        //
+        return view('page', compact('saledelivery'));
     }
 
     /**
@@ -104,5 +104,23 @@ class SaleDeliveryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        SaleDelivery::find($id)->delete();
+        toast('Data sale delivery berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = SaleDelivery::orderBy('sale_delivery_date','desc')->get();
+            
+        } else {
+            $data = SaleDelivery::whereBetween('sale_delivery_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
     }
 }
