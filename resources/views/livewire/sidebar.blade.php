@@ -57,6 +57,7 @@
                 @include('menu.dashboard')
                 @include('menu.stock')
                 @include('menu.manage-stock')
+                @include('menu.delivery')
                 @include('menu.opname')
                 @include('menu.dealer')
                 @include('menu.manpower')

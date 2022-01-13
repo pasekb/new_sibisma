@@ -15,6 +15,8 @@ use App\Http\Controllers\OutController;
 use App\Http\Controllers\OpnameController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaleDeliveryController;
+use App\Http\Controllers\BranchDeliveryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +122,20 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogCont
 // DOKUMEN
 Route::middleware(['auth:sanctum', 'verified'])->resource('document', DokumenController::class);
 // END DOKUMEN
+
+// SALE DELIVERY
+Route::middleware(['auth:sanctum', 'verified'])->resource('sale-delivery', SaleDeliveryController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-delivery/delete/{id}', [SaleDeliveryController::class, 'delete'])->name('sale-delivery.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/sale-delivery/deleteall', [SaleDeliveryController::class, 'deleteall'])->name('sale-delivery.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-delivery-history/{date?}', [SaleDeliveryController::class, 'history'])->name('sale-delivery.history');
+// END SALE DELIVERY
+
+// BRANCH DELIVERY
+Route::middleware(['auth:sanctum', 'verified'])->resource('branch-delivery', BranchDeliveryController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/branch-delivery/delete/{id}', [BranchDeliveryController::class, 'delete'])->name('branch-delivery.delete');
+Route::middleware(['auth:sanctum', 'verified'])->post('/branch-delivery/deleteall', [BranchDeliveryController::class, 'deleteall'])->name('branch-delivery.deleteall');
+Route::middleware(['auth:sanctum', 'verified'])->get('/branch-delivery-history/{date?}', [BranchDeliveryController::class, 'history'])->name('branch-delivery.history');
+// END BRANCH DELIVERY
 
 // USER
 Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController::class);

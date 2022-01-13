@@ -144,6 +144,16 @@
             @include('component.user-create')
             @include('component.user-data')
         @endif
+
+    <!-- Sale Delivery Page -->
+    @elseif(Route::is('sale-delivery.*'))
+        @include('component.sale-delivery-create')
+        @include('component.sale-delivery-data')
+
+    <!-- Branch Delivery Page -->
+    @elseif(Route::is('branch-delivery.*'))
+        @include('component.branch-delivery-create')
+        @include('component.branch-delivery-data')
     
     @endif
     

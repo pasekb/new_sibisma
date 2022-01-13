@@ -19,10 +19,11 @@ class CreateSaleDeliveriesTable extends Migration
             $table->unsignedInteger('sale_id');
             $table->string('down_payment')->nullable();
             $table->time('delivery_time');
-            $table->time('arrival_time');
+            $table->time('arrival_time')->nullable();
             $table->unsignedInteger('main_driver');
             $table->unsignedInteger('backup_driver');
             $table->enum('status',['prepared','on the way','has arrived']);
+            $table->text('note')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

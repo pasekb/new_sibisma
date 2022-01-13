@@ -18,10 +18,11 @@ class CreateBranchDeliveriesTable extends Migration
             $table->date('branch_delivery_date');
             $table->unsignedInteger('out_id');
             $table->time('delivery_time');
-            $table->time('arrival_time');
+            $table->time('arrival_time')->nullable();
             $table->unsignedInteger('main_driver');
             $table->unsignedInteger('backup_driver');
             $table->enum('status',['prepared','on the way','has arrived']);
+            $table->text('note')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();
             $table->timestamps();

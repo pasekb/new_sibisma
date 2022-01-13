@@ -94,74 +94,102 @@
                             @endforelse
                         </tbody>
                         <!-- ELSE IF -->
-                        @elseif(Route::is('document.*'))
-                        
+                        @elseif(Route::is('document.*') || Route::is('sale-delivery.*'))
                         <thead>
                             <tr>
-                                <th>customer</th>
-                                <th>model</th>
-                                <th>color</th>
+                                <th>Customer</th>
+                                <th>Model Name</th>
+                                <th>Color</th>
                                 <th>Year</th>
-                                <th>Frame Number</th>
+                                <th>Frame No</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>customer</th>
-                                <th>model</th>
-                                <th>color</th>
+                                <th>Customer</th>
+                                <th>Model Name</th>
+                                <th>Color</th>
                                 <th>Year</th>
-                                <th>Frame Number</th>
+                                <th>Frame No</th>
                             </tr>
                         </tfoot>
                         <tbody>
                             @forelse($sale as $o)
                             <tr data-id="{{ $o->id}}" 
                                 data-customer="{{ $o->customer_name }}"
-                                data-phone="{{ $o->phone}}"
-                                data-address="{{ $o->address}}"
-                                data-model="{{$o->stock->unit->model_name}}"
+                                data-phone="{{ $o->phone }}"
+                                data-address="{{ $o->address }}"
+                                data-model="{{ $o->stock->unit->model_name }}"
                                 data-color="{{ $o->stock->unit->color->color_name }}"
                                 data-yearmc="{{ $o->stock->unit->year_mc }}"
                                 data-frame="{{ $o->frame_no }}"
-                                data-engine="{{$o->engine_no}}"
+                                data-engine="{{ $o->engine_no }}"
+                                data-colorcode="{{ $o->stock->unit->color->color_code }}"
                                 class="klik">
                                 <td>{{ $o->customer_name }}</td>
                                 <td>{{ $o->stock->unit->color->color_name }}</td>
-                                <td>{{$o->stock->unit->model_name}}</td>
+                                <td>{{ $o->stock->unit->model_name }}</td>
                                 <td>{{ $o->frame_no }}</td>
                                 <td>{{ $o->stock->unit->year_mc }}</td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" style="text-align: center;">No data available</td>
+                                <td colspan="5" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>
-                        
-                        <!-- ELSE -->
-                        @else
 
+                        <!-- ELSE IF -->
+                        @elseif(Route::is('branch-delivery.*'))
                         <thead>
                             <tr>
-                                <th>customer</th>
-                                <th>model</th>
-                                <th>color</th>
+                                <th>Dealer</th>
+                                <th>Model Name</th>
+                                <th>Color</th>
                                 <th>Year</th>
-                                <th>Frame Number</th>
+                                <th>Frame No</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>customer</th>
-                                <th>model</th>
-                                <th>color</th>
+                                <th>Dealer</th>
+                                <th>Model Name</th>
+                                <th>Color</th>
                                 <th>Year</th>
-                                <th>Frame Number</th>
+                                <th>Frame No</th>
                             </tr>
                         </tfoot>
                         <tbody>
+                            @forelse($out as $o)
+                            <tr data-id="{{ $o->id}}" 
+                                data-dealerid="{{ $o->dealer->dealer_id }}"
+                                data-dealername="{{ $o->dealer->dealer_name }}"
+                                data-phone="{{ $o->phone }}"
+                                data-address="{{ $o->address }}"
+                                data-model="{{ $o->stock->unit->model_name }}"
+                                data-color="{{ $o->stock->unit->color->color_name }}"
+                                data-yearmc="{{ $o->stock->unit->year_mc }}"
+                                data-frame="{{ $o->frame_no }}"
+                                data-engine="{{ $o->engine_no }}"
+                                data-colorcode="{{ $o->stock->unit->color->color_code }}"
+                                class="klik">
+                                <td>{{ $o->dealer->dealer_name }}</td>
+                                <td>{{ $o->stock->unit->color->color_name }}</td>
+                                <td>{{ $o->stock->unit->model_name }}</td>
+                                <td>{{ $o->frame_no }}</td>
+                                <td>{{ $o->stock->unit->year_mc }}</td>
+                            </tr>
+                            @empty
                             <tr>
+                                <td colspan="5" style="text-align: center;">No data available</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
+                        <!-- ELSE -->
+                        @else
+                        <tbody>
+                            <tr style="text-align: center;">
                                 <td colspan="5" style="text-align: center;">No data available</td>
                             </tr>
                         </tbody>
@@ -207,9 +235,10 @@
         $('#color_code').css('background', code);
     });
 </script>
-@elseif(Route::is('document.*'))
+@elseif(Route::is('document.*') || Route::is('sale-delivery.*'))
 <script>
     $(document).on('click', '.klik', function (e) {
+        let code = $(this).attr('data-colorcode');
         $('#sale_id').val($(this).attr('data-id'));
         $('#customer_name').val($(this).attr('data-customer'));
         $('#phone').val($(this).attr('data-phone'));
@@ -220,6 +249,27 @@
         $('#frame_no').val($(this).attr('data-frame'));
         $('#engine_no').val($(this).attr('data-engine'));
         $('.modalData').modal('hide');
+
+        $('#color_code').css('background', code);
+    });
+</script>
+@elseif(Route::is('branch-delivery.*'))
+<script>
+    $(document).on('click', '.klik', function (e) {
+        let code = $(this).attr('data-colorcode');
+        $('#out_id').val($(this).attr('data-id'));
+        $('#dealer_id').val($(this).attr('data-dealerid'));
+        $('#dealer_name').val($(this).attr('data-dealername'));
+        $('#phone').val($(this).attr('data-phone'));
+        $('#address').val($(this).attr('data-address'));
+        $('#model_name').val($(this).attr('data-model'));
+        $('#color').val($(this).attr('data-color'));
+        $('#year_mc').val($(this).attr('data-yearmc'));
+        $('#frame_no').val($(this).attr('data-frame'));
+        $('#engine_no').val($(this).attr('data-engine'));
+        $('.modalData').modal('hide');
+
+        $('#color_code').css('background', code);
     });
 </script>
 @endif

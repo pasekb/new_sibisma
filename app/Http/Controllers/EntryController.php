@@ -137,7 +137,7 @@ class EntryController extends Controller
                 // if no record by date in stock history's table -> Create History
                 $his = new StockHistory;
                 $his->history_date = $req->entry_date;
-                $his->dealer_id = $dealer_code;
+                $his->dealer_code = $dealer_code;
                 $his->first_stock = $firstStock;
                 $his->in_qty = $entry_qty;
                 $his->out_qty = $out;
@@ -151,7 +151,7 @@ class EntryController extends Controller
         /** ============== END Create Or Update Stock History ============== */ 
 
         toast('Data entry berhasil disimpan','success');
-        return redirect()->back();
+        return redirect()->back()->withInput($req->except('stock_id', 'model_name','color','year_mc','on_hand','dealer_id','dealer_name','in_qty'));
     }
 
     /**

@@ -146,7 +146,7 @@ class OutController extends Controller
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
                     $his->history_date = $req->sale_date;
-                    $his->dealer_id = $dealer_code;
+                    $his->dealer_code = $dealer_code;
                     $his->first_stock = $firstStock;
                     $his->in_qty = $in;
                     $his->out_qty = $out_qty;
@@ -160,7 +160,7 @@ class OutController extends Controller
             /** ============== END Create Or Update Stock History ============== */ 
 
             toast('Data out berhasil disimpan','success');
-            return redirect()->back();
+            return redirect()->back()->withInput($req->except('stock_id', 'model_name','color','year_mc','on_hand','dealer_id','dealer_name','frame_no','engine_no'));
         }
     }
 
