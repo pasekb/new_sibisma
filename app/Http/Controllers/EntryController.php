@@ -40,10 +40,6 @@ class EntryController extends Controller
         //
     }
 
-    public function history(){
-        return view('page');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -262,5 +258,17 @@ class EntryController extends Controller
         Entry::whereIn('id',$req->pilih)->delete();
         toast('Data entry berhasil dihapus','success');
         return redirect()->back();
+    }
+
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Entry::orderBy('entry_date','desc')->get();
+            
+        } else {
+            $data = Entry::whereBetween('entry_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
     }
 }

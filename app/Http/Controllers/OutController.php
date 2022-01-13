@@ -269,4 +269,16 @@ class OutController extends Controller
         toast('Data Out berhasil dihapus','success');
         return redirect()->back();
     }
+
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Out::orderBy('out_date','desc')->get();
+            
+        } else {
+            $data = Out::whereBetween('out_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
+    }
 }

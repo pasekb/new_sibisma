@@ -18,7 +18,7 @@
     <i class="flaticon-right-arrow"></i>
 </li>
 <li class="nav-item">
-    <a href="#">Edit</a>
+    <a href="#">History</a>
 </li>
 @endpush
 

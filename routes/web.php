@@ -87,14 +87,14 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history/{date?}', [S
 Route::middleware(['auth:sanctum', 'verified'])->resource('entry', EntryController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/entry/delete/{id}', [EntryController::class, 'delete'])->name('entry.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/entry/deleteall', [EntryController::class, 'deleteall'])->name('entry.deleteall');
-Route::middleware(['auth:sanctum', 'verified'])->get('/entry-history', [EntryController::class, 'history'])->name('entry.history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/entry-history/{date?}', [EntryController::class, 'history'])->name('entry.history');
 // END ENTRY
 
 // OUT
 Route::middleware(['auth:sanctum', 'verified'])->resource('out', OutController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/out/delete/{id}', [OutController::class, 'delete'])->name('out.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/out/deleteall', [OutController::class, 'deleteall'])->name('out.deleteall');
-Route::middleware(['auth:sanctum', 'verified'])->post('/out-history', [OutController::class, 'history'])->name('out.history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/out-history/{date?}', [OutController::class, 'history'])->name('out.history');
 // END OUT
 
 // HISTORY

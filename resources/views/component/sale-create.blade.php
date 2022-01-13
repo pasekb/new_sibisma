@@ -42,7 +42,7 @@
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
                             <input id="dealer" type="text" class="form-control input-border-bottom"
                                 name="dealer" value="{{ old('dealer') }}" data-toggle="modal"
-                                data-target=".modalDealer" required>
+                                data-target=".modalMasterDealer" required>
                             <label for="dealer" class="placeholder">Select Dealer *</label>
                         </div>
                     </div>
@@ -173,6 +173,7 @@
 @include('component.modal-data')
 @include('component.modal-leasing')
 @include('component.modal-dealer')
+@include('component.modal-master-dealer')
 
 @push('after-script')
 <script>

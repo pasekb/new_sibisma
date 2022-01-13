@@ -92,6 +92,10 @@
     <!-- Entry Page -->
     @elseif(Route::is('entry.*'))
         @if(Route::is('entry.history'))
+            <livewire:ratio-stock>
+            <livewire:entry-l-m>
+            <livewire:entry-l-y>
+            @include('component.search-box')
             @include('component.entry-history')
         @else
             @include('component.entry-create')
@@ -104,6 +108,10 @@
     <!-- Out Page -->
     @elseif(Route::is('out.*'))
         @if(Route::is('out.history'))
+            <livewire:ratio-stock>
+            <livewire:out-l-m>
+            <livewire:out-l-y>
+            @include('component.search-box')
             @include('component.out-history')
         @else
             @include('component.out-create')
