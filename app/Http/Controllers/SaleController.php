@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dealer;
 use Illuminate\Http\Request;
 use App\Models\Entry;
 use App\Models\Sale;
@@ -25,10 +26,11 @@ class SaleController extends Controller
     {
         $stock = Stock::all();
         $leasing = Leasing::all();
+        $dealer = Dealer::all();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
 
-        return view('page', compact('stock','leasing','today','data'));
+        return view('page', compact('stock','leasing','today','data','dealer'));
     }
 
     /**
@@ -49,6 +51,12 @@ class SaleController extends Controller
      */
     public function store(Request $req)
     {
+        if (Auth::user()->dealer_code == 'group') {
+            $dealer_code = $req->dealer_code;
+        } else {
+            $dealer_code = Auth::user()->dealer_code;
+        }
+        
         // Get Stok ID from Input
         $stockId = $req->stock_id;
 
@@ -164,7 +172,7 @@ class SaleController extends Controller
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
                     $his->history_date = $req->sale_date;
-                    $his->dealer_id = $req->dealer_id;
+                    $his->dealer_code = $dealer_code;
                     $his->first_stock = $firstStock;
                     $his->in_qty = $in;
                     $his->out_qty = $out;
@@ -178,7 +186,7 @@ class SaleController extends Controller
             /** ============== END Create Or Update Stock History ============== */ 
         
             toast('Data sale berhasil disimpan','success');
-            return redirect()->back();
+            return redirect()->back()->withInput($req->except('stock_id', 'model_name','color','year_mc','on_hand','leasing_id','leasing_code','frame_no','engine_no','nik','customer_name','phone','address'));
         }
     }
     
@@ -283,20 +291,14 @@ class SaleController extends Controller
         return redirect()->back();
     }
 
-    public function history($start = null, $end = null){
-        if ($start && $end) {
-            $data = Sale::whereBetween('sale_date', [$start, $end])->get();
-        } else {
-            $data = Sale::orderBy('sale_date', 'desc')->get();
-        }
-
-        return view('sale-history', compact('data', 'start', 'end'));
-        
-    }
-
     public function deleteall(Request $req){
         Sale::whereIn('id',$req->pilih)->delete();
         toast('Data sale berhasil dihapus','success');
         return redirect()->back();
+    }
+
+    public function history(){
+        $data = Sale::all();
+        return view('page');
     }
 }

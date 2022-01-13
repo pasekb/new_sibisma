@@ -48,6 +48,12 @@ class OutController extends Controller
      */
     public function store(Request $req)
     {
+        if (Auth::user()->dealer_code == 'group') {
+            $dealer_code = $req->dealer_code;
+        } else {
+            $dealer_code = Auth::user()->dealer_code;
+        }
+
         // Get Stok ID from Input
         $stockId = $req->stock_id;
 
@@ -140,7 +146,7 @@ class OutController extends Controller
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
                     $his->history_date = $req->sale_date;
-                    $his->dealer_id = $req->dealer_id;
+                    $his->dealer_id = $dealer_code;
                     $his->first_stock = $firstStock;
                     $his->in_qty = $in;
                     $his->out_qty = $out_qty;

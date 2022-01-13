@@ -34,7 +34,7 @@ class Dealer extends Model
 
     // Relasi to Stok History
     public function history(){
-        return $this->hasMany(StockHistory::class);
+        return $this->hasMany(StockHistory::class, 'dealer_code', 'dealer_code');
     }
 
     // Relasi to User

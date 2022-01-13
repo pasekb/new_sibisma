@@ -40,6 +40,10 @@ class EntryController extends Controller
         //
     }
 
+    public function history(){
+        return view('page');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -48,6 +52,12 @@ class EntryController extends Controller
      */
     public function store(Request $req)
     {
+        if (Auth::user()->dealer_code == 'group') {
+            $dealer_code = $req->dealer_code;
+        } else {
+            $dealer_code = Auth::user()->dealer_code;
+        }
+
         // Get Stok ID from Input
         $stockId = $req->stock_id;
 
@@ -131,7 +141,7 @@ class EntryController extends Controller
                 // if no record by date in stock history's table -> Create History
                 $his = new StockHistory;
                 $his->history_date = $req->entry_date;
-                $his->dealer_id = $req->dealer_id;
+                $his->dealer_id = $dealer_code;
                 $his->first_stock = $firstStock;
                 $his->in_qty = $entry_qty;
                 $his->out_qty = $out;

@@ -28,7 +28,7 @@
                         </tfoot>
                         <tbody>
                             @forelse($leasing as $o)
-                            <tr data-id="{{ $o->id }}" data-code="{{ $o->leasing_code }}" class="pilih">
+                            <tr data-id="{{ $o->id }}" data-code="{{ $o->leasing_code }}" class="pilihLeasing">
                                 <td>{{ $o->leasing_code }}</td>
                                 <td>{{ $o->leasing_name }}</td>
                             </tr>
@@ -51,7 +51,7 @@
 
 @push('after-script')
 <script>
-    $(document).on('click', '.pilih', function (e) {
+    $(document).on('click', '.pilihLeasing', function (e) {
         $('#leasing_id').val($(this).attr('data-id'));
         $('#leasing_code').val($(this).attr('data-code'));
         $('.modalLeasing').modal('hide');

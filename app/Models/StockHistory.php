@@ -15,7 +15,7 @@ class StockHistory extends Model
 
     // Relasi to Dealer
     public function dealer(){
-        return $this->belongsTo(Dealer::class);
+        return $this->belongsTo(Dealer::class, 'dealer_code', 'dealer_code');
     }
 
     // Relasi to User

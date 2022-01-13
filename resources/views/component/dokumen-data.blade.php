@@ -60,7 +60,7 @@
                             <td>{{ $o->stck }}</td>
                             <td>{{ $o->stnk}}</td>
                             <td>{{ $o->bpkb}}</td>
-                            <td>{{ $o->frame_no }}</td>
+                            <td>{{ $o->sale->frame_no }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">

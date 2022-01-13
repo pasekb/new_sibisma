@@ -33,7 +33,7 @@
             @include('component.dokumen-edit')    
         @else
             @include('component.dokumen-data')
-    @endif
+        @endif
 
     <!-- Unit Page -->
     @elseif(Route::is('unit.*'))
@@ -75,27 +75,39 @@
 
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
-        @include('component.sale-create')
-        <livewire:ratio-stock>
-        <livewire:sale-l-m>
-        <livewire:sale-l-y>
-        @include('component.sale-data')
+        @if(Route::is('sale.history'))
+            @include('component.sale-history')
+        @else
+            @include('component.sale-create')
+            <livewire:ratio-stock>
+            <livewire:sale-l-m>
+            <livewire:sale-l-y>
+            @include('component.sale-data')
+        @endif
 
     <!-- Entry Page -->
     @elseif(Route::is('entry.*'))
-        @include('component.entry-create')
-        <livewire:ratio-stock>
-        <livewire:entry-l-m>
-        <livewire:entry-l-y>
-        @include('component.entry-data')
+        @if(Route::is('entry.history'))
+            @include('component.entry-history')
+        @else
+            @include('component.entry-create')
+            <livewire:ratio-stock>
+            <livewire:entry-l-m>
+            <livewire:entry-l-y>
+            @include('component.entry-data')
+        @endif
 
     <!-- Out Page -->
     @elseif(Route::is('out.*'))
-        @include('component.out-create')
-        <livewire:ratio-stock>
-        <livewire:out-l-m>
-        <livewire:out-l-y>
-        @include('component.out-data')
+        @if(Route::is('out.history'))
+            @include('component.out-history')
+        @else
+            @include('component.out-create')
+            <livewire:ratio-stock>
+            <livewire:out-l-m>
+            <livewire:out-l-y>
+            @include('component.out-data')
+        @endif
     
     <!-- Opname Page -->
     @elseif(Route::is('opname.*'))

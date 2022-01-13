@@ -28,11 +28,11 @@
                         </tfoot>
                         <tbody>
                             @if(Route::is('user.*'))
-                                <tr data-code="group" data-name="Bisma Group" class="pilih">
+                                <tr data-code="group" data-name="Bisma Group" class="pilihDealer">
                                     <td style="text-align: center;" colspan="3">Bisma Group</td>
                                 </tr>
                                 @forelse($dealer as $o)
-                                <tr data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                <tr data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilihDealer" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
                                     <td>{{ $o->id }}</td>
                                     <td>{{ $o->dealer_code }}</td>
                                     <td>{{ $o->dealer_name }}</td>
@@ -44,7 +44,7 @@
                                 @endforelse
                             @else
                                 @forelse($dealer as $o)
-                                <tr data-id="{{ $o->id }}" data-name="{{ $o->dealer_name }}" class="pilih" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                <tr data-id="{{ $o->id }}" data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilihDealer" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
                                     <td>{{ $o->id }}</td>
                                     <td>{{ $o->dealer_code }}</td>
                                     <td>{{ $o->dealer_name }}</td>
@@ -70,7 +70,7 @@
 @push('after-script')
     @if(Route::is('user.*'))
     <script>
-        $(document).on('click', '.pilih', function (e) {
+        $(document).on('click', '.pilihDealer', function (e) {
             $('#dealer_code').val($(this).attr('data-code'));
             $('#dealer_name').val($(this).attr('data-name'));
             $('.modalDealer').modal('hide');
@@ -78,9 +78,11 @@
     </script>
     @else
     <script>
-        $(document).on('click', '.pilih', function (e) {
+        $(document).on('click', '.pilihDealer', function (e) {
             $('#dealer_id').val($(this).attr('data-id'));
             $('#dealer_name').val($(this).attr('data-name'));
+            $('#dealer_code').val($(this).attr('data-code'));
+            $('#dealer').val($(this).attr('data-name'));
             $('.modalDealer').modal('hide');
         });
     </script>

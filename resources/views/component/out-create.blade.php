@@ -34,6 +34,21 @@
         <div class="card-body">
             <form action="{{ route('out.store') }}" method="post">
                 @csrf
+
+                @if(Auth::user()->dealer_code == 'group')
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
+                            <input id="dealer" type="text" class="form-control input-border-bottom"
+                                name="dealer" value="{{ old('dealer') }}" data-toggle="modal"
+                                data-target=".modalDealer" required>
+                            <label for="dealer" class="placeholder">Select Dealer *</label>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
