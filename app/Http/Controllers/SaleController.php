@@ -286,6 +286,11 @@ class SaleController extends Controller
         $his->updated_by = Auth::user()->id;
         $his->save();
         /** ============== END Create Or Update Stock History ============== */
+
+        // Delete Document by Sale ID
+        // Get document ID by Sale ID
+        $docId = Document::where('sale_id',$id)->pluck('id');
+        Document::where('id',$docId)->delete();
         
         toast('Data sale berhasil dihapus','success');
         return redirect()->back();

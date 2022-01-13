@@ -81,8 +81,6 @@
         $(document).on('click', '.pilihDealer', function (e) {
             $('#dealer_id').val($(this).attr('data-id'));
             $('#dealer_name').val($(this).attr('data-name'));
-            $('#dealer_code').val($(this).attr('data-code'));
-            $('#dealer').val($(this).attr('data-name'));
             $('.modalDealer').modal('hide');
         });
     </script>
