@@ -25,14 +25,16 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
+            <livewire:widget-stock-qty>
             <h4 class="card-title">Sales History Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="display table table-striped table-hover" width="100%">
+                <table id="multi-filter-select" class="display table table-striped table-hover" width="100%">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Date</th>
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
@@ -44,6 +46,7 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
+                            <th>Date</th>
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
@@ -57,6 +60,7 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
+                            <td>{{ \Carbon\Carbon::parse($o->sale_date)->format('j M Y') }}</td>
                             <td>{{ $o->stock->unit->model_name }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
                                 {{ $o->stock->unit->color->color_name }}
@@ -75,7 +79,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="7" style="text-align: center;">No data available</td>
+                            <td colspan="8" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

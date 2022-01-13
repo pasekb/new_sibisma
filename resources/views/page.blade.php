@@ -76,6 +76,10 @@
     <!-- Sale Page -->
     @elseif(Route::is('sale.*'))
         @if(Route::is('sale.history'))
+            <livewire:ratio-stock>
+            <livewire:sale-l-m>
+            <livewire:sale-l-y>
+            @include('component.search-box')
             @include('component.sale-history')
         @else
             @include('component.sale-create')

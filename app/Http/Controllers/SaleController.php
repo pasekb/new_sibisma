@@ -297,8 +297,15 @@ class SaleController extends Controller
         return redirect()->back();
     }
 
-    public function history(){
-        $data = Sale::all();
-        return view('page');
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Sale::orderBy('sale_date','desc')->get();
+            
+        } else {
+            $data = Sale::whereBetween('sale_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
     }
 }

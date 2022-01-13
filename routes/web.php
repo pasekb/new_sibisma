@@ -80,7 +80,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/deleteall', [Stock
 Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController::class);
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale/delete/{id}', [SaleController::class, 'delete'])->name('sale.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleController::class, 'deleteall'])->name('sale.deleteall');
-Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history', [SaleController::class, 'history'])->name('sale.history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history/{date?}', [SaleController::class, 'history'])->name('sale.history');
 // END SALE
 
 // ENTRY
@@ -109,6 +109,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [Opname
 // REPORT
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history', [ReportController::class, 'stockHistory'])->name('report.stock-history');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
+Route::middleware(['auth:sanctum', 'verified'])->post('/report/print/{start?}/{end?}', [ReportController::class, 'print'])->name('report.print');
 // END REPORT
 
 // LOG
