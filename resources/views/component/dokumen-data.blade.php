@@ -57,9 +57,37 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $o->sale->customer_name }}</td>
                             <td>{{ $o->sale->stock->unit->model_name }}</td>
-                            <td>{{ $o->stck }}</td>
-                            <td>{{ $o->stnk}}</td>
-                            <td>{{ $o->bpkb}}</td>
+                            
+                                @if($o->stck < 1)
+                                <td style="background-color:red">
+                                -
+                                </td>
+                                @else
+                                <td>
+                                {{ $o->stck }}
+                                </td>
+                                @endif
+                            
+                                @if($o->stnk < 1)
+                                <td style="background-color:#eb343480">
+                                -
+                                </td>
+                                @else
+                                <td>
+                                {{ $o->stnk }}
+                                </td>
+                                @endif
+
+                                @if($o->bpkb < 1)
+                                <td style="background-color:#eb343480">
+                                -
+                                </td>
+                                @else
+                                <td>
+                                {{ $o->bpkb }}
+                                </td>
+                                @endif
+
                             <td>{{ $o->sale->frame_no }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
