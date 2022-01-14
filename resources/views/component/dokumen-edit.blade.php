@@ -30,6 +30,7 @@
                     
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
+                            <input type="hidden" id="sale_id" name="sale_id" value="{{$document->sale_id}}" required>
                             <input id="nik" type="text" class="form-control input-border-bottom"
                                 name="nik" value="{{ $document->sale->nik }}" autofocus required>
                             <label for="nik" class="placeholder">NIK</label>
@@ -92,7 +93,7 @@
                         <div class="col-md-3">
                             <div class="form-group form-floating-label">
                                 <input id="stck" type="text" class="form-control input-border-bottom"
-                                    name="stck" value="{{ $document->stck }}" autofocus required>
+                                    name="stck" value="{{ $document->stck }}" autofocus >
                                 <label for="stck" class="placeholder">STCK</label>
                             </div>
                         </div>
@@ -102,6 +103,47 @@
                                 <label for="stck_status">STCK status</label>
                                 <input id="stck_status" type="text" class="form-control input-border-bottom"
                                     name="stck_status" value="{{ $document->stck_status }}" autofocus required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <input id="stnk" type="text" class="form-control input-border-bottom"
+                                    name="stnk" value="{{ $document->stnk }}" autofocus >
+                                <label for="stnk" class="placeholder">STNK</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <label for="stnk_status">STNK status</label>
+                                
+                                <input id="stnk_status" type="text" class="form-control input-border-bottom"
+                                    name="stnk_status" value="{{ $document->stnk_status }}" autofocus required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <input id="bpkb" type="text" class="form-control input-border-bottom"
+                                    name="bpkb" value="{{ $document->bpkb }}" autofocus >
+                                <label for="bpkb" class="placeholder">BPKB</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <label for="bpkb_status">BPKB status</label>
+                                <input id="bpkb_status" type="text" class="form-control input-border-bottom"
+                                    name="bpkb_status" value="{{ $document->bpkb_status }}" autofocus required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group form-floating-label">
+                                <input id="document_note" type="text" class="form-control input-border-bottom"
+                                    name="document_note" value="{{ $document->document_note }}" autofocus  >
+                                    <label for="document_note" class="placeholder">document note</label>
                             </div>
                         </div>
 
@@ -121,10 +163,32 @@
 </div>
 
 @push('after-script')
+
 <script>
-    $('#btnImage').on('click', function () {
-        $('#formImage').css('display', 'block');
-        $('#formImage').addClass('fadeInBawah');
-    });
+    // $(document).ready(function(){
+    //     $('#stck').focus(function(){
+    //         $('#stck_status').val('finished');
+    //     });
+    //     $('#stck').blur(function(){
+    //         $('#stck_status').val('');
+    //     });
+
+    //     $('#stnk').focus(function(){
+    //         $('#stnk_status').val('finished');
+    //     });
+    //     $('#stnk').blur(function(){
+    //         let a = $('#stnk_hidden').val();
+    //         $('#stnk_status').val(a);
+    //     });
+
+    //     $('#bpkb').focus(function(){
+    //         $('#bpkb_status').val('finished');
+    //     });
+    //     $('#bpkb').blur(function(){
+    //         $('#bpkb_status').val('on process');
+    //     });
+    // });
 </script>
+
+
 @endpush

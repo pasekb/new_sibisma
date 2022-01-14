@@ -99,10 +99,55 @@ class DokumenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, Document $document)
     {
-        //
+
+        //update document
+        $data = Document::find($document->id);
+        $data->stck = $req->stck;
+        $data->stnk = $req->stnk;
+        $data->bpkb = $req->bpkb;
+        if($req->stck != 0)
+        {
+            $data->stck_status = 'finished';
+
+            if($req->stnk != 0)
+            {
+                $data->stnk_status = 'finished';
+
+                if($req->bpkb != 0)
+                {
+                    $data->bpkb_status = 'finished';
+                }else{
+                    $data->bpkb_status = 'on process';
+                }
+            }else{
+                $data->stnk_status = 'on process';
+            }
+        }else{
+            $data->stck_status = 'on process';
+        }
+        $data->document_note = $req->document_note;
+        $data->save();
+
+        //update sale
+        $saleId = $req->sale_id;
+
+        $sale = Sale::where('id',$saleId)->first();
+        $sale->customer_name = $req->customer_name;
+        $sale->phone = $req->phone;
+        $sale->frame_no = $req->frame_no;
+        $sale->engine_no = $req->engine_no;
+        $sale->address = $req->address;
+        $sale->updated_by = Auth::user()->id;
+        $sale->save();
+
+           
+            toast('Data unit berhasil disimpan','success');
+            return redirect()->back();
+        
     }
+    
 
     /**
      * Remove the specified resource from storage.
