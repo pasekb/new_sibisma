@@ -25,4 +25,13 @@ class ReportController extends Controller
         toast('Status berhasil diubah','success');
         return redirect()->back();
     }
+
+    public function reportPrint($param, $start, $end){
+        if ($param == 'entry') {
+            
+        } else {
+            # code...
+        }
+        
+    }
 }

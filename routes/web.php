@@ -145,3 +145,8 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController
 Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/user/change/{id}/{status}', [UserController::class, 'changeStatus'])->name('user.update-status');
 // END USER
+
+// REPORT
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start}/{end}', [ReportController::class, 'reportPrint'])->name('report.print');
+// END REPORT
+

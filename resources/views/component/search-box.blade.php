@@ -37,7 +37,7 @@
                         </form>
                         <!-- END FORM -->
                             <div class="input-group-prepend">
-                                <a href="{{ route('report.print') }}" class="btn btn-success" type="button" style="color: #fff;"><i class="fas fa-print"></i></a>
+                                <a href="{{ url('report.print') }}" class="btn btn-success" type="button" style="color: #fff;"><i class="fas fa-print"></i></a>
                             </div>
                         </div>
                     </div>
