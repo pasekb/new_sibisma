@@ -13,7 +13,7 @@
                     aria-valuenow="{{ $vsLMach }}" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $vsLMach ?>%"></div>
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <p class="text-muted mb-0"><a href="{{ route('stock.ratio') }}" class="text-success" id="vsLM" style="text-decoration: none;">vs Last Month</a></p>
+                <p class="text-muted mb-0"><a href="{{ route('out.ach', 'lm') }}" class="text-success" id="vsLM" style="text-decoration: none;">Achievement</a></p>
                 <p class="text-muted mb-0">{{ $vsLMach }}%</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
 
     $('#vsLM').mouseleave(function(){
         let link = $('#vsLM');
-        link.text('Stock Ratio');
+        link.text('Achievement');
     })
 </script>
 @endpush

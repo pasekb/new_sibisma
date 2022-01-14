@@ -13,7 +13,7 @@
                     aria-valuenow="{{ $vsLYach }}" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $vsLYach ?>%"></div>
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <p class="text-muted mb-0"><a href="{{ route('stock.ratio') }}" class="text-danger" id="vsLY" style="text-decoration: none;">vs Last Year</a></p>
+                <p class="text-muted mb-0"><a href="{{ route('out.ach', 'ly') }}" class="text-danger" id="vsLY" style="text-decoration: none;">Achievement</a></p>
                 <p class="text-muted mb-0">{{ $vsLYach }}%</p>
             </div>
         </div>
@@ -29,7 +29,7 @@
 
     $('#vsLY').mouseleave(function(){
         let link = $('#vsLY');
-        link.text('Stock Ratio');
+        link.text('Achievement');
     })
 </script>
 @endpush

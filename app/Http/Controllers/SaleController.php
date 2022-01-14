@@ -14,6 +14,7 @@ use App\Models\Document;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -312,5 +313,25 @@ class SaleController extends Controller
             $data = Sale::whereBetween('sale_date',[$req->start, $req->end])->get();
         }
         return view('page', compact('data','start','end'));
+    }
+
+    public function achievment($param){
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $month = Carbon::now('GMT+8')->format('m');
+        $year = Carbon::now('GMT+8')->format('Y');
+        $tgl = Carbon::now('GMT+8');
+        $lastMonth = $tgl->subMonth()->format('Y-m');
+        $lastYear = $year - 1;
+
+        if ($param == 'lm') {
+            $last = Sale::whereMonth('sale_date', $lastMonth);
+            $data = Sale::whereMonth('sale_date', $month)->union($last)->get();
+        } else {
+            $last = Sale::whereYear('sale_date', $lastYear);
+            $data = Sale::whereMonth('sale_date', $year)->union($last)->get();
+        }
+        dd($data);
+        return view('page', compact('data','param'));
+        
     }
 }
