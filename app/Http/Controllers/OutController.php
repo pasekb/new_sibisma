@@ -145,7 +145,7 @@ class OutController extends Controller
                 } else {
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
-                    $his->history_date = $req->sale_date;
+                    $his->history_date = $req->out_date;
                     $his->dealer_code = $dealer_code;
                     $his->first_stock = $firstStock;
                     $his->in_qty = $in;

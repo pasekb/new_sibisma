@@ -12,26 +12,28 @@ class SaleLY extends Component
     {
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $month = Carbon::now('GMT+8')->format('m');
-        $tgl = Carbon::now('GMT+8');
-        $lastMonth = $tgl->subMonth()->format('Y-m');
+        $year = Carbon::now('GMT+8')->format('Y');
+        $lastMonth = Carbon::now('GMT+8')->subMonth()->format('Y-m');
         $lastYear = Carbon::now('GMT+8')->format('Y') - 1;
-        $monthSales = Sale::whereMonth('sale_date',$month)->sum('sale_qty');
+        $yearSales = Sale::whereYear('sale_date',$year)->sum('sale_qty');
 
         // vs LY
-        $LY = Sale::whereMonth('sale_date',$lastYear)->sum('sale_qty');
-        if($LY <= 0 && $monthSales <= 0){
+        $LY = Sale::whereYear('sale_date',$lastYear)->sum('sale_qty');
+        if($LY <= 0 && $yearSales <= 0){
             $vsLYach = 0;
-        }elseif ($LY <= 0 || $monthSales <= 0) {
+            $vsLY = 0;
+        }elseif ($LY <= 0 || $yearSales <= 0) {
             if ($LY <= 0) {
-                $vsLYach = ($monthSales/$monthSales);
+                $vsLYach = ($yearSales/$yearSales);
+                $vsLY = ($LY)*100;
             } else {
-                $vsLYach = ($LY/$LY);
+                $vsLYach = 0;
+                $vsLY = (0-$LY)*100;
             }
         } else {
-            $vsLYach = ($monthSales/$LY)*100;
+            $vsLYach = ($yearSales/$LY)*100;
+            $vsLY = ($yearSales/$LY-1)*100;
         }
-
-        $vsLY = ($vsLYach-1)*100;
 
         return view('livewire.sale-l-y', compact('today','vsLY','lastYear','vsLYach'));
     }

@@ -12,26 +12,28 @@ class OutLY extends Component
     {
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $month = Carbon::now('GMT+8')->format('m');
-        $tgl = Carbon::now('GMT+8');
-        $lastMonth = $tgl->subMonth()->format('Y-m');
+        $year = Carbon::now('GMT+8')->format('Y');
+        $lastMonth = Carbon::now('GMT+8')->subMonth()->format('Y-m');
         $lastYear = Carbon::now('GMT+8')->format('Y') - 1;
-        $monthOut = Out::whereMonth('out_date',$month)->sum('out_qty');
+        $yearOut = Out::whereYear('out_date',$year)->sum('out_qty');
 
         // vs LY
-        $LY = Out::whereMonth('out_date',$lastYear)->sum('out_qty');
-        if($LY <= 0 && $monthOut <= 0){
+        $LY = Out::whereYear('out_date',$lastYear)->sum('out_qty');
+        if($LY <= 0 && $yearOut <= 0){
             $vsLYach = 0;
-        }elseif ($LY <= 0 || $monthOut <= 0) {
+            $vsLY = 0;
+        }elseif ($LY <= 0 || $yearOut <= 0) {
             if ($LY <= 0) {
-                $vsLYach = ($monthOut/$monthOut);
+                $vsLYach = ($yearOut/$yearOut);
+                $vsLY = ($LY)*100;
             } else {
-                $vsLYach = ($LY/$LY);
+                $vsLYach = 0;
+                $vsLY = (0-$LY)*100;
             }
         } else {
-            $vsLYach = ($monthOut/$LY)*100;
+            $vsLYach = ($yearOut/$LY)*100;
+            $vsLY = ($yearOut/$LY-1)*100;
         }
-
-        $vsLY = ($vsLYach-1)*100;
 
         return view('livewire.out-l-y', compact('today','lastYear','vsLY','vsLYach'));
     }

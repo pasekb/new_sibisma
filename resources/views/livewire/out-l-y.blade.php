@@ -6,7 +6,7 @@
                     <h5><b>Out vs Last Year</b></h5>
                     <p class="text-muted">{{ $lastYear }} vs {{ \Carbon\Carbon::parse($today)->format('Y') }}</p>
                 </div>
-                <h3 class="text-danger fw-bold">{{ $vsLY >= 0 ? '+'.$vsLY : $vsLY }}%</h3>
+                <h3 class="text-danger fw-bold">{{ $vsLY >= 0 ? '+'.number_format($vsLY,1) : number_format($vsLY,1) }}%</h3>
             </div>
             <div class="progress progress-sm">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar"
@@ -14,7 +14,7 @@
             </div>
             <div class="d-flex justify-content-between mt-2">
                 <p class="text-muted mb-0"><a href="{{ route('out.ach', 'ly') }}" class="text-danger" id="vsLY" style="text-decoration: none;">Achievement</a></p>
-                <p class="text-muted mb-0">{{ $vsLYach }}%</p>
+                <p class="text-muted mb-0">{{ number_format($vsLYach,1) }}%</p>
             </div>
         </div>
     </div>

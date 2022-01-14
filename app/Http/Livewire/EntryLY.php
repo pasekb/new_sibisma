@@ -12,26 +12,28 @@ class EntryLY extends Component
     {
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $month = Carbon::now('GMT+8')->format('m'); 
-        $tgl = Carbon::now('GMT+8');
-        $lastMonth = $tgl->subMonth()->format('Y-m');
+        $year = Carbon::now('GMT+8')->format('Y');
+        $lastMonth = Carbon::now('GMT+8')->subMonth()->format('Y-m');
         $lastYear = Carbon::now('GMT+8')->format('Y') - 1;
-        $monthEntry = Entry::whereMonth('entry_date',$month)->sum('in_qty');
+        $yearEntry = Entry::whereYear('entry_date',$year)->sum('in_qty');
 
         // vs LY
-        $LY = Entry::whereMonth('entry_date',$lastYear)->sum('in_qty');
-        if($LY <= 0 && $monthEntry <= 0){
+        $LY = Entry::whereYear('entry_date',$lastYear)->sum('in_qty');
+        if($LY <= 0 && $yearEntry <= 0){
             $vsLYach = 0;
-        }elseif ($LY <= 0 || $monthEntry <= 0) {
+            $vsLY = 0;
+        }elseif ($LY <= 0 || $yearEntry <= 0) {
             if ($LY <= 0) {
-                $vsLYach = ($monthEntry/$monthEntry);
+                $vsLYach = ($yearEntry/$yearEntry);
+                $vsLY = ($LY)*100;
             } else {
-                $vsLYach = ($LY/$LY);
+                $vsLYach = 0;
+                $vsLY = (0-$LY)*100;
             }
         } else {
-            $vsLYach = ($monthEntry/$LY)*100;
+            $vsLYach = ($yearEntry/$LY)*100;
+            $vsLY = ($yearEntry/$LY-1)*100;
         }
-
-        $vsLY = ($vsLYach-1)*100;
 
         return view('livewire.entry-l-y',compact('today','lastYear','vsLY','vsLYach'));
     }
