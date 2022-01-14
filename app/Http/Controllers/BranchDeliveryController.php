@@ -67,9 +67,9 @@ class BranchDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(BranchDelivery $branchdelivery)
+    public function show(BranchDelivery $branchDelivery)
     {
-        return view('page', compact('branchdelivery'));
+        return view('page', compact('branchDelivery'));
     }
 
     /**
@@ -78,9 +78,10 @@ class BranchDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(BranchDelivery $branchDelivery)
     {
-        //
+        $manpower = Manpower::where('position','Driver')->get();
+        return view('page', compact('branchDelivery','manpower'));
     }
 
     /**
@@ -90,9 +91,19 @@ class BranchDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $id)
+    public function update(Request $req, BranchDelivery $branchDelivery)
     {
-        //
+        $data = BranchDelivery::find($branchDelivery->id);
+        $data->delivery_time = $req->delivery_time;
+        $data->arrival_time = $req->arrival_time;
+        $data->main_driver = $req->main_driver;
+        $data->backup_driver = $req->backup_driver;
+        $data->note = $req->note;
+        $data->updated_by = Auth::user()->id;
+        $data->save();
+
+        toast('Data branch delivery berhasil diubah','success');
+        return redirect()->back();
     }
 
     /**

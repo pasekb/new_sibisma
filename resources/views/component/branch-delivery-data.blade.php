@@ -57,7 +57,7 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->branch_delivery_date }}</td>
+                            <td>{{ \Carbon\Carbon::parse($o->branch_delivery_date)->format('j M Y') }}</td>
                             <td>{{ $o->status }}</td>
                             <td>{{ $o->out->dealer->dealer_name }}</td>
                             <td style="background-color: <?php echo $o->out->stock->unit->color->color_code ?>50 ;">

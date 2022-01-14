@@ -67,9 +67,9 @@ class SaleDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(SaleDelivery $saledelivery)
+    public function show(SaleDelivery $saleDelivery)
     {
-        return view('page', compact('saledelivery'));
+        return view('page', compact('saleDelivery'));
     }
 
     /**
@@ -78,9 +78,10 @@ class SaleDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SaleDelivery $saleDelivery)
     {
-        //
+        $manpower = Manpower::where('position','Driver')->get();
+        return view('page', compact('saleDelivery','manpower'));
     }
 
     /**
@@ -90,9 +91,19 @@ class SaleDeliveryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $req, $id)
+    public function update(Request $req, SaleDelivery $saleDelivery)
     {
-        //
+        $data = SaleDelivery::find($saleDelivery->id);
+        $data->delivery_time = $req->delivery_time;
+        $data->arrival_time = $req->arrival_time;
+        $data->main_driver = $req->main_driver;
+        $data->backup_driver = $req->backup_driver;
+        $data->note = $req->note;
+        $data->updated_by = Auth::user()->id;
+        $data->save();
+
+        toast('Data sale delivery berhasil diubah','success');
+        return redirect()->back();
     }
 
     /**

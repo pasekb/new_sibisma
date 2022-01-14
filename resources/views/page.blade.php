@@ -152,6 +152,8 @@
             @include('component.sale-delivery-history')
         @elseif(Route::is('sale-delivery.show'))
             @include('component.sale-delivery-show')
+        @elseif(Route::is('sale-delivery.edit'))
+            @include('component.sale-delivery-edit')
         @else
             @include('component.sale-delivery-create')
             @include('component.sale-delivery-data')
@@ -162,6 +164,10 @@
         @if(Route::is('branch-delivery.history'))
             @include('component.search-box')
             @include('component.branch-delivery-history')
+        @elseif(Route::is('branch-delivery.show'))
+            @include('component.branch-delivery-show')
+        @elseif(Route::is('branch-delivery.edit'))
+            @include('component.branch-delivery-edit')
         @else
             @include('component.branch-delivery-create')
             @include('component.branch-delivery-data')
