@@ -132,9 +132,14 @@
         @include('component.opname-data')
 
     <!-- Report -->
-    @elseif(Route::is('report.stock-history'))
-        @include('component.search-box')
-        @include('component.stock-history')
+
+    @elseif(Route::is('report.*'))
+        @if(Route::is('report.stock-history'))
+            @include('component.search-box')
+            @include('component.stock-history')
+        @elseif(Route::is('report.send-report'))
+            @include('component.send-report')
+        @endif
 
     <!-- Log Page -->
     @elseif(Route::is('log.*'))

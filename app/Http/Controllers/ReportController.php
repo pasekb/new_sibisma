@@ -18,7 +18,7 @@ class ReportController extends Controller
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
-            $data = StockHistory::orderBy('history_date','asc')->get();
+            $data = StockHistory::orderBy('history_date','desc')->get();
         }else {
             $data = StockHistory::whereBetween('history_date',[$req->start, $req->end])->orderBy('history_date','asc')->get();
         }
@@ -84,7 +84,7 @@ class ReportController extends Controller
             $dataSale = Sale::where('sale_date',$date)->get();
         }
         
-        $data = StockHistory::orderBy('history_date','desc')->limit(7);
+        $data = StockHistory::orderBy('history_date','desc')->limit(7)->get();
         return view('page', compact('data','date','today','firstStock','in','out','sale','dataIn','dataOut','dataSale','data'));
     }
 }
