@@ -7,24 +7,25 @@
 </style>
 @endpush
 
-@section('title','Document')
-@section('page-title','Document')
+@section('title','Document History')
+@section('page-title','Document History')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('document.index') }}">Data Document</a>
+    <a href="{{ route('document.index') }}">Data Document History</a>
 </li>
-@endpush
-
-@push('button')
-    @section('button-title','Document History')
-    @include('component.button-history')
+<li class="separator">
+    <i class="flaticon-right-arrow"></i>
+</li>
+<li class="nav-item">
+    <a href="#">History</a>
+</li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Document Data</h4>
+            <h4 class="card-title">Document History Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">

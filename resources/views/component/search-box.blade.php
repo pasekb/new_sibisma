@@ -16,6 +16,10 @@
                                 {{ route('sale-delivery.history') }}
                             @elseif(Route::is('branch-delivery.*'))
                                 {{ route('branch-delivery.history') }}
+                            @elseif(Route::is('report.*'))
+                                {{ route('report.stock-history') }}
+                            @elseif(Route::is('document.*'))
+                                {{ route('document.history') }}
                             @else
                                 #
                             @endif
@@ -30,14 +34,30 @@
                         <div class="input-group">
                             <input type="date" class="form-control" placeholder="" aria-label=""
                                 aria-describedby="basic-addon1" name="end" value="{{ $end != null ? $end : null }}">
-                            <!-- Hidden XS and MD -->
                             <div class="input-group-prepend">
-                                <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                                <button class="btn btn-default" type="submit" data-toggle="tooltip" data-placement="top" title="Search"><i class="fas fa-search"></i></button>
                             </div>
-                        </form>
                         <!-- END FORM -->
-                            <div class="input-group-prepend">
-                                <a href="{{ url('report.print') }}" class="btn btn-success" type="button" style="color: #fff;"><i class="fas fa-print"></i></a>
+                            <div class="input-group-prepend {{ $start == null || $end == null ? 'd-none' : 'd-block' }}">
+                                <a href="
+                                @if(Route::is('sale.*'))
+                                    {{ url('report/sale/'.$start.'/'.$end) }}
+                                @elseif(Route::is('entry.*'))
+                                    {{ url('report/entry/'.$start.'/'.$end) }}
+                                @elseif(Route::is('out.*'))
+                                    {{ url('report/out/'.$start.'/'.$end) }}
+                                @elseif(Route::is('sale-delivery.*'))
+                                    {{ url('report/sale-delivery/'.$start.'/'.$end) }}
+                                @elseif(Route::is('branch-delivery.*'))
+                                    {{ url('report/branch-delivery/'.$start.'/'.$end) }}
+                                @elseif(Route::is('report.*'))
+                                    {{ url('report/stock-history/'.$start.'/'.$end) }}
+                                @elseif(Route::is('document.*'))
+                                    {{ url('report/document/'.$start.'/'.$end) }}
+                                @else
+                                    #
+                                @endif
+                                " class="btn btn-success" type="button" style="color: #fff;" data-toggle="tooltip" data-placement="top" title="Print"><i class="fas fa-print"></i></a>
                             </div>
                         </div>
                     </div>

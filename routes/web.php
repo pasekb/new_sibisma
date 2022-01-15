@@ -112,9 +112,10 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [Opname
 // END OPNAME
 
 // REPORT
-Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history', [ReportController::class, 'stockHistory'])->name('report.stock-history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history/{date?}', [ReportController::class, 'stockHistory'])->name('report.stock-history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/send-report/{date?}', [ReportController::class, 'sendReport'])->name('report.send-report');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
-Route::middleware(['auth:sanctum', 'verified'])->post('/report/print/{start?}/{end?}', [ReportController::class, 'print'])->name('report.print');
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start}/{end}', [ReportController::class, 'reportPrint'])->name('report.print');
 // END REPORT
 
 // LOG
@@ -124,6 +125,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogCont
 
 // DOKUMEN
 Route::middleware(['auth:sanctum', 'verified'])->resource('document', DokumenController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/document-history/{date?}', [DokumenController::class, 'history'])->name('document.history');
 // END DOKUMEN
 
 // SALE DELIVERY
@@ -145,8 +147,3 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('user', UserController
 Route::middleware(['auth:sanctum', 'verified'])->post('/user/deleteall', [UserController::class, 'deleteall'])->name('user.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/user/change/{id}/{status}', [UserController::class, 'changeStatus'])->name('user.update-status');
 // END USER
-
-// REPORT
-Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start}/{end}', [ReportController::class, 'reportPrint'])->name('report.print');
-// END REPORT
-

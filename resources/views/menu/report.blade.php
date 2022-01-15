@@ -11,6 +11,11 @@
                     <span class="sub-item">Stock History</span>
                 </a>
             </li>
+            <li class="{{ Route::is('report.send-report') ? 'active' : '' }}">
+                <a href="{{ route('report.send-report') }}">
+                    <span class="sub-item">Send Report</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

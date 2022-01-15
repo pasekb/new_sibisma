@@ -9,6 +9,8 @@
         {{ route('sale-delivery.history') }}
     @elseif(Route::is('branch-delivery.*'))
         {{ route('branch-delivery.history') }}
+    @elseif(Route::is('document.*'))
+        {{ route('document.history') }}
     @else
         #
     @endif

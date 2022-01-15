@@ -30,7 +30,10 @@
         @if(Route::is('document.show'))
             @include('component.dokumen-show')
         @elseif(Route::is('document.edit'))
-            @include('component.dokumen-edit')    
+            @include('component.dokumen-edit')
+        @elseif(Route::is('document.history'))
+            @include('component.search-box')
+            @include('component.dokumen-history') 
         @else
             @include('component.dokumen-data')
         @endif
@@ -130,6 +133,7 @@
 
     <!-- Report -->
     @elseif(Route::is('report.stock-history'))
+        @include('component.search-box')
         @include('component.stock-history')
 
     <!-- Log Page -->

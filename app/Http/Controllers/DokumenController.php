@@ -142,9 +142,8 @@ class DokumenController extends Controller
         $sale->updated_by = Auth::user()->id;
         $sale->save();
 
-           
-            toast('Data unit berhasil disimpan','success');
-            return redirect()->back();
+        toast('Data unit berhasil disimpan','success');
+        return redirect()->back();
         
     }
     
@@ -158,5 +157,19 @@ class DokumenController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function history(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Document::join('sales','documents.sale_id','sales.id')
+            ->orderBy('sale_date','desc')->get();
+            
+        } else {
+            $data = Document::join('sales','documents.sale_id','sales.id')
+            ->whereBetween('sale_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
     }
 }

@@ -3,11 +3,13 @@
         <tr>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Dealer Code</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Dealer Name</th>
-            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Entry Date</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Out Date</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Model Name</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Frame No.</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Engine No.</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Color</th>
-            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Year</th>
-            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Sender</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Year MC</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Destination</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Qty</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Created By</th>
         </tr>
@@ -17,17 +19,19 @@
         <tr>
             <td>{{ $o->stock->dealer->dealer_code }}</td>
             <td>{{ $o->stock->dealer->dealer_name }}</td>
-            <td>{{ $o->entry_date }}</td>
+            <td>{{ $o->out_date }}</td>
             <td>{{ $o->stock->unit->model_name }}</td>
+            <td>{{ $o->frame_no }}</td>
+            <td>{{ $o->engine_no }}</td>
             <td>{{ $o->stock->unit->color->color_name }}</td>
             <td>{{ $o->stock->unit->year_mc }}</td>
             <td>{{ $o->dealer->dealer_name }}</td>
-            <td>{{ $o->in_qty }}</td>
+            <td>{{ $o->out_qty }}</td>
             <td>{{ $o->createdBy->first_name }}</td>
         </tr>
         @empty
         <tr>
-            <td colspan="8" style="text-align: center;">No data available</td>
+            <td colspan="11" style="text-align: center;">No data available</td>
         </tr>
         @endforelse
     </tbody>
