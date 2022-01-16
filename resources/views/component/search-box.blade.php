@@ -20,6 +20,8 @@
                                 {{ route('report.stock-history') }}
                             @elseif(Route::is('document.*'))
                                 {{ route('document.history') }}
+                            @elseif(Route::is('log'))
+                                {{ route('log') }}
                             @else
                                 #
                             @endif
@@ -54,6 +56,8 @@
                                     {{ url('report/stock-history/'.$start.'/'.$end) }}
                                 @elseif(Route::is('document.*'))
                                     {{ url('report/document/'.$start.'/'.$end) }}
+                                @elseif(Route::is('log'))
+                                    {{ url('report/log/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif

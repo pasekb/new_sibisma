@@ -63,15 +63,18 @@
                 @include('menu.manpower')
                 @include('menu.dokumen')
                 @include('menu.report')
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Admin</h4>
-                </li>
-                @include('menu.datamaster')
-                @include('menu.user')
-                @include('menu.log')
+
+                @if(Auth::user()->access == 'master')
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Admin</h4>
+                    </li>
+                    @include('menu.datamaster')
+                    @include('menu.user')
+                    @include('menu.log')
+                @endif
             </ul>
         </div>
     </div>

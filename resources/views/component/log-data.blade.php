@@ -12,7 +12,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('log.index') }}">Data Log</a>
+    <a href="{{ route('log') }}">Data Log</a>
 </li>
 @endpush
 
@@ -41,8 +41,6 @@
                                 </th>
                                 <th>Activity</th>
                                 <th>Timestamps</th>
-                                <th>Created By</th>
-                                <th>Updated By</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -57,8 +55,6 @@
                                 </th>
                                 <th>Activity</th>
                                 <th>Timestamps</th>
-                                <th>Created By</th>
-                                <th>Updated By</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -75,13 +71,11 @@
                                 </td>
                                 <td>{{ $o->activity }}</td>
                                 <td>{{ $o->created_at }}</td>
-                                <td>{{ $o->createdBy->first_name }}</td>
-                                <td>{{ $o->updatedBy->first_name }}</td>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" style="text-align: center;">No data available</td>
+                                <td colspan="3" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

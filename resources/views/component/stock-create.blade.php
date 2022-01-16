@@ -55,6 +55,7 @@
                 </div>
 
                 <div class="row">
+                    @if(Auth::user()->access == 'master')
                     <div class="col-md-8">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_id" name="dealer_id" value="{{ old('dealer_id') }}" required>
@@ -64,6 +65,16 @@
                                 <label for="dealer_name" class="placeholder">Select Dealer *</label>
                             </div>
                     </div>
+                    @else
+                    <div class="col-md-8">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="dealer_id" name="dealer_id" value="{{ $dealerId }}" required>
+                                <input id="dealer_name" type="text" class="form-control input-border-bottom"
+                                    name="dealer_name" value="{{ $dealerName }}" required>
+                                <label for="dealer_name" class="placeholder">Select Dealer *</label>
+                            </div>
+                    </div>
+                    @endif
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">

@@ -93,6 +93,18 @@
                     </div>
                 </div>
 
+                @if(Auth::user()->access == 'master')
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group form-floating-label">
+                            <input id="password" type="password" class="form-control input-border-bottom"
+                                name="password" placeholder="Change Password *">
+                            <label for="password" class="placeholder"></label>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 <button class="btn btn-success" type="submit"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
             </form>

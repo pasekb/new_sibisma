@@ -100,7 +100,7 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="{{ route('stock.delete', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
-                                            onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }}?')"><i
+                                            onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }} {{ $o->unit->color->color_name }}?')"><i
                                                 class="fas fa-trash-alt"></i></a>
                                     </div>
                                 </td>

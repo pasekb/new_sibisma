@@ -191,15 +191,6 @@ class User extends Authenticatable
         return $this->hasMany(Stock::class, 'updated_by');
     }
 
-    // Relasi to created, updated Log
-    public function logC(){
-        return $this->hasMany(Log::class, 'created_by');
-    }
-
-    public function logU(){
-        return $this->hasMany(Log::class, 'updated_by');
-    }
-
     public function user(){
         return $this->hasMany(Log::class);
     }

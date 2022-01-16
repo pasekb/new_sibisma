@@ -52,7 +52,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('report.send-report') }}">Send Report</a>
+    <a href="#">Send Report</a>
 </li>
 @endpush
 
@@ -74,7 +74,7 @@
             </div>
             <table style="width: 100%;">
                 <div id="reportStock">
-                    <p class="header">*Lap. Stok @if(Auth::user()->dealer_code != 'group') {{ $dealerName }} @endif {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}*</p>
+                    <p class="header">*Lap. Stok {{ $dealerName }} {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}*</p>
 
                     <p class="header total">
                         *_Stok Awal : {{ $firstStock }}_*
@@ -128,63 +128,6 @@
                     <p>_recorded in SiBisma on id:_ <br> _{{ $reportId }}_</p>
                 </div>
             </table>
-        </div>
-    </div>
-</div>
-
-<div class="col-md-6">
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Report History</h4>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="customTable">
-                    <thead>
-                        <tr>
-                            <th class="full">Date</th>
-                            <th class="full">Dealer</th>
-                            <th class="full">First Stock</th>
-                            <th class="full">In</th>
-                            <th class="full">Out</th>
-                            <th class="full">Sale</th>
-                            <th class="full">Last Stock</th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Date</th>
-                            <th>Dealer</th>
-                            <th>First Stock</th>
-                            <th>In</th>
-                            <th>Out</th>
-                            <th>Sale</th>
-                            <th>Last Stock</th>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @forelse($data as $o)
-                        <tr>
-                            <td><a href="{{ Auth::user()->dealer_code == 'group' ? url('report/'.$o->dealer_code.'/'.$o->history_date) : route('report.send-report', $o->history_date) }}" data-toggle="tooltip"
-                                    data-placement="top"
-                                    title="Show details">{{ \Carbon\Carbon::parse($o->history_date)->isoFormat('ddd, D-M-Y') }}
-                                </a>
-                            </td>
-                            <td class="ctr">{{ $o->dealer_code }}</td>
-                            <td class="ctr">{{ $o->first_stock }}</td>
-                            <td class="ctr">{{ $o->in_qty }}</td>
-                            <td class="ctr">{{ $o->out_qty }}</td>
-                            <td class="ctr">{{ $o->sale_qty }}</td>
-                            <td class="ctr">{{ $o->last_stock }}</td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" style="text-align: center;">No data available</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 </div>

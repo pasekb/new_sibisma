@@ -15,6 +15,8 @@
         {{ route('report.stock-history') }}
     @elseif(Route::is('report.stock-history'))
         {{ route('report.send-report') }}
+    @elseif(Route::is('report.send-group'))
+        {{ url('report/group/all') }}
     @else
         #
     @endif

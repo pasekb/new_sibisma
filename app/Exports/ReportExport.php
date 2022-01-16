@@ -9,6 +9,7 @@ use App\Models\SaleDelivery;
 use App\Models\BranchDelivery;
 use App\Models\Document;
 use App\Models\StockHistory;
+use App\Models\Log;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -70,6 +71,11 @@ class ReportExport implements FromView
                 'data' => Document::join('sales','documents.sale_id','sales.id')
                 ->whereBetween('sale_date', [$this->start, $this->end])
                 ->orderBy('sale_date','asc')->get()
+            ]);
+        }elseif($this->param == 'log') {
+            return view('export.log',[
+                'data' => Log::whereBetween('log_date', [$this->start, $this->end])
+                ->orderBy('log_date','asc')->get()
             ]);
         }else{
             return view('export.error');

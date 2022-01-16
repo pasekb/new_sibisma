@@ -63,6 +63,9 @@
                                 <th>Color</th>
                                 <th>Qty</th>
                                 <th>Year</th>
+                                @if(Auth::user()->access == 'master')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </thead>
                         <tfoot>
@@ -71,6 +74,9 @@
                                 <th>Color</th>
                                 <th>Qty</th>
                                 <th>Year</th>
+                                @if(Auth::user()->access == 'master')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </tfoot>
                         <tbody>
@@ -86,10 +92,13 @@
                                 </td>
                                 <td>{{ $o->qty }}</td>
                                 <td>{{ $o->unit->year_mc }}</td>
+                                @if(Auth::user()->access == 'master')
+                                <td>{{ $o->dealer->dealer_code }}</td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" style="text-align: center;">No data available</td>
+                                <td colspan="{{ Auth::user()->access == 'master' ? '5' : '4' }}" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

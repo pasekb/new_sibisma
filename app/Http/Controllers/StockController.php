@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Dealer;
 use App\Models\Stock;
 use App\Models\Unit;
+use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class StockController extends Controller
 {
@@ -18,16 +20,37 @@ class StockController extends Controller
      */
     public function index()
     {
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $dealer = Dealer::all();
-        $stock = Stock::select('unit_id')->get();
-        $unit_id = [];
-        foreach($stock as $o){
-            array_push($unit_id,$o->unit_id);
+
+        if ($dc == 'group') {
+            $unit = Unit::all();
+            $data = Stock::all();
+            return view('page', compact('data','dealer','unit'));
+
+        } else {
+            // View units that have not been inputted to database by dealer code
+            $stock = Stock::join('dealers','stocks.dealer_id','=','dealers.id')
+            ->select('unit_id')
+            ->where('dealer_code',$dc)
+            ->get();
+            $unit_id = [];
+            foreach($stock as $o){
+                array_push($unit_id,$o->unit_id);
+            }
+            $unit = Unit::whereNotIn('id',$unit_id)->get();
+            // --------------------------------------------
+            
+            $data = Stock::where('dealer_id',$did)->get();
+            $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+            $dealerName = $dealerName[0];
+            $dealerId = Dealer::where('dealer_code',$dc)->pluck('id');
+            $dealerId = $dealerId[0];
+            return view('page', compact('data','dealer','unit','dealerName','dealerId'));
+
         }
-        $unit = Unit::all();
-        $data = Stock::all();
-        // dd($data);
-        return view('page', compact('data','dealer','unit'));
+        
     }
 
     /**
@@ -65,6 +88,14 @@ class StockController extends Controller
                 $data->qty = $req->qty;
             }
             $data->save();
+
+            // Write log
+            $log = new Log;
+            $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+            $log->activity = 'creates stock data';
+            $log->user_id = Auth::user()->id;
+            $log->save();
+
             toast('Data stock berhasil disimpan','success');
             return redirect()->back()->with('display', true);
         }
@@ -134,12 +165,28 @@ class StockController extends Controller
 
     public function delete($id){
         Stock::find($id)->delete();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'deletes a stock data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data stock berhasil dihapus','success');
         return redirect()->back();
     }
 
     public function deleteall(Request $req){
         Stock::whereIn('id',$req->pilih)->delete();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'deletes some stocks data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data stock berhasil dihapus','success');
         return redirect()->back();
     }

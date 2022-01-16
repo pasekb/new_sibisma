@@ -139,10 +139,13 @@
             @include('component.stock-history')
         @elseif(Route::is('report.send-report'))
             @include('component.send-report')
+        @elseif(Route::is('report.send-group'))
+            @include('component.send-group')
         @endif
 
     <!-- Log Page -->
-    @elseif(Route::is('log.*'))
+    @elseif(Route::is('log'))
+        @include('component.search-box')
         @include('component.log-data')
 
     <!-- User Page -->

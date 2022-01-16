@@ -1,3 +1,6 @@
+@extends('layouts.main')
+
+@section('content')
 @push('after-css')
 <style>
     a.btnAction {
@@ -21,10 +24,7 @@
 </li>
 @endpush
 
-@push('button')
-    @section('button-title','Send Report')
-    @include('component.button-history')
-@endpush
+@include('component.search-box')
 
 <div class="col-md-12">
     <div class="card">
@@ -108,3 +108,4 @@
         </div>
     </div>
 </div>
+@endsection

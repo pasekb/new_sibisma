@@ -114,12 +114,15 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [Opname
 // REPORT
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/stock-history/{date?}', [ReportController::class, 'stockHistory'])->name('report.stock-history');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/send-report/{date?}', [ReportController::class, 'sendReport'])->name('report.send-report');
+// ROUTE SEND REPORT IF DEALER CODE != GROUP
+Route::middleware(['auth:sanctum', 'verified'])->get('/report/{dealer}/{date}', [ReportController::class, 'sendReportGroup'])->name('report.send-group');
+// END
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{status}', [ReportController::class, 'changeStatusStockHistory'])->name('report.update-status');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start}/{end}', [ReportController::class, 'reportPrint'])->name('report.print');
 // END REPORT
 
 // LOG
-Route::middleware(['auth:sanctum', 'verified'])->resource('log', LogController::class);
+Route::middleware(['auth:sanctum', 'verified'])->get('/log/{date?}', [LogController::class, 'log'])->name('log');
 Route::middleware(['auth:sanctum', 'verified'])->post('/log/deleteall', [LogController::class, 'deleteall'])->name('log.deleteall');
 // END LOG
 

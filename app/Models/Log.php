@@ -16,14 +16,4 @@ class Log extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-
-     // Relasi to User
-    public function createdBy(){
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
-    // Relasi to User
-    public function updatedBy(){
-        return $this->belongsTo(User::class, 'updated_by');
-    }
 }

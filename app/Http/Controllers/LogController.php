@@ -8,6 +8,18 @@ use Illuminate\Http\Request;
 
 class LogController extends Controller
 {
+    public function log(Request $req){
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            $data = Log::orderBy('created_at','desc')->limit(10)->get();
+            
+        } else {
+            $data = Log::whereBetween('log_date',[$req->start, $req->end])->get();
+        }
+        return view('page', compact('data','start','end'));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +27,7 @@ class LogController extends Controller
      */
     public function index()
     {
-        $data = Log::all();
-        return view('page', compact('data'));
+        // 
     }
 
     /**

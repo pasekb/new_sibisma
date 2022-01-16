@@ -7,6 +7,7 @@ use App\Models\Unit;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Dealer;
+use Auth;
 
 class UserController extends Controller
 {
@@ -48,7 +49,7 @@ class UserController extends Controller
         $data->dealer_code = $req->dealer_code;
         $data->email = $req->email;
         $data->username = $req->username;
-        $data->password = bcrypt($req->confirm_pass);
+        $data->password = bcrypt($req->password);
         $data->access = $req->access;
         $data->save();
 
@@ -96,6 +97,9 @@ class UserController extends Controller
         $data->email = $req->email;
         $data->username = $req->username;
         $data->access = $req->access;
+        if(Auth::user()->access == 'master'){
+            $data->password = bcrypt($req->password);
+        }
         $data->save();
 
         toast('User berhasil diubah','success');
