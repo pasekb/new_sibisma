@@ -173,6 +173,7 @@ class SaleController extends Controller
                     // if no record by date in stock history's table -> Create History
                     $his = new StockHistory;
                     $his->history_date = $req->sale_date;
+                    $his->id_key = Carbon::now('GMT+8')->format('H').'sh'.$dealer_code.Carbon::now('GMT+8')->format('Y').Carbon::now('GMT+8')->format('i').Carbon::now('GMT+8')->format('m').'b'.Carbon::now('GMT+8')->format('d').Carbon::now('GMT+8')->format('s');
                     $his->dealer_code = $dealer_code;
                     $his->first_stock = $firstStock;
                     $his->in_qty = $in;

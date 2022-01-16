@@ -30,6 +30,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Destination</th>
                             <th>Frame No</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -41,6 +42,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Destination</th>
                             <th>Frame No</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -56,6 +58,7 @@
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
+                            <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->frame_no }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>

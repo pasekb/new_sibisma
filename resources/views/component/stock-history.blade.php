@@ -4,6 +4,11 @@
         font-size: 20px;
     }
 
+    table a:hover {
+        text-decoration: none;
+        font-weight: bold;
+    }
+
 </style>
 @endpush
 
@@ -14,6 +19,11 @@
 <li class="nav-item">
     <a href="{{ route('report.stock-history') }}">Data Stock History</a>
 </li>
+@endpush
+
+@push('button')
+    @section('button-title','Send Report')
+    @include('component.button-history')
 @endpush
 
 <div class="col-md-12">
@@ -56,7 +66,12 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($o->history_date)->format('l, j M Y') }}</td>
+                            <td>
+                                <a href="{{ route('report.send-report', $o->history_date) }}"   data-toggle="tooltip"
+                                data-placement="top"
+                                title="Show details">{{ \Carbon\Carbon::parse($o->history_date)->isoFormat('ddd, D-MM-Y') }}
+                                </a>
+                            </td>
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->first_stock }}</td>
                             <td>{{ $o->in_qty }}</td>

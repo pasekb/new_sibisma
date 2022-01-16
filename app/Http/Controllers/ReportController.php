@@ -61,30 +61,73 @@ class ReportController extends Controller
 
     public function sendReport(Request $req){
         $date = $req->date;
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
         if ($date == null) {
-            $today = Carbon::now('GMT+8')->format('Y-m-d');
-            $firstStock = StockHistory::where('history_date',$today)->pluck('first_stock');
-            $in = Entry::where('entry_date',$today)->sum('in_qty');
+            // Stock Report
+            $date = $today;
+            $firstStock = StockHistory::where('history_date',$today)->sum('first_stock');
+            $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$today)
+            ->where('dealer_code','YIMM')->sum('in_qty');
+            $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$today)
+            ->where('dealer_code','!=','YIMM')->sum('in_qty');
             $out = Out::where('out_date',$today)->sum('out_qty');
             $sale = Sale::where('sale_date',$today)->sum('sale_qty');
             $lastStock = Stock::sum('qty');
 
-            $dataIn = Entry::where('entry_date',$today)->get();
-            $dataOut = Out::where('out_date',$today)->get();
-            $dataSale = Sale::where('sale_date',$today)->get();
+            $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$today)
+            ->where('dealer_code','YIMM')->get();
+            $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$today)
+            ->where('dealer_code','!=','YIMM')->get();
+            $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
+            ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
+            ->where('out_date',$today)
+            ->groupBy('dealer_id','stock_id')->get();
+            $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+            ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+            ->where('sale_date',$today)
+            ->groupBy('stock_id','leasing_id')->get();
+
+            $idKey = StockHistory::where('history_date',$today)->pluck('id_key');
+            $reportId = $idKey[0];
         }else {
-            $firstStock = StockHistory::where('history_date',$date)->pluck('first_stock');
-            $in = Entry::where('entry_date',$date)->sum('in_qty');
+            // Stock Report by date
+            $firstStock = StockHistory::where('history_date',$date)->sum('first_stock');
+            $inYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$date)
+            ->where('dealer_code','YIMM')->sum('in_qty');
+            $inBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$date)
+            ->where('dealer_code','!=','YIMM')->sum('in_qty');
             $out = Out::where('out_date',$date)->sum('out_qty');
             $sale = Sale::where('sale_date',$date)->sum('sale_qty');
-            $lastStock = Stock::sum('qty');
+            $lastStock = StockHistory::where('history_date',$date)->sum('last_stock');
 
-            $dataIn = Entry::where('entry_date',$date)->get();
-            $dataOut = Out::where('out_date',$date)->get();
-            $dataSale = Sale::where('sale_date',$date)->get();
+            $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$date)
+            ->where('dealer_code','YIMM')->get();
+            $dataInBranch = Entry::join('dealers','entries.dealer_id','=','dealers.id')
+            ->where('entry_date',$date)
+            ->where('dealer_code','!=','YIMM')->get();
+            $dataOut = Out::join('dealers','outs.dealer_id','=','dealers.id')
+            ->selectRaw('SUM(out_qty) as qty, dealer_name ,stock_id')
+            ->where('out_date',$date)
+            ->groupBy('dealer_id','stock_id')->get();
+            $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+            ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+            ->where('sale_date',$date)
+            ->groupBy('stock_id','leasing_id')->get();
+
+            $idKey = StockHistory::where('history_date',$date)->pluck('id_key');
+            $reportId = $idKey[0];
         }
         
+        // Data Report History
+
         $data = StockHistory::orderBy('history_date','desc')->limit(7)->get();
-        return view('page', compact('data','date','today','firstStock','in','out','sale','dataIn','dataOut','dataSale','data'));
+        return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','data','dataInBranch','inBranch','lastStock','reportId'));
     }
 }

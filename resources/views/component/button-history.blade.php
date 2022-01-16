@@ -11,7 +11,11 @@
         {{ route('branch-delivery.history') }}
     @elseif(Route::is('document.*'))
         {{ route('document.history') }}
+    @elseif(Route::is('report.send-report'))
+        {{ route('report.stock-history') }}
+    @elseif(Route::is('report.stock-history'))
+        {{ route('report.send-report') }}
     @else
         #
     @endif
-" class="btn btn-default btn-round" style="margin-bottom: 20px;"><i class="fas fa-hourglass-half"></i>&nbsp;&nbsp; <strong>@yield('button-title')</strong> </a>
+" class="btn btn-default btn-round" style="margin-bottom: 20px;"><i class="{{ Route::is('report.stock-history') ? 'fas fa-paper-plane' : 'fas fa-hourglass-half' }}"></i>&nbsp;&nbsp; <strong>@yield('button-title')</strong> </a>
