@@ -49,7 +49,7 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->name }}</td>
+                            <td @if($o->gender == 'L') style="background-color: #76b2e380;" @else style="background-color: pink;" @endif>{{ $o->name }}</td>
                             <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->phone }}</td>
                             <td>{{ $o->position }}</td>

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Manpower;
 use App\Models\Dealer;
+use App\Models\Log;
 use Auth;
+use Carbon\Carbon;
 
 class ManpowerController extends Controller
 {
@@ -17,9 +19,19 @@ class ManpowerController extends Controller
      */
     public function index()
     {
-        $data = Manpower::all();
-        $dealer = Dealer::all();
-        return view('page', compact('data','dealer'));
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        if ($dc == 'group') {
+            $data = Manpower::all();
+            $dealer = Dealer::all();
+            return view('page', compact('data','dealer'));
+        }else{
+            $data = Manpower::where('dealer_id',$did)->get();
+            $dealer = $did;
+            return view('page', compact('data','dealer'));
+        }
+        
     }
 
     /**
@@ -54,6 +66,14 @@ class ManpowerController extends Controller
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
         $data->save();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'creates manpower data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data manpower berhasil disimpan','success');
         return redirect()->route('manpower.index')->with('display', true);;
     }
@@ -105,6 +125,14 @@ class ManpowerController extends Controller
             'education' => $req->education,
             'updated_by' => Auth::user()->id,
         ]);
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'updates manpower data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data manpower berhasil diubah','success');
         return redirect()->back();
     }
@@ -122,6 +150,14 @@ class ManpowerController extends Controller
 
     public function delete($id){
         Manpower::find($id)->delete();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'deletes manpower data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data manpower terhapus','success');
         return redirect()->back();
     }

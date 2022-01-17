@@ -38,6 +38,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Sender</th>
                             <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -50,6 +51,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
+                            <th>Sender</th>
                             <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
@@ -66,6 +68,7 @@
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
+                            <td>{{ $o->dealer->dealer_name }}</td>
                             <td>{{ $o->in_qty }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
@@ -79,7 +82,7 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="8" style="text-align: center;">No data available</td>
+                            <td colspan="9" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

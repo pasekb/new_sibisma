@@ -11,6 +11,7 @@ use App\Models\Out;
 use App\Models\Leasing;
 use App\Models\Stock;
 use App\Models\Document;
+use App\Models\Log;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
@@ -25,13 +26,25 @@ class SaleController extends Controller
      */
     public function index()
     {
-        $stock = Stock::all();
-        $leasing = Leasing::all();
-        $dealer = Dealer::all();
-        $today = Carbon::now('GMT+8')->format('Y-m-d');
-        $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
 
-        return view('page', compact('stock','leasing','today','data','dealer'));
+        $dealer = Dealer::all();
+        $leasing = Leasing::all();
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        if ($dc == 'group') {
+            $stock = Stock::all();
+            $data = Sale::where('sale_date',$today)->orderBy('id','desc')->get();
+            return view('page', compact('stock','leasing','today','data','dealer'));
+        }else{
+            $stock = Stock::where('dealer_id',$did)->get('stocks.*');
+            $dealerCode = $dc;
+            $data = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$today)->where('stocks.dealer_id',$did)->orderBy('sales.id','desc')->get();
+            return view('page', compact('stock','leasing','today','data','dealer','dealerCode'));
+        }
+        
     }
 
     /**
@@ -57,6 +70,9 @@ class SaleController extends Controller
         } else {
             $dealer_code = Auth::user()->dealer_code;
         }
+
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
         
         // Get Stok ID from Input
         $stockId = $req->stock_id;
@@ -70,24 +86,62 @@ class SaleController extends Controller
         // Update Stock
         $updateStock = $latestStock - $soldQty;
 
-        /** ============== Create Or Update Stock History ============== */ 
-        $isSale = Sale::where('sale_date',$req->sale_date)->count();
-        $isOut = Out::where('out_date',$req->sale_date)->count();
-        $isEntry = Entry::where('entry_date',$req->sale_date)->count();
-
-        // Count first stock
-        $stock = Stock::sum('qty');
-        $in = Entry::where('entry_date',$req->sale_date)->sum('in_qty');
-        $in = ($in == 0) ? $in = 0 : (int)$in ;
-        $out = Out::where('out_date',$req->sale_date)->sum('out_qty');
-        $out = ($out == 0) ? $out = 0 : (int)$out ;
-        $sale = Sale::where('sale_date',$req->sale_date)->sum('sale_qty');
-        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
-        $firstStock = $stock - ($in + $out + $sale);
+        /** ============== Create Or Update Stock History ============== */
+        if($dc == 'group'){
+            $isSale = Sale::where('sale_date',$req->sale_date)->count();
+            $isOut = Out::where('out_date',$req->sale_date)->count();
+            $isEntry = Entry::where('entry_date',$req->sale_date)->count();
+    
+            // Count first stock
+            $stock = Stock::sum('qty');
+            $in = Entry::where('entry_date',$req->sale_date)->sum('in_qty');
+            $in = ($in == 0) ? $in = 0 : (int)$in ;
+            $out = Out::where('out_date',$req->sale_date)->sum('out_qty');
+            $out = ($out == 0) ? $out = 0 : (int)$out ;
+            $sale = Sale::where('sale_date',$req->sale_date)->sum('sale_qty');
+            $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+            $firstStock = $stock - ($in + $out + $sale);
+        }else{
+            $isSale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->count();
+            $isOut = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->count();
+            $isEntry = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->count();
+    
+            // Count first stock
+            $stock = Stock::where('dealer_id',$did)->sum('qty');
+            $in = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->sum('in_qty');
+            $in = ($in == 0) ? $in = 0 : (int)$in ;
+            $out = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->sum('out_qty');
+            $out = ($out == 0) ? $out = 0 : (int)$out ;
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$req->sale_date)
+            ->where('stocks.dealer_id',$did)->sum('sale_qty');
+            $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+            $firstStock = $stock - ($in + $out + $sale);
+        }
+        
         /** ============== END Create Or Update Stock History ============== */ 
-
-        $frameSale = Sale::where('frame_no',$req->frame_no)->count('frame_no');
-        $frameOut = Out::where('frame_no',$req->frame_no)->count('frame_no');
+        if ($dc == 'group') {
+            $frameSale = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+            $frameOut = Out::where('frame_no',$req->frame_no)->count('frame_no');
+        }else{
+            $frameSale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('frame_no',$req->frame_no)
+            ->where('stocks.dealer_id',$did)->count('frame_no');
+            $frameOut = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('frame_no',$req->frame_no)
+            ->where('stocks.dealer_id',$did)->count('frame_no');
+        }
+        
 
         if ($frameSale > 0 || $frameOut > 0) {
             alert()->warning('Warning','Frame number already sold!');
@@ -115,11 +169,23 @@ class SaleController extends Controller
             $stock->save();
             
             /** ============== Create Documents ============== */ 
-            $cekframe = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+            if ($dc == 'group') {
+                $cekframe = Sale::where('frame_no',$req->frame_no)->count('frame_no');
+            }else{
+                $cekframe = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->where('frame_no',$req->frame_no)
+                ->where('stocks.dealer_id',$did)->count('frame_no');
+            }
+            
 
             if($cekframe > 0){
-
-                $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
+                if ($dc == 'group') {
+                    $saleId = Sale::where('frame_no',$req->frame_no)->sum('id');
+                }else{
+                    $saleId = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->where('frame_no',$req->frame_no)
+                    ->where('stocks.dealer_id',$did)->sum('sales.id');
+                }
 
                 $data = new Document;
                 $data->sale_id = $saleId;
@@ -136,12 +202,26 @@ class SaleController extends Controller
             /** ============== Create Or Update Stock History ============== */ 
 
             // Get QTY after update
-            $sale_qty = Sale::where('sale_date',$req->sale_date)->sum('sale_qty');
-            $lastStock = Stock::sum('qty');
+            if ($dc == 'group') {
+                $sale_qty = Sale::where('sale_date',$req->sale_date)->sum('sale_qty');
+                $lastStock = Stock::sum('qty');
+            }else{
+                $sale_qty = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->where('sale_date',$req->sale_date)
+                ->where('stocks.dealer_id',$did)->sum('sale_qty');
+                $lastStock = Stock::where('dealer_id',$did)->sum('qty');
+            }
+            
 
             if ($isEntry > 0 && $isOut > 0 && $isSale > 0) {
                 // If that variables has records -> Update History
-                $his = StockHistory::where('history_date',$req->sale_date)->first();
+                if ($dc == 'group') {
+                    $his = StockHistory::where('history_date',$req->sale_date)->first();
+                }else{
+                    $his = StockHistory::where('history_date',$req->sale_date)
+                    ->where('dealer_code',$dc)->first();
+                }
+                
                 $his->in_qty = $in;
                 $his->out_qty = $out;
                 $his->sale_qty = $sale_qty;
@@ -150,7 +230,13 @@ class SaleController extends Controller
                 $his->save();
             } elseif($isEntry > 0 || $isOut > 0 || $isSale > 0) {
                 // If one of them have records -> Update History
-                $his = StockHistory::where('history_date',$req->sale_date)->first();
+                if ($dc == 'group') {
+                    $his = StockHistory::where('history_date',$req->sale_date)->first();
+                }else{
+                    $his = StockHistory::where('history_date',$req->sale_date)
+                    ->where('dealer_code',$dc)->first();
+                }
+                
                 $his->in_qty = $in;
                 $his->out_qty = $out;
                 $his->sale_qty = $sale_qty;
@@ -159,10 +245,21 @@ class SaleController extends Controller
                 $his->save();
             } else {
                 // If no record by input date in DB -> Create History
-                $cek = StockHistory::where('history_date',$req->sale_date)->count();
+                if ($dc == 'group') {
+                    $cek = StockHistory::where('history_date',$req->sale_date)->count();
+                }else{
+                    $cek = StockHistory::where('history_date',$req->sale_date)
+                    ->where('dealer_code',$dc)->count();
+                }
+                
                 if ($cek > 0) {
                     // if Stock history's table contain data with the same date -> Update History
-                    $his = StockHistory::where('history_date',$req->sale_date)->first();
+                    if ($dc == 'group') {
+                        $his = StockHistory::where('history_date',$req->sale_date)->first();
+                    }else{
+                        $his = StockHistory::where('history_date',$req->sale_date)
+                        ->where('dealer_code',$dc)->first();
+                    }
                     $his->in_qty = $in;
                     $his->out_qty = $out;
                     $his->sale_qty = $sale_qty;
@@ -186,6 +283,13 @@ class SaleController extends Controller
                 }
             }
             /** ============== END Create Or Update Stock History ============== */ 
+
+            // Write log
+            $log = new Log;
+            $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+            $log->activity = 'creates sale units data';
+            $log->user_id = Auth::user()->id;
+            $log->save();
         
             toast('Data sale berhasil disimpan','success');
             return redirect()->back()->withInput($req->except('stock_id', 'model_name','color','year_mc','on_hand','leasing_id','leasing_code','frame_no','engine_no','nik','customer_name','phone','address'));
@@ -239,6 +343,9 @@ class SaleController extends Controller
     }
 
     public function delete($id){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         // Get Stock ID from Sale Table
         $stockId = Sale::where('id',$id)->pluck('stock_id');
 
@@ -253,14 +360,33 @@ class SaleController extends Controller
 
         /** ============== Create Or Update Stock History ============== */
         $sale_date = Sale::where('id',$id)->pluck('sale_date');
-        // Count first stock
-        $stock = Stock::sum('qty');
-        $in = Entry::where('entry_date',$sale_date)->sum('in_qty');
-        $in = ($in == 0) ? $in = 0 : (int)$in ;
-        $out = Out::where('out_date',$sale_date)->sum('out_qty');
-        $out = ($out == 0) ? $out = 0 : (int)$out ;
-        $sale = Sale::where('sale_date',$sale_date)->sum('sale_qty');
-        $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+
+        if($dc == 'group'){
+            // Count first stock
+            $stock = Stock::sum('qty');
+            $in = Entry::where('entry_date',$sale_date)->sum('in_qty');
+            $in = ($in == 0) ? $in = 0 : (int)$in ;
+            $out = Out::where('out_date',$sale_date)->sum('out_qty');
+            $out = ($out == 0) ? $out = 0 : (int)$out ;
+            $sale = Sale::where('sale_date',$sale_date)->sum('sale_qty');
+            $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+        }else{
+            // Count first stock
+            $stock = Stock::where('dealer_id',$did)->sum('qty');
+            $in = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$sale_date)
+            ->where('stocks.dealer_id',$did)->sum('in_qty');
+            $in = ($in == 0) ? $in = 0 : (int)$in ;
+            $out = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$sale_date)
+            ->where('stocks.dealer_id',$did)->sum('out_qty');
+            $out = ($out == 0) ? $out = 0 : (int)$out ;
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$sale_date)
+            ->where('stocks.dealer_id',$did)->sum('sale_qty');
+            $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
+        }
+        
         /** ============== END Create Or Update Stock History ============== */ 
 
         // dd($updateStock);
@@ -275,12 +401,27 @@ class SaleController extends Controller
         /** ============== END Create Or Update Stock History ============== */ 
 
         // Get QTY after update
-        $sale_qty = Sale::where('sale_date',$sale_date)->sum('sale_qty');
-        $sale_qty = ($sale_qty == 0) ? $sale_qty = 0 : (int)$sale_qty ;
-        $lastStock = Stock::sum('qty');
+        if ($dc == 'group') {
+            $sale_qty = Sale::where('sale_date',$sale_date)->sum('sale_qty');
+            $sale_qty = ($sale_qty == 0) ? $sale_qty = 0 : (int)$sale_qty ;
+            $lastStock = Stock::sum('qty');
+        }else{
+            $sale_qty = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$sale_date)
+            ->where('stocks.dealer_id',$did)->sum('sale_qty');
+            $sale_qty = ($sale_qty == 0) ? $sale_qty = 0 : (int)$sale_qty ;
+            $lastStock = Stock::where('dealer_id',$did)->sum('qty');
+        }
+        
 
         // Update Stock History
-        $his = StockHistory::where('history_date',$sale_date)->first();
+        if ($dc == 'group') {
+            $his = StockHistory::where('history_date',$sale_date)->first();
+        }else{
+            $his = StockHistory::where('history_date',$sale_date)
+            ->where('dealer_code',$dc)->first();
+        }
+        
         $his->in_qty = $in;
         $his->out_qty = $out;
         $his->sale_qty = $sale_qty;
@@ -293,6 +434,13 @@ class SaleController extends Controller
         // Get document ID by Sale ID
         $docId = Document::where('sale_id',$id)->pluck('id');
         Document::where('id',$docId)->delete();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'deletes sale units data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
         
         toast('Data sale berhasil dihapus','success');
         return redirect()->back();
@@ -305,17 +453,33 @@ class SaleController extends Controller
     }
 
     public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
-            $data = Sale::orderBy('sale_date','desc')->get();
+            if ($dc == 'group') {
+                $data = Sale::orderBy('sale_date','desc')->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('sale_date','desc')->get();
+            }
             
         } else {
-            $data = Sale::whereBetween('sale_date',[$req->start, $req->end])->get();
+            if ($dc == 'group') {
+                $data = Sale::whereBetween('sale_date',[$req->start, $req->end])->get();
+            }else{
+                $data = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('sale_date',[$req->start, $req->end])->get();
+            }
         }
         return view('page', compact('data','start','end'));
     }
 
+    // PAGE Show All Achievment
     public function achievment($param){
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $month = Carbon::now('GMT+8')->format('m');

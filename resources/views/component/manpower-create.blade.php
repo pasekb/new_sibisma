@@ -31,6 +31,7 @@
             <form action="{{ route('manpower.store') }}" method="post">
                 @csrf
                 <div class="row">
+                @if(Auth::user()->dealer_code == 'group')
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_id" name="dealer_id" value="{{ old('dealer_id') }}" required>
@@ -40,6 +41,9 @@
                             <label for="dealer_name" class="placeholder">Select Dealer *</label>
                         </div>
                     </div>
+                @else
+                    <input type="hidden" id="dealer_id" name="dealer_id" value="{{ $dealer }}" required>
+                @endif
 
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
@@ -49,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="{{ Auth::user()->dealer_code == 'group' ? 'col-md-4' : 'col-md-8' }}">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom"
                                 name="address" value="{{ old('address') }}" required>
@@ -121,7 +125,9 @@
     </div>
 </div>
 
-@include('component.modal-dealer')
+@if(Auth::user()->dealer_code == 'group')
+    @include('component.modal-dealer')
+@endif
 @include('component.modal-position')
 @include('component.modal-education')
 @include('component.modal-gender')

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\SaleDelivery;
 use App\Models\Manpower;
+use App\Models\Dealer;
 use Carbon\Carbon;
 use Auth;
 
@@ -19,12 +20,32 @@ class SaleDeliveryController extends Controller
      */
     public function index()
     {
-        $data = SaleDelivery::orderBy('sale_delivery_date','desc')->get();
-        $manpower = Manpower::where('position','Driver')->get();
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $time = Carbon::now('GMT+8')->format('h:i:s');
-        $sale = Sale::all();
-        return view('page', compact('data','manpower','today','sale','time'));
+
+        if ($dc == 'group') {
+            $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
+            ->join('stocks','sales.stock_id','stocks.id')
+            ->orderBy('sale_delivery_date','desc')->get();
+            $manpower = Manpower::where('position','Driver')->get();
+            $sale = Sale::all();
+            return view('page', compact('data','manpower','today','sale','time'));
+        }else{
+            $data = SaleDelivery::join('sales','sale_deliveries.sale_id','sales.id')
+            ->join('stocks','sales.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('sale_delivery_date','desc')
+            ->select('stocks.*','sale_deliveries.*')->get();
+            $manpower = Manpower::where('position','Driver')
+            ->where('dealer_id',$did)->get();
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)->get();
+            return view('page', compact('data','manpower','today','sale','time'));
+        }
+        
     }
 
     /**

@@ -63,7 +63,7 @@
                                 <th>Color</th>
                                 <th>Qty</th>
                                 <th>Year</th>
-                                @if(Auth::user()->access == 'master')
+                                @if(Auth::user()->dealer_code == 'group')
                                 <th>Dealer</th>
                                 @endif
                             </tr>
@@ -74,7 +74,7 @@
                                 <th>Color</th>
                                 <th>Qty</th>
                                 <th>Year</th>
-                                @if(Auth::user()->access == 'master')
+                                @if(Auth::user()->dealer_code == 'group')
                                 <th>Dealer</th>
                                 @endif
                             </tr>
@@ -111,6 +111,9 @@
                                 <th>Color</th>
                                 <th>Year</th>
                                 <th>Frame No</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </thead>
                         <tfoot>
@@ -120,6 +123,9 @@
                                 <th>Color</th>
                                 <th>Year</th>
                                 <th>Frame No</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </tfoot>
                         <tbody>
@@ -140,10 +146,13 @@
                                 <td>{{ $o->stock->unit->model_name }}</td>
                                 <td>{{ $o->frame_no }}</td>
                                 <td>{{ $o->stock->unit->year_mc }}</td>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <td>{{ $o->stock->dealer->dealer_code }}</td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" style="text-align: center;">No data available</td>
+                                <td colspan="6" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

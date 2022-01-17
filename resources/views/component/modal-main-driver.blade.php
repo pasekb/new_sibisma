@@ -17,12 +17,18 @@
                             <tr>
                                 <th>Position</th>
                                 <th>Manpower's Name</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>Position</th>
                                 <th>Manpower's Name</th>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <th>Dealer</th>
+                                @endif
                             </tr>
                         </tfoot>
                         <tbody>
@@ -31,6 +37,9 @@
                                 data-name="{{ $o->name }}" class="pilihMainDriver">
                                 <td>{{ $o->position }}</td>
                                 <td>{{ $o->name }}</td>
+                                @if(Auth::user()->dealer_code == 'group')
+                                <td>{{ $o->dealer->dealer_code }}</td>
+                                @endif
                             </tr>
                             @empty
                             <tr>

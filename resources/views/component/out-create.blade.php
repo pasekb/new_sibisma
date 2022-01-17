@@ -47,6 +47,8 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
                 @endif
                 
                 <div class="row">

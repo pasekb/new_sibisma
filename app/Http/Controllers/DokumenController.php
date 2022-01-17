@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\Sale;
+use App\Models\Dealer;
 use Carbon\Carbon;
 use Auth;
 
@@ -18,10 +19,25 @@ class DokumenController extends Controller
      */
     public function index()
     {
-        $sale = Sale::all();
-        $data = Document::all();
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        return view('page', compact('data','today','sale'));
+
+        if ($dc == 'group') {
+            $sale = Sale::orderBy('sale_date','desc')->get();
+            $data = Document::join('sales','documents.sale_id','sales.id')
+            ->join('stocks','sales.stock_id','stocks.id')->get();
+            return view('page', compact('data','today','sale'));
+        }else{
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('sale_date','desc')->get();
+            $data = Document::join('sales','documents.sale_id','sales.id')
+            ->join('stocks','sales.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)->get();
+            return view('page', compact('data','today','sale'));
+        }
+        
     }
 
     /**

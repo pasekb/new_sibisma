@@ -27,20 +27,19 @@ class EntryController extends Controller
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         
         $dealer = Dealer::orderBy('id','asc')->get();
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         if ($dc == 'group') {
             $stock = Stock::all();
-            $today = Carbon::now('GMT+8')->format('Y-m-d');
             $data = Entry::where('entry_date',$today)->orderBy('id','desc')->get();
             return view('page', compact('stock','dealer','today','data'));
         } else {
             $stock = Stock::where('dealer_id',$did)->get('stocks.*');
-            
-            
             $dealerCode = $dc;
-            $today = Carbon::now('GMT+8')->format('Y-m-d');
             $data = Entry::join('stocks','entries.stock_id','stocks.id')
-            ->where('entry_date',$today)->where('stocks.dealer_id',$did)->orderBy('entries.id','desc')->get();
+            ->join('dealers','entries.dealer_id','dealers.id')
+            ->where('entry_date',$today)->where('stocks.dealer_id',$did)->orderBy('entries.id','desc')
+            ->select('dealers.dealer_name','stocks.*','entries.*')->get();
             // dd($data);
 
             return view('page', compact('stock','today','data','dealerCode','dealer'));
@@ -229,15 +228,15 @@ class EntryController extends Controller
                 $his->updated_by = Auth::user()->id;
                 $his->save();
             }
-            
-            // Write log
-            $log = new Log;
-            $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
-            $log->activity = 'creates entry units data';
-            $log->user_id = Auth::user()->id;
-            $log->save();
         }
         /** ============== END Create Or Update Stock History ============== */ 
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'creates entry units data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
 
         toast('Data entry berhasil disimpan','success');
         return redirect()->back()->withInput($req->except('stock_id', 'model_name','color','year_mc','on_hand','dealer_id','dealer_name','in_qty'));
@@ -347,7 +346,7 @@ class EntryController extends Controller
 
         /** ============== END Create Or Update Stock History ============== */ 
         // Get QTY after update
-        if ($dc == 'master') {
+        if ($dc == 'group') {
             $entry_qty = Entry::where('entry_date',$entry_date)->sum('in_qty');
             $entry_qty = ($entry_qty == 0) ? $entry_qty = 0 : (int)$entry_qty;
             $lastStock = Stock::sum('qty');
@@ -360,7 +359,13 @@ class EntryController extends Controller
         }
 
         // Update Stock History
-        $his = StockHistory::where('history_date',$entry_date)->first();
+        if ($dc == 'group') {
+            $his = StockHistory::where('history_date',$entry_date)->first();
+        }else{
+            $his = StockHistory::where('history_date',$entry_date)
+            ->where('dealer_code',$dc)->first();
+        }
+        
         $his->in_qty = $entry_qty;
         $his->out_qty = $out;
         $his->sale_qty = $sale;
@@ -387,13 +392,32 @@ class EntryController extends Controller
     }
 
     public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
-            $data = Entry::orderBy('entry_date','desc')->get();
+            if ($dc == 'group') {
+                $data = Entry::orderBy('entry_date','desc')->get();
+            }else{
+                $data = Entry::join('stocks','entries.stock_id','stocks.id')
+                ->join('dealers','entries.dealer_id','dealers.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('entry_date','desc')
+                ->select('dealers.dealer_name','stocks.*','entries.*')->get();
+            }
             
         } else {
-            $data = Entry::whereBetween('entry_date',[$req->start, $req->end])->get();
+            if ($dc == 'group') {
+                $data = Entry::whereBetween('entry_date',[$req->start, $req->end])->get();
+            }else{
+                $data = Entry::join('stocks','entries.stock_id','stocks.id')
+                ->join('dealers','entries.dealer_id','dealers.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('entry_date',[$req->start, $req->end])
+                ->select('dealers.dealer_name','stocks.*','entries.*')->get();
+            }
         }
         return view('page', compact('data','start','end'));
     }

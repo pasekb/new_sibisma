@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    @if(Auth::user()->access == 'master')
+                    @if(Auth::user()->dealer_code == 'group')
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}"
