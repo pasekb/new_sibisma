@@ -16,6 +16,13 @@
                     <span class="sub-item">Send Report</span>
                 </a>
             </li>
+            @if(Auth::user()->dealer_code == 'group')
+            <li class="{{ Route::is('report.search-id') ? 'active' : '' }}">
+                <a href="{{ route('report.search-id') }}">
+                    <span class="sub-item">Search Report</span>
+                </a>
+            </li>
+            @endif
         </ul>
     </div>
 </li>

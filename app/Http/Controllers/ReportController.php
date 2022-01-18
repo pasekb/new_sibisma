@@ -103,7 +103,9 @@ class ReportController extends Controller
                 $sale = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->where('sale_date',$today)
                 ->where('stocks.dealer_id',$did)->sum('sale_qty');
-                $lastStock = Stock::where('dealer_id',$did)->sum('qty');
+                $lastStock = StockHistory::where('history_date',$today)
+                ->where('dealer_code',$dc)->sum('last_stock');
+                $sysStock = Stock::where('dealer_id',$did)->sum('qty');
 
                 $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
                 ->join('stocks','entries.stock_id','stocks.id')
@@ -156,7 +158,9 @@ class ReportController extends Controller
                 $sale = Sale::join('stocks','sales.stock_id','stocks.id')
                 ->where('sale_date',$date)
                 ->where('stocks.dealer_id',$did)->sum('sale_qty');
-                $lastStock = Stock::where('dealer_id',$did)->sum('qty');
+                $lastStock = StockHistory::where('history_date',$date)
+                ->where('dealer_code',$dc)->sum('last_stock');
+                $sysStock = Stock::where('dealer_id',$did)->sum('qty');
 
                 $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
                 ->join('stocks','entries.stock_id','stocks.id')
@@ -188,11 +192,13 @@ class ReportController extends Controller
                 $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
                 $dealerName = $dealerName[0];
         }
+
+        $diff = $sysStock - $lastStock;
         
         // Data Report History
             $data = StockHistory::where('dealer_code',$dc)->orderBy('history_date','desc')->limit(7)->get();
 
-            return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName'));
+            return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','diff','sysStock'));
         
     }
 
@@ -224,7 +230,9 @@ class ReportController extends Controller
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
             ->where('sale_date',$date)
             ->where('stocks.dealer_id',$did)->sum('sale_qty');
-            $lastStock = Stock::where('dealer_id',$did)->sum('qty');
+            $lastStock = StockHistory::where('history_date',$date)
+            ->where('dealer_code',$dealer)->sum('last_stock');
+            $sysStock = Stock::where('dealer_id',$did)->sum('qty');
 
             $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
             ->join('stocks','entries.stock_id','stocks.id')
@@ -256,7 +264,20 @@ class ReportController extends Controller
             $dealerName = Dealer::where('dealer_code',$dealer)->pluck('dealer_name');
             $dealerName = $dealerName[0];
 
-            return view('page', compact('date','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName'));
+            $diff = $sysStock - $lastStock;
+
+            return view('page', compact('date','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','diff','sysStock'));
         }
+    }
+
+    public function reportSearch(Request $req){
+        $rid = $req->rid;
+        if ($rid == null) {
+            $data = StockHistory::orderBy('id','desc')->limit(20)->get();
+        } else {
+            $data = StockHistory::where('id_key',$rid)
+            ->orderBy('id','desc')->get();
+        }
+        return view('page', compact('data'));
     }
 }

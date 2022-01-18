@@ -141,6 +141,9 @@
             @include('component.send-report')
         @elseif(Route::is('report.send-group'))
             @include('component.send-group')
+        @elseif(Route::is('report.search-id'))
+            @include('component.search-report-id')
+            @include('component.search-report-id-data')
         @endif
 
     <!-- Log Page -->

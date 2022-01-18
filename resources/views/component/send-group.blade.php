@@ -38,10 +38,15 @@
     .total {
         color: white;
         background-color: #0f5abc;
+        font-size: 20px;
     }
 
     .sum {
         background-color: #00000010;
+    }
+
+    .t{
+        color: transparent;
     }
 
 </style>
@@ -74,14 +79,14 @@
             </div>
             <table style="width: 100%;">
                 <div id="reportStock">
-                    <p class="header">*Lap. Stok {{ $dealerName }} {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}*</p>
+                    <p class="header"><span class="t">*</span>Lap. Stok {{ $dealerName }} {{ \Carbon\Carbon::parse($date)->format('d-m-Y') }}<span class="t">*</span></p>
 
                     <p class="header total">
-                        *_Stok Awal : {{ $firstStock }}_*
+                        <span class="t">*_</span>Stok Awal : {{ $firstStock }}<span class="t">_*</span>
                     </p>
 
                     <p class="header sum">
-                        Masuk YIMM : *{{ $inYIMM }}* (+)
+                        Masuk YIMM : <span class="t">*</span>{{ $inYIMM }}<span class="t">*</span> (+)
                     </p>
                     <p>
                         @foreach($dataInYIMM as $o)
@@ -91,7 +96,7 @@
                     </p><br>
 
                     <p class="header sum">
-                        Masuk Cabang : *{{ $inBranch }}* (+)
+                        Masuk Cabang : <span class="t">*</span>{{ $inBranch }}<span class="t">*</span> (+)
                     </p>
                     <p>
                         @foreach($dataInBranch as $o)
@@ -101,7 +106,7 @@
                     </p><br>
 
                     <p class="header sum">
-                        Keluar : *{{ $out }}* (-)
+                        Keluar : <span class="t">*</span>{{ $out }}<span class="t">*</span> (-)
                     </p>
                     <p>
                         @foreach($dataOut as $o)
@@ -112,7 +117,7 @@
                     </p><br>
 
                     <p class="header sum">
-                        Terjual : *{{ $sale }}* (-)
+                        Terjual : <span class="t">*</span>{{ $sale }}<span class="t">*</span> (-)
                     </p>
                     <p>
                         @foreach($dataSale as $o)
@@ -122,10 +127,15 @@
                     </p><br>
 
                     <p class="header total">
-                        *_Stok Akhir : {{ $lastStock }}_*
+                    <span class="t">*_</span>Stok Akhir : {{ $lastStock }}<span class="t">_*</span>
                     </p><br>
 
-                    <p>_recorded in SiBisma on id:_ <br> _{{ $reportId }}_</p>
+                    <p class="{{ $diff == '0' ? 'd-none' : 'd-block' }}" style="color: red;">
+                        Stok sistem : {{ $sysStock }} <br>
+                        Selisih : {{ $diff }}
+                    </p>
+
+                    <p><span class="t">_</span>recorded in SiBisma on id:<span class="t">_</span> <br> <span class="t">_</span>{{ $reportId }}<span class="t">_</span></p>
                 </div>
             </table>
         </div>

@@ -125,6 +125,11 @@
                         *_Stok Akhir : {{ $lastStock }}_*
                     </p><br>
 
+                    <p class="{{ $diff == '0' ? 'd-none' : 'd-block' }}" style="color: red;">
+                        Stok sistem : {{ $sysStock }} <br>
+                        Selisih : {{ $diff }}
+                    </p>
+
                     <p>_recorded in SiBisma on id:_ <br> _{{ $reportId }}_</p>
                 </div>
             </table>

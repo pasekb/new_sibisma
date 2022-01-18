@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Opname;
 use App\Models\Stock;
+use App\Models\Dealer;
+use App\Models\Log;
 use Carbon\Carbon;
 use Auth;
 
@@ -18,11 +20,22 @@ class OpnameController extends Controller
      */
     public function index()
     {
-        $stock = Stock::all();
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
         $today = Carbon::now('GMT+8')->format('Y-m-d');
-        $data = Opname::where('opname_date',$today)->orderBy('id','desc')->get();
 
-        return view('page', compact('stock','today','data'));
+        if ($dc == 'group') {
+            $stock = Stock::all();
+            $data = Opname::where('opname_date',$today)->orderBy('id','desc')->get();
+            return view('page', compact('stock','today','data'));
+        }else{
+            $stock = Stock::where('dealer_id',$did)->get();
+            $data = Opname::join('stocks','opnames.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->where('opname_date',$today)->orderBy('opnames.id','desc')->get();
+            return view('page', compact('stock','today','data'));
+        }
+        
     }
 
     /**
@@ -65,6 +78,13 @@ class OpnameController extends Controller
         $stock = Stock::where('id', $req->stock_id)->first();
         $stock->qty = $req->stock_opname;
         $stock->save();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'creates stock opname data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
 
         toast('Data stock opname berhasil disimpan','success');
         return redirect()->back();

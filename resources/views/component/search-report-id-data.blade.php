@@ -1,6 +1,3 @@
-@extends('layouts.main')
-
-@section('content')
 @push('after-css')
 <style>
     a.btnAction {
@@ -20,17 +17,20 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('report.stock-history') }}">Data Stock History</a>
+    <a href="{{ route('report.search-id') }}">Search Report Data</a>
 </li>
 @endpush
 
-@include('component.search-box')
+@push('button')
+    @section('button-title','Send Report')
+    @include('component.button-history')
+@endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
             <livewire:widget-stock-qty>
-                <h4 class="card-title">Stock History Data</h4>
+                <h4 class="card-title">Search Report Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -90,4 +90,3 @@
         </div>
     </div>
 </div>
-@endsection

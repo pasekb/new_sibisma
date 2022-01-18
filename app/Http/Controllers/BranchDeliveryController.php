@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Out;
 use App\Models\BranchDelivery;
 use App\Models\Manpower;
+use App\Models\Log;
+use App\Models\Dealer;
 use Carbon\Carbon;
 use Auth;
 
@@ -19,12 +21,30 @@ class BranchDeliveryController extends Controller
      */
     public function index()
     {
-        $data = BranchDelivery::orderBy('branch_delivery_date','desc')->get();
-        $manpower = Manpower::where('position','Driver')->get();
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $today = Carbon::now('GMT+8')->format('Y-m-d');
         $time = Carbon::now('GMT+8')->format('h:i:s');
-        $out = Out::all();
-        return view('page', compact('data','manpower','today','out','time'));
+
+        if ($dc == 'group') {
+            $data = BranchDelivery::orderBy('branch_delivery_date','desc')->get();
+            $manpower = Manpower::where('position','Driver')->get();
+            $out = Out::all();
+            return view('page', compact('data','manpower','today','out','time'));
+        }else{
+            $data = BranchDelivery::join('outs','branch_deliveries.out_id','outs.id')
+            ->join('stocks','outs.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->orderBy('branch_delivery_date','desc')
+            ->select('stocks.*','branch_deliveries.*')->get();
+            $manpower = Manpower::where('position','Driver')
+            ->where('dealer_id',$did)->get();
+            $out = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('stocks.dealer_id',$did)
+            ->select('outs.*','stocks.unit_id')->get();
+            return view('page', compact('data','manpower','today','out','time'));
+        }
     }
 
     /**
@@ -56,6 +76,13 @@ class BranchDeliveryController extends Controller
         $data->created_by = Auth::user()->id;
         $data->updated_by = Auth::user()->id;
         $data->save();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'creates branch deliveries data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
 
         toast('Data branch delivery berhasil disimpan','success');
         return redirect()->back();
@@ -102,6 +129,13 @@ class BranchDeliveryController extends Controller
         $data->updated_by = Auth::user()->id;
         $data->save();
 
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'updates branch deliveries data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data branch delivery berhasil diubah','success');
         return redirect()->back();
     }
@@ -119,18 +153,46 @@ class BranchDeliveryController extends Controller
 
     public function delete($id){
         BranchDelivery::find($id)->delete();
+
+        // Write log
+        $log = new Log;
+        $log->log_date = Carbon::now('GMT+8')->format('Y-m-d');
+        $log->activity = 'deletes branch deliveries data';
+        $log->user_id = Auth::user()->id;
+        $log->save();
+
         toast('Data branch delivery berhasil dihapus','success');
         return redirect()->back();
     }
 
     public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $start = $req->start;
         $end = $req->end;
         if ($start == null && $end == null) {
-            $data = BranchDelivery::orderBy('branch_delivery_date','desc')->get();
-            
+            if ($dc == 'group') {
+                $data = BranchDelivery::orderBy('branch_delivery_date','desc')->get();
+            }else{
+                $data = BranchDelivery::join('outs','branch_deliveries.out_id','outs.id')
+                ->join('stocks','outs.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('branch_delivery_date','desc')
+                ->select('stocks.*','branch_deliveries.*')->get();
+            }
         } else {
-            $data = BranchDelivery::whereBetween('branch_delivery_date',[$req->start, $req->end])->get();
+            if ($dc == 'group') {
+                $data = BranchDelivery::whereBetween('branch_delivery_date',[$req->start, $req->end])->get();
+            }else{
+                $data = BranchDelivery::join('outs','branch_deliveries.out_id','outs.id')
+                ->join('stocks','outs.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('branch_delivery_date',[$req->start, $req->end])
+                ->orderBy('branch_delivery_date','desc')
+                ->select('stocks.*','branch_deliveries.*')->get();
+            }
+        
         }
         return view('page', compact('data','start','end'));
     }
