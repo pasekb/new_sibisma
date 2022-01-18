@@ -11,6 +11,8 @@
         {{ route('branch-delivery.history') }}
     @elseif(Route::is('document.*'))
         {{ route('document.history') }}
+    @elseif(Route::is('opname.*'))
+        {{ route('opname.history') }}
     @elseif(Route::is('report.send-report'))
         {{ route('report.stock-history') }}
     @elseif(Route::is('report.stock-history'))

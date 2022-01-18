@@ -43,7 +43,9 @@
                                 <th>Contact</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
+                                @if(Auth::user()->dealer_code == 'group')
                                 <th width="70">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tfoot>
@@ -60,7 +62,9 @@
                                 <th>Contact</th>
                                 <th>Created By</th>
                                 <th>Updated By</th>
+                                @if(Auth::user()->dealer_code == 'group')
                                 <th width="70">Action</th>
+                                @endif
                             </tr>
                         </tfoot>
                         <tbody>
@@ -80,6 +84,7 @@
                                 <td>{{ $o->phone }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
+                                @if(Auth::user()->dealer_code == 'group')
                                 <td>
                                     <div class="form-button-action">
                                         <a href="{{ route('dealer.edit', $o->id) }}" class="btnAction"
@@ -92,10 +97,11 @@
                                                 class="fas fa-trash-alt"></i></a>
                                     </div>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="6" style="text-align: center;">No data available</td>
+                                <td colspan="{{ Auth::user()->dealer_code == 'group' ? '5' : '6' }}" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

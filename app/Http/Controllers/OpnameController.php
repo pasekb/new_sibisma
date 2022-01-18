@@ -27,15 +27,13 @@ class OpnameController extends Controller
         if ($dc == 'group') {
             $stock = Stock::all();
             $data = Opname::where('opname_date',$today)->orderBy('id','desc')->get();
-            return view('page', compact('stock','today','data'));
         }else{
             $stock = Stock::where('dealer_id',$did)->get();
             $data = Opname::join('stocks','opnames.stock_id','stocks.id')
             ->where('stocks.dealer_id',$did)
             ->where('opname_date',$today)->orderBy('opnames.id','desc')->get();
-            return view('page', compact('stock','today','data'));
         }
-        
+        return view('page', compact('stock','today','data'));
     }
 
     /**
@@ -135,4 +133,30 @@ class OpnameController extends Controller
         //
     }
 
+    public function history(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
+        $start = $req->start;
+        $end = $req->end;
+        if ($start == null && $end == null) {
+            if ($dc == 'group') {
+                $data = Opname::orderBy('id','desc')->get();
+            }else{
+                $data = Opname::join('stocks','opnames.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->orderBy('opnames.id','desc')->get();
+            }
+            
+        } else {
+            if ($dc == 'group') {
+                $data = Opname::whereBetween('opname_date',[$req->start, $req->end])->orderBy('id','desc')->get();
+            }else{
+                $data = Opname::join('stocks','opnames.stock_id','stocks.id')
+                ->where('stocks.dealer_id',$did)
+                ->whereBetween('opname_date',[$req->start, $req->end])->orderBy('opnames.id','desc')->get();
+            }
+        }
+        return view('page', compact('data','start','end'));
+    }
 }

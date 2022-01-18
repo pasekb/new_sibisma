@@ -128,8 +128,13 @@
     
     <!-- Opname Page -->
     @elseif(Route::is('opname.*'))
-        @include('component.opname-create')
-        @include('component.opname-data')
+        @if(Route::is('opname.history'))
+            @include('component.search-box')
+            @include('component.opname-data')
+        @else
+            @include('component.opname-create')
+            @include('component.opname-data')
+        @endif
 
     <!-- Report -->
 

@@ -7,19 +7,24 @@
 </style>
 @endpush
 
-@section('title','Stock Opname')
-@section('page-title','Stock Opname')
+@if(Route::is('opname.history'))
+    @section('title','Stock Opname History')
+    @section('page-title','Stock Opname History')
+@else
+    @section('title','Stock Opname')
+    @section('page-title','Stock Opname')
+@endif
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('sale.index') }}">Data Stock Opname</a>
+    <a href="{{ route('sale.index') }}">Data Stock Opname @if(Route::is('opname.history')) History @endif</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Stock Opname Data</h4>
+            <h4 class="card-title">Stock Opname  @if(Route::is('opname.history')) History @endif Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">

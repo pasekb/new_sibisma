@@ -108,7 +108,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockCont
 
 // OPNAME
 Route::middleware(['auth:sanctum', 'verified'])->resource('opname', OpnameController::class);
-Route::middleware(['auth:sanctum', 'verified'])->post('/opname/history', [OpnameController::class, 'history'])->name('opname.history');
+Route::middleware(['auth:sanctum', 'verified'])->get('/opname-history/{date?}', [OpnameController::class, 'history'])->name('opname.history');
 // END OPNAME
 
 // REPORT

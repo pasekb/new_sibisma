@@ -97,11 +97,11 @@
                                         <a href="{{ route('stock.show', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Detail"
                                             style="color:orange;"><i class="fa fa-eye"></i></a>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="{{ route('stock.delete', $o->id) }}" class="btnAction"
                                             data-toggle="tooltip" data-placement="top" title="Delete" style="color:red;"
                                             onclick="return tanya('Yakin hapus stock {{ $o->unit->model_name }} {{ $o->unit->color->color_name }}?')"><i
-                                                class="fas fa-trash-alt"></i></a>
+                                                class="fas fa-trash-alt"></i></a> -->
                                     </div>
                                 </td>
                             </tr>

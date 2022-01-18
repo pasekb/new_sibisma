@@ -1,7 +1,9 @@
+@if(Auth::user()->dealer_code == 'group')
 @push('button')
     @section('button-title','Add New Dealer')
     @include('component.button-add')
 @endpush
+@endif
 
 <div class="col-md-12" id="dataCreate" @if(Session::has('display')) style="display: block;" @else style="display: none;" @endif>
     <div class="card">

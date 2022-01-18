@@ -152,6 +152,23 @@ class ReportExport implements FromView
                     })->get()
                 ]);
             }
+        }elseif($this->param == 'opname'){
+            if ($dc == 'group') {
+                return view('export.opname',[
+                    'data' => Opname::whereBetween('opname_date', [$this->start, $this->end])
+                    ->orderBy('opname_date','asc')->get()
+                ]);
+            } else {
+                return view('export.opname',[
+                    'data' => Opname::with(['stock'], function($query){
+                        $dc = Auth::user()->dealer_code;
+                        $did = Dealer::where('dealer_code',$dc)->sum('id');
+                        $query->where('stock.dealer_id',$did)
+                        ->whereBetween('opname_date', [$this->start, $this->end])
+                        ->orderBy('opname_date','asc');
+                    })->get()
+                ]);
+            }
         }elseif($this->param == 'log') {
             return view('export.log',[
                 'data' => Log::whereBetween('log_date', [$this->start, $this->end])

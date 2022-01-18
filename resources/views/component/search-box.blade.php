@@ -22,6 +22,8 @@
                                 {{ route('document.history') }}
                             @elseif(Route::is('log'))
                                 {{ route('log') }}
+                            @elseif(Route::is('opname.*'))
+                                {{ route('opname.history') }}
                             @else
                                 #
                             @endif
@@ -58,6 +60,8 @@
                                     {{ url('report/document/'.$start.'/'.$end) }}
                                 @elseif(Route::is('log'))
                                     {{ url('report/log/'.$start.'/'.$end) }}
+                                @elseif(Route::is('opname.*'))
+                                    {{ url('report/opname/'.$start.'/'.$end) }}
                                 @else
                                     #
                                 @endif
