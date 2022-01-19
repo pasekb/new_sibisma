@@ -2,7 +2,21 @@
 
 @section('content')
     @if(Route::is('dashboard'))
-        <livewire:dashboard>
+        @section('title','Dashboard')
+        @section('page-title','Dashboard')
+
+        @push('link-bread')
+        <li class="nav-item">
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+        </li>
+        @endpush
+        <livewire:sale-chart>
+        <livewire:ratio-stock>
+        <livewire:sale-l-m>
+        <livewire:sale-l-y>
+        <livewire:sale-by-dealer-chart>
+        <livewire:top-product-chart>
+        <livewire:top-stock-chart>
 
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
