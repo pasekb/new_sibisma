@@ -8,7 +8,7 @@
             @forelse($data as $o)
             <div class="d-flex">
                 <div class="avatar">
-                    <img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="flex-1 pt-1 ml-2">
                     <h6 class="fw-bold mb-1">{{ $o->category }}</h6>
@@ -22,7 +22,7 @@
             @empty
             <div class="d-flex">
                 <div class="avatar">
-                    <img src="../assets/img/logoproduct.svg" alt="..." class="avatar-img rounded-circle">
+                    <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="flex-1 pt-1 ml-2">
                     <h6 class="fw-bold mb-1">Model Name</h6>

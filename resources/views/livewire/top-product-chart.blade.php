@@ -2,7 +2,7 @@
 <div class="col-sm-4">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Top Units</h5>
+            <h5 class="card-title">Top Selling</h5>
             <div class="card-category">{{ $dealerName }}</div>
         </div>
         <div class="card-body">

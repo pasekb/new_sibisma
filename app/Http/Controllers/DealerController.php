@@ -86,7 +86,7 @@ class DealerController extends Controller
      */
     public function update(Request $req, Dealer $dealer)
     {
-        Dealer::find($req->id)->update([
+        Dealer::find($dealer->id)->update([
             'dealer_name' => $req->dealer_name,
             'phone' => $req->phone,
             'address' => $req->address,

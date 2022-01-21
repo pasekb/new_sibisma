@@ -42,6 +42,7 @@ class TopStockChart extends BaseChart
         }else{
             $topStock = Stock::join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(qty) as sum_qty, units.model_name')
+            ->where('stocks.dealer_id',$did)
             ->groupBy('units.model_name')
             ->orderBy('sum_qty','desc')
             ->limit(5)
@@ -50,6 +51,7 @@ class TopStockChart extends BaseChart
 
             $sumStock = Stock::join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(qty) as sum_qty, units.model_name')
+            ->where('stocks.dealer_id',$did)
             ->groupBy('units.model_name')
             ->orderBy('sum_qty','desc')
             ->limit(5)

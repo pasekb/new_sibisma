@@ -3,7 +3,7 @@
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('dealer') }}">Data Dealer</a>
+    <a href="{{ route('dealer.index') }}">Data Dealer</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
@@ -13,22 +13,20 @@
 </li>
 @endpush
 
-@forelse($data as $o)
 <div class="col-md-12" id="dealerCreate">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Edit Dealer {{ $o->dealer_code }}</h4>
+            <h4 class="card-title">Edit Dealer {{ $dealer->dealer_code }}</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('dealer.update') }}" method="post">
+            <form action="{{ route('dealer.update',$dealer->id) }}" method="post">
                 @csrf
                 
-                <input type="hidden" name="id" value="{{ $o->id }}">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="dealer_name" type="text" class="form-control input-border-bottom"
-                                name="dealer_name" value="{{ $o->dealer_name }}" autofocus required>
+                                name="dealer_name" value="{{ $dealer->dealer_name }}" autofocus required>
                             <label for="dealer_name" class="placeholder">Dealer Name</label>
                         </div>
                     </div>
@@ -36,7 +34,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="phone" type="text" class="form-control input-border-bottom"
-                                name="phone" value="{{ $o->phone }}" required>
+                                name="phone" value="{{ $dealer->phone }}" required>
                             <label for="phone" class="placeholder">Phone</label>
                         </div>
                     </div>
@@ -44,7 +42,7 @@
                     <div class="col-md-4">
                         <div class="form-group form-floating-label">
                             <input id="address" type="text" class="form-control input-border-bottom"
-                                name="address" value="{{ $o->address }}" required>
+                                name="address" value="{{ $dealer->address }}" required>
                             <label for="address" class="placeholder">Address</label>
                         </div>
                     </div>
@@ -56,14 +54,3 @@
         </div>
     </div>
 </div>
-@empty
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <center>
-                <h4 class="card-title">No Data Available</h4>
-            </center>
-        </div>
-    </div>
-</div>
-@endforelse

@@ -30,7 +30,7 @@ class SaleByDealerChart extends BaseChart
         $a08 = Dealer::where('dealer_code','AA0108')->sum('id');
         $a09 = Dealer::where('dealer_code','AA0109')->sum('id');
         $a04F = Dealer::where('dealer_code','AA0104F')->sum('id');
-        $a041 = Dealer::where('dealer_code','AA0104-1')->sum('id');
+        $a041 = Dealer::where('dealer_code','AA0104-01')->sum('id');
 
         // SENTRAL
         $jan01 = Sale::join('stocks','sales.stock_id','stocks.id')

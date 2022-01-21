@@ -15,11 +15,11 @@ class TopStockChart extends Component
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         $cek = Dealer::where('dealer_code',$dc)->count();
         if ($cek > 0) {
-            $did = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
+            $dealerId = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
             if ($dc == 'group') {
                 $dealerName = 'Bisma Group';
             } else {
-                $dealerName = $did[0];
+                $dealerName = $dealerId[0];
             }
         } else {
             if ($dc == 'group') {
@@ -39,11 +39,12 @@ class TopStockChart extends Component
         }else{
             $data = Stock::join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(qty) as sum_qty, units.model_name, units.category')
-            ->where('dealer_id',$did)
+            ->where('stocks.dealer_id',$did)
             ->groupBy('units.model_name')
             ->orderBy('sum_qty','desc')
             ->limit(5)
             ->get();
+            
         }
 
         return view('livewire.top-stock-chart', compact('data','dealerName'));

@@ -17,6 +17,7 @@
         <livewire:sale-by-dealer-chart>
         <livewire:top-product-chart>
         <livewire:top-stock-chart>
+        <livewire:psi-chart>
 
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
