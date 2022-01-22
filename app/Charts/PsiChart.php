@@ -52,6 +52,7 @@ class PsiChart extends BaseChart
 
                 $dataStock = StockHistory::whereMonth('history_date',$i)
                 ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
                 ->sum('last_stock');
 
                 if ($dataSaleOut == 0) {

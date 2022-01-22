@@ -11,8 +11,8 @@
                     <img src="{{ asset('img/yamaha-pic.jpg') }}" alt="..." class="avatar-img rounded-circle">
                 </div>
                 <div class="flex-1 pt-1 ml-2">
-                    <h6 class="fw-bold mb-1">{{ $o->category }}</h6>
-                    <small class="text-muted">{{ $o->model_name }}</small>
+                    <h6 class="fw-bold mb-1">{{ $o->model_name }}</h6>
+                    <small class="text-muted">{{ $o->category }}</small>
                 </div>
                 <div class="d-flex ml-auto align-items-center">
                     <h3 class="text-info fw-bold">{{ $o->sum_qty }}</h3>

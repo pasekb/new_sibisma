@@ -25,7 +25,7 @@ class StockController extends Controller
         $dealer = Dealer::all();
 
         if ($dc == 'group') {
-            $unit = Unit::all();
+            $unit = Unit::orderBy('model_name', 'desc')->get();
             $data = Stock::all();
             return view('page', compact('data','dealer','unit'));
 
@@ -39,7 +39,7 @@ class StockController extends Controller
             foreach($stock as $o){
                 array_push($unit_id,$o->unit_id);
             }
-            $unit = Unit::whereNotIn('id',$unit_id)->get();
+            $unit = Unit::whereNotIn('id',$unit_id)->orderBy('model_name', 'desc')->get();
             // --------------------------------------------
             
             $data = Stock::where('dealer_id',$did)->get();
