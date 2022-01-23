@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             \App\Charts\SaleByDealerChart::class,
             \App\Charts\TopProductChart::class,
             \App\Charts\TopStockChart::class,
-            \App\Charts\PsiChart::class
+            \App\Charts\PsiChart::class,
         ]);
     }
 }

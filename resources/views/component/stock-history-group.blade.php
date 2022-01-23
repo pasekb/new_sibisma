@@ -44,6 +44,7 @@
                             <th>Out Stock</th>
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
+                            <th>Opname Stock</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                         </tr>
@@ -57,6 +58,7 @@
                             <th>Out Stock</th>
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
+                            <th>Opname Stock</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                         </tr>
@@ -76,6 +78,7 @@
                             <td>{{ $o->out_qty }}</td>
                             <td>{{ $o->sale_qty }}</td>
                             <td>{{ $o->last_stock }}</td>
+                            <td>{{ $o->opname }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                         </tr>

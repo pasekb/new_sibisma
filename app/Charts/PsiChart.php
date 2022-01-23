@@ -9,12 +9,12 @@ use ConsoleTVs\Charts\BaseChart;
 use Illuminate\Http\Request;
 use App\Models\Sale;
 use App\Models\Dealer;
-use App\Models\Stock;
 use App\Models\Out;
 use App\Models\Entry;
 use App\Models\StockHistory;
+use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
 class PsiChart extends BaseChart
 {
@@ -25,16 +25,21 @@ class PsiChart extends BaseChart
      */
     public function handler(Request $request): Chartisan
     {
-        $dc = Auth::user()->dealer_code;
+        $id = Auth::user()->id;
+        $dc = User::where('id',$id)->pluck('dealer_code');
+        $dc = $dc[0];
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         $yearNow = Carbon::now('GMT+8')->format('Y');
-        $thisMonth = Carbon::now('GMT+8')->format('m');
 
         if ($dc == 'group') {
             $sale = [];
             $stock = [];
             $in = [];
             $ratio = [];
+            $dCode = [];
+            $countCode = Dealer::groupBy('dealer_code')->pluck('dealer_code');
+            $dataStockGroup = [];
+
             for ($i=1; $i < 13; $i++) {
                 $dataSale = Sale::whereMonth('sale_date',$i)
                 ->whereYear('sale_date',$yearNow)
@@ -50,10 +55,30 @@ class PsiChart extends BaseChart
                 ->whereYear('entry_date',$yearNow)
                 ->sum('in_qty');
 
-                $dataStock = StockHistory::whereMonth('history_date',$i)
-                ->whereYear('history_date',$yearNow)
-                ->orderBy('history_date','desc')
-                ->sum('last_stock');
+                for ($a=0; $a < count($countCode); $a++) { 
+                    array_push($dCode, $countCode[$a]);
+                }
+
+                // dd($dCode);
+                for ($b=0; $b < count($dCode); $b++) {
+                    $dataStock = StockHistory::where('dealer_code',$dCode[$b])
+                    ->whereMonth('history_date',$i)
+                    ->whereYear('history_date',$yearNow)
+                    ->orderBy('history_date','desc')
+                    ->limit(1)
+                    ->pluck('last_stock');
+
+                    if (count($dataStock) == 0 ) {
+                        $dataStock = 0;
+                    } else {
+                        $dataStock = $dataStock[0];
+                    }
+
+                    array_push($dataStockGroup, $dataStock);
+                }
+                
+                $dataStock = array_sum($dataStockGroup);
+                // dd($dataStockGroup);
 
                 if ($dataSaleOut == 0) {
                     $dataRatio = 0;
@@ -96,7 +121,15 @@ class PsiChart extends BaseChart
                 $dataStock = StockHistory::where('dealer_code',$dc)
                 ->whereMonth('history_date',$i)
                 ->whereYear('history_date',$yearNow)
-                ->sum('last_stock');
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($dataStock) == 0 ) {
+                    $dataStock = 0;
+                } else {
+                    $dataStock = $dataStock[0];
+                }
 
                 if ($dataSaleOut == 0) {
                     $dataRatio = 0;

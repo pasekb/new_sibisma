@@ -8,6 +8,7 @@ use App\Models\Opname;
 use App\Models\Stock;
 use App\Models\Dealer;
 use App\Models\Log;
+use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
 
@@ -54,6 +55,9 @@ class OpnameController extends Controller
      */
     public function store(Request $req)
     {
+        $dc = Auth::user()->dealer_code;
+        $did = Dealer::where('dealer_code',$dc)->sum('id');
+
         $qty = $req->on_hand;
         $opname = $req->stock_opname;
 
@@ -76,6 +80,29 @@ class OpnameController extends Controller
         $stock = Stock::where('id', $req->stock_id)->first();
         $stock->qty = $req->stock_opname;
         $stock->save();
+
+        // Update Stock History
+        if ($dc == 'group') {
+            $dealerCode = Stock::join('dealers','stocks.dealer_id','dealers.id')
+            ->where('stocks.id', $req->stock_id)
+            ->pluck('dealers.dealer_code');
+            $dealerCode = $dealerCode[0];
+            $dealerId = Stock::where('stocks.id', $req->stock_id)
+            ->sum('dealer_id');
+            $his = StockHistory::where('dealer_code', $dealerCode)->orderBy('history_date','desc')->first();
+            
+            $lastStock = Stock::where('dealer_id', $dealerId)->sum('qty');
+            // dd($dealerCode, $dealerId, $his);
+        }else{
+            $his = StockHistory::where('dealer_code', $dc)->orderBy('history_date','desc')->first();
+            $lastStock = Stock::where('dealer_id', $did)->sum('qty');
+            // dd($dc);
+        }
+        
+        $his->last_stock = $lastStock;
+        $his->opname = 'yes';
+        $his->save();
+        //END Update Stock History
 
         // Write log
         $log = new Log;
