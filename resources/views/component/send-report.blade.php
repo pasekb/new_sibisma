@@ -100,7 +100,7 @@
                     </p>
                     <p>
                         @foreach($dataInBranch as $o)
-                        {{ $o->in_qty }} | {{ $o->stock->unit->model_name }} |
+                        <span style="color: #0f5abc;">{{ $o->dealer_name }}</span> : {{ $o->in_qty }} | {{ $o->stock->unit->model_name }} |
                         {{ $o->stock->unit->color->color_name }} | {{ $o->stock->unit->year_mc }} <br>
                         @endforeach
                     </p><br>

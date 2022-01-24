@@ -33,12 +33,10 @@ class PsiChart extends BaseChart
 
         if ($dc == 'group') {
             $sale = [];
-            $stock = [];
             $in = [];
+            $code = Dealer::where('dealer_code','!=','YIMM')->groupBy('dealer_code')->pluck('dealer_code');
+            $stock = [];
             $ratio = [];
-            $dCode = [];
-            $countCode = Dealer::groupBy('dealer_code')->pluck('dealer_code');
-            $dataStockGroup = [];
 
             for ($i=1; $i < 13; $i++) {
                 $dataSale = Sale::whereMonth('sale_date',$i)
@@ -55,43 +53,287 @@ class PsiChart extends BaseChart
                 ->whereYear('entry_date',$yearNow)
                 ->sum('in_qty');
 
-                for ($a=0; $a < count($countCode); $a++) { 
-                    array_push($dCode, $countCode[$a]);
+                array_push($sale, $dataSaleOut);
+                array_push($in, $dataIn);
+            }
+
+            // January
+            $janArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $janStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',1)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($janStock) == 0) {
+                    $janStock = 0;
+                } else {
+                    $janStock = $janStock[0];
                 }
 
-                // dd($dCode);
-                for ($b=0; $b < count($dCode); $b++) {
-                    $dataStock = StockHistory::where('dealer_code',$dCode[$b])
-                    ->whereMonth('history_date',$i)
-                    ->whereYear('history_date',$yearNow)
-                    ->orderBy('history_date','desc')
-                    ->limit(1)
-                    ->pluck('last_stock');
+                array_push($janArray, $janStock);
+            }
 
-                    if (count($dataStock) == 0 ) {
-                        $dataStock = 0;
-                    } else {
-                        $dataStock = $dataStock[0];
-                    }
+            $jan = array_sum($janArray);
+            array_push($stock, $jan);
 
-                    array_push($dataStockGroup, $dataStock);
+            // February
+            $febArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $febStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',2)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($febStock) == 0) {
+                    $febStock = 0;
+                } else {
+                    $febStock = $febStock[0];
                 }
-                
-                $dataStock = array_sum($dataStockGroup);
-                // dd($dataStockGroup);
 
-                if ($dataSaleOut == 0) {
+                array_push($febArray, $febStock);
+            }
+
+            $feb = array_sum($febArray);
+            array_push($stock, $feb);
+
+            // March
+            $marArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $marStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',3)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($marStock) == 0) {
+                    $marStock = 0;
+                } else {
+                    $marStock = $marStock[0];
+                }
+
+                array_push($marArray, $marStock);
+            }
+
+            $mar = array_sum($marArray);
+            array_push($stock, $mar);
+
+            // April
+            $aprArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $aprStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',4)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($aprStock) == 0) {
+                    $aprStock = 0;
+                } else {
+                    $aprStock = $aprStock[0];
+                }
+
+                array_push($aprArray, $aprStock);
+            }
+
+            $apr = array_sum($aprArray);
+            array_push($stock, $apr);
+
+            // May
+            $mayArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $mayStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',5)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($mayStock) == 0) {
+                    $mayStock = 0;
+                } else {
+                    $mayStock = $mayStock[0];
+                }
+
+                array_push($mayArray, $mayStock);
+            }
+
+            $may = array_sum($mayArray);
+            array_push($stock, $may);
+
+            // June
+            $junArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $junStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',6)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($junStock) == 0) {
+                    $junStock = 0;
+                } else {
+                    $junStock = $junStock[0];
+                }
+
+                array_push($junArray, $junStock);
+            }
+
+            $jun = array_sum($junArray);
+            array_push($stock, $jun);
+
+            // July
+            $julArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $julStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',7)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($julStock) == 0) {
+                    $julStock = 0;
+                } else {
+                    $julStock = $julStock[0];
+                }
+
+                array_push($julArray, $julStock);
+            }
+
+            $jul = array_sum($julArray);
+            array_push($stock, $jul);
+
+            // August
+            $augArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $augStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',8)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($augStock) == 0) {
+                    $augStock = 0;
+                } else {
+                    $augStock = $augStock[0];
+                }
+
+                array_push($augArray, $augStock);
+            }
+
+            $aug = array_sum($augArray);
+            array_push($stock, $aug);
+
+            // September
+            $sepArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $sepStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',9)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($sepStock) == 0) {
+                    $sepStock = 0;
+                } else {
+                    $sepStock = $sepStock[0];
+                }
+
+                array_push($sepArray, $sepStock);
+            }
+
+            $sep = array_sum($sepArray);
+            array_push($stock, $sep);
+
+            // October
+            $octArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $octStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',10)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($octStock) == 0) {
+                    $octStock = 0;
+                } else {
+                    $octStock = $octStock[0];
+                }
+
+                array_push($octArray, $octStock);
+            }
+
+            $oct = array_sum($octArray);
+            array_push($stock, $oct);
+
+            // November
+            $novArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $novStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',11)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($novStock) == 0) {
+                    $novStock = 0;
+                } else {
+                    $novStock = $novStock[0];
+                }
+
+                array_push($novArray, $novStock);
+            }
+
+            $nov = array_sum($novArray);
+            array_push($stock, $nov);
+
+            // December
+            $decArray = [];
+            for ($a=0; $a < count($code); $a++) { 
+                $decStock = StockHistory::where('dealer_code',$code[$a])
+                ->whereMonth('history_date',12)
+                ->whereYear('history_date',$yearNow)
+                ->orderBy('history_date','desc')
+                ->limit(1)
+                ->pluck('last_stock');
+
+                if (count($decStock) == 0) {
+                    $decStock = 0;
+                } else {
+                    $decStock = $decStock[0];
+                }
+
+                array_push($decArray, $decStock);
+            }
+
+            $dec = array_sum($decArray);
+            array_push($stock, $dec);
+
+            // dd($stock);
+
+            // Ratio
+            for ($b=0; $b < count($stock); $b++) {
+                if ($sale[$b] == 0) {
                     $dataRatio = 0;
                 } else {
-                    $dataRatio = (int)$dataStock / (int)$dataSaleOut;
+                    $dataRatio = $stock[$b] / $sale[$b];
                 }
 
-                array_push($sale, $dataSaleOut);
-                array_push($stock, $dataStock);
-                array_push($in, $dataIn);
                 array_push($ratio, $dataRatio);
             }
-            // dd($sale, $in, $out);
+            
         } else {
             $sale = [];
             $stock = [];

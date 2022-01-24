@@ -18,6 +18,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SaleDeliveryController;
 use App\Http\Controllers\BranchDeliveryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StockHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,6 +121,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/report/change/{id}/{statu
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/{param}/{start}/{end}', [ReportController::class, 'reportPrint'])->name('report.print');
 Route::middleware(['auth:sanctum', 'verified'])->get('/report/search/{reportid?}', [ReportController::class, 'reportSearch'])->name('report.search-id');
 // END REPORT
+
+// STOCK HISTORY
+Route::middleware(['auth:sanctum', 'verified'])->resource('stock-history', StockHistoryController::class);
+// END
 
 // LOG
 Route::middleware(['auth:sanctum', 'verified'])->get('/log/{date?}', [LogController::class, 'log'])->name('log');

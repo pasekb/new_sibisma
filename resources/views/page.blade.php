@@ -209,7 +209,11 @@
             @include('component.branch-delivery-create')
             @include('component.branch-delivery-data')
         @endif
-    
+
+    <!-- Faktur Service Page -->
+    @elseif(Route::is('stock-history.*'))
+        @include('component.fns-create')
+        
     @endif
     
 @endsection
