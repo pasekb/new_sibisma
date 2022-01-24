@@ -100,7 +100,7 @@
                     </p>
                     <p>
                         @foreach($dataInBranch as $o)
-                        {{ $o->in_qty }} | {{ $o->stock->unit->model_name }} |
+                        <span style="color: #0f5abc;">{{ $o->dealer_name }}</span> : {{ $o->in_qty }} | {{ $o->stock->unit->model_name }} |
                         {{ $o->stock->unit->color->color_name }} | {{ $o->stock->unit->year_mc }} <br>
                         @endforeach
                     </p><br>
@@ -126,16 +126,14 @@
                         @endforeach
                     </p><br>
 
+                    <p class="header sum">
+                        Faktur : <span class="t">*</span>{{ $dataFaktur }}<span class="t">*</span> <br>
+                        Service : <span class="t">*</span>{{ $dataService }}<span class="t">*</span>
+                    </p>
+
                     <p class="header total">
                     <span class="t">*_</span>Stok Akhir : {{ $lastStock }}<span class="t">_*</span>
                     </p><br>
-
-                    <p class="{{ $diff == '0' ? 'd-none' : 'd-block' }}" style="color: red;">
-                        Stok sistem : {{ $sysStock }} <br>
-                        Selisih : {{ $diff }} <br>
-                        <a href="{{ route('opname.history', $dateOpname) }}"
-                        data-toggle="tooltip" data-placement="top" title="Detail" style="text-decoration: none;">Stok opname : {{ $stockOpname }}</a>
-                    </p>
 
                     <p><span class="t">_</span>recorded in SiBisma on id:<span class="t">_</span> <br> <span class="t">_</span>{{ $reportId }}<span class="t">_</span></p>
                 </div>

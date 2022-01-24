@@ -3,7 +3,9 @@
     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bell"></i>
+        @if($count > 0)
         <span class="notification">{{ $count }}</span>
+        @endif
     </a>
     <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
         @if(Auth::user()->dealer_code == 'group')

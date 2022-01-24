@@ -73,6 +73,7 @@ class StockHistoryController extends Controller
         $data = StockHistory::where('id', $stockHistory->id)->first();
         $data->faktur = $req->faktur;
         $data->service = $req->service;
+        $data->status = 'completed';
         $data->save();
         toast('Data faktur & service berhasil disimpan','success');
         return redirect()->route('report.stock-history');

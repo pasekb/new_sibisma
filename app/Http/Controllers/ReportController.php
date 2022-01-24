@@ -86,6 +86,21 @@ class ReportController extends Controller
 
         $date = $req->date;
         $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        $faktur = StockHistory::where('history_date',$today)
+        ->where('dealer_code',$dc)
+        ->orderBy('history_date', 'desc')
+        ->sum('faktur');
+
+        $service = StockHistory::where('history_date',$today)
+        ->where('dealer_code',$dc)
+        ->orderBy('history_date', 'desc')
+        ->sum('service');
+
+        $fns = StockHistory::where('history_date',$today)
+        ->where('dealer_code',$dc)
+        ->first();
+
         if ($date == null) {
                 // Stock Report
                 $firstStock = StockHistory::where('history_date',$today)
@@ -114,8 +129,6 @@ class ReportController extends Controller
                 $lastStock = StockHistory::where('history_date',$today)
                 ->where('dealer_code',$dc)->sum('last_stock');
                 
-                $sysStock = Stock::where('dealer_id',$did)->sum('qty');
-                
                 $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
                 ->join('stocks','entries.stock_id','stocks.id')
                 ->where('entry_date',$today)
@@ -141,6 +154,16 @@ class ReportController extends Controller
                 ->where('sale_date',$today)
                 ->where('stocks.dealer_id',$did)
                 ->groupBy('stock_id','leasing_id')->get();
+
+                $dataFaktur = StockHistory::where('history_date',$today)
+                ->where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->sum('faktur');
+
+                $dataService = StockHistory::where('history_date',$today)
+                ->where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->sum('service');
                 
                 $isIdKey = StockHistory::where('history_date',$today)
                     ->where('dealer_code',$dc)->count('id_key');
@@ -184,7 +207,6 @@ class ReportController extends Controller
                 ->where('stocks.dealer_id',$did)->sum('sale_qty');
                 $lastStock = StockHistory::where('history_date',$date)
                 ->where('dealer_code',$dc)->sum('last_stock');
-                $sysStock = Stock::where('dealer_id',$did)->sum('qty');
 
                 $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
                 ->join('stocks','entries.stock_id','stocks.id')
@@ -209,6 +231,16 @@ class ReportController extends Controller
                 ->where('stocks.dealer_id',$did)
                 ->groupBy('stock_id','leasing_id')->get();
 
+                $dataFaktur = StockHistory::where('history_date',$date)
+                ->where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->sum('faktur');
+
+                $dataService = StockHistory::where('history_date',$date)
+                ->where('dealer_code',$dc)
+                ->orderBy('history_date', 'desc')
+                ->sum('service');
+
                 $isIdKey = StockHistory::where('history_date',$date)
                 ->where('dealer_code',$dc)->count('id_key');
                 if ($isIdKey > 0) {
@@ -228,13 +260,11 @@ class ReportController extends Controller
                 $dealerName = Dealer::where('dealer_code',$dc)->pluck('dealer_name');
                 $dealerName = $dealerName[0];
         }
-
-        $diff = $sysStock - $lastStock;
         
         // Data Report History
             $data = StockHistory::where('dealer_code',$dc)->orderBy('history_date','desc')->limit(7)->get();
 
-            return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','diff','sysStock','dateOpname','stockOpname'));
+            return view('page', compact('data','date','today','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','faktur','service','fns','dataFaktur','dataService'));
         
     }
 
@@ -268,7 +298,6 @@ class ReportController extends Controller
             ->where('stocks.dealer_id',$did)->sum('sale_qty');
             $lastStock = StockHistory::where('history_date',$date)
             ->where('dealer_code',$dealer)->sum('last_stock');
-            $sysStock = Stock::where('dealer_id',$did)->sum('qty');
 
             $dataInYIMM = Entry::join('dealers','entries.dealer_id','=','dealers.id')
             ->join('stocks','entries.stock_id','stocks.id')
@@ -293,6 +322,16 @@ class ReportController extends Controller
             ->where('stocks.dealer_id',$did)
             ->groupBy('stock_id','leasing_id')->get();
 
+            $dataFaktur = StockHistory::where('history_date',$date)
+            ->where('dealer_code',$dealer)
+            ->orderBy('history_date', 'desc')
+            ->sum('faktur');
+
+            $dataService = StockHistory::where('history_date',$date)
+            ->where('dealer_code',$dealer)
+            ->orderBy('history_date', 'desc')
+            ->sum('service');
+
             $isIdKey = StockHistory::where('history_date',$date)
             ->where('dealer_code',$dealer)->count('id_key');
             if ($isIdKey > 0) {
@@ -312,9 +351,7 @@ class ReportController extends Controller
             $dealerName = Dealer::where('dealer_code',$dealer)->pluck('dealer_name');
             $dealerName = $dealerName[0];
 
-            $diff = $sysStock - $lastStock;
-
-            return view('page', compact('date','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','diff','sysStock','dateOpname','stockOpname'));
+            return view('page', compact('date','firstStock','inYIMM','out','sale','dataInYIMM','dataOut','dataSale','dataInBranch','inBranch','lastStock','reportId','dealerName','dateOpname','stockOpname','dataFaktur','dataService'));
         }
     }
 

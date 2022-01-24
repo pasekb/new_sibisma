@@ -48,7 +48,7 @@
 
         @livewireStyles
     </head>
-    <body>
+    <body data-background-color="dark">
         <div class="wrapper">
             <!-- Header -->
             <livewire:header>
@@ -58,12 +58,12 @@
             
             <div class="main-panel">
 			    <div class="content">
-                    <div class="panel-header bg-info-gradient text-white bubble-shadow">
+                    <div class="panel-header bg-secondary-gradient text-white bubble-shadow">
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>
                                     <div class="page-header">
-                                        <h4 class="page-title">@yield('page-title')</h4>
+                                        <h4 class="page-title" style="color: #fff;">@yield('page-title')</h4>
                                         <ul class="breadcrumbs">
                                             <li class="nav-home">
                                                 <a href="{{ route('dashboard') }}">

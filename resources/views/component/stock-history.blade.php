@@ -45,6 +45,8 @@
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
                             <th>Opname Stock</th>
+                            <th>Faktur</th>
+                            <th>Service</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                             <th>Action</th>
@@ -60,6 +62,8 @@
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
                             <th>Opname Stock</th>
+                            <th>Faktur</th>
+                            <th>Service</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                             <th>Action</th>
@@ -81,11 +85,27 @@
                             <td>{{ $o->sale_qty }}</td>
                             <td>{{ $o->last_stock }}</td>
                             <td>{{ $o->opname }}</td>
+                            <td>{{ $o->faktur }}</td>
+                            <td>{{ $o->service }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                             <td>{{ $o->status }}</td>
                             <td>
                                 <div class="form-button-action">
+                                    <a href="{{ route('stock-history.edit',$o->id) }}" class="btnAction" data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="{{ $o->status == 'uncompleted' ? 'Add Faktur & Service' : 'Edit Faktur & Service' }}">
+
+                                        @if($o->status == 'uncompleted') 
+                                        <i class="fas fa-plus-circle"></i>
+                                        @else
+                                        <i class="fas fa-edit" style="color:orange;"></i>
+                                        @endif
+                                        
+                                    </a>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                                     <a href="{{ url('report/change/'.$o->id.'/'.$o->status.'') }}" class="btnAction" data-toggle="tooltip"
                                         data-placement="top"
                                         title="{{ $o->status == 'uncompleted' ? 'Active' : 'Completed' }}"

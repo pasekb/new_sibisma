@@ -10,9 +10,9 @@
         text-align: center;
         border-radius: 0 3px 0 20px;
 
-        box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
-        -webkit-box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
-        -moz-box-shadow: -8px 6px 8px -8px rgba(135,135,135,0.47);
+        box-shadow: -8px 6px 8px -8px rgba(8, 11, 63, 0.8);
+        -webkit-box-shadow: -8px 6px 8px -8px rgba(8, 11, 63, 0.8);
+        -moz-box-shadow: -8px 6px 8px -8px rgba(8, 11, 63, 0.8);
     }
 </style>
 @endpush

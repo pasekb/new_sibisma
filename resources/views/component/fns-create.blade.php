@@ -25,11 +25,17 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-12">
-                {{ $stockHistory->history_date }}
+                    <div class="form-group form-floating-label">
+                        <input id="date" type="text" class="form-control input-border-bottom"
+                            value="{{ $stockHistory->history_date }}" required>
+                        <label for="date" class="placeholder">Date</label>
+                    </div>
                 </div>
             </div>
-            <form action="{{ route('stock-history.update', $stockHistory->id) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('stock-history.update', $stockHistory->id) }}" method="post"
+                enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
@@ -41,8 +47,8 @@
 
                     <div class="col-md-6">
                         <div class="form-group form-floating-label">
-                            <input id="service" type="number" class="form-control input-border-bottom"
-                                name="service" required>
+                            <input id="service" type="number" class="form-control input-border-bottom" name="service"
+                                required>
                             <label for="service" class="placeholder">Service</label>
                         </div>
                     </div>

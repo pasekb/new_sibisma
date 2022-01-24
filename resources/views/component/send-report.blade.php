@@ -66,7 +66,24 @@
     @include('component.button-history')
 @endpush
 
+@if($faktur == 0 && $service == 0)
 <div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title" align="center" style="font-weight: bold;">
+                Faktur & Service is empty <br><br>
+                <a href="{{ route('stock-history.edit',$fns->id) }}" class="btn btn-success" style="color: #fff;">
+                    <i class="fas fa-plus"></i>
+                    &nbsp;&nbsp;
+                    Faktur & Service
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+<div class="col-md-6" @if($faktur == 0 && $service == 0) hidden @endif>
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Stock Report</h4>
@@ -126,16 +143,14 @@
                         @endforeach
                     </p><br>
 
+                    <p class="header sum">
+                        Faktur : <span class="t">*</span>{{ $dataFaktur }}<span class="t">*</span> <br>
+                        Service : <span class="t">*</span>{{ $dataService }}<span class="t">*</span>
+                    </p>
+
                     <p class="header total">
                     <span class="t">*_</span>Stok Akhir : {{ $lastStock }}<span class="t">_*</span>
                     </p><br>
-
-                    <p class="{{ $diff == '0' ? 'd-none' : 'd-block' }}" style="color: red;">
-                        Stok sistem : {{ $sysStock }} <br>
-                        Selisih : {{ $diff }} <br>
-                        <a href="{{ route('opname.history', $dateOpname) }}"
-                        data-toggle="tooltip" data-placement="top" title="Detail" style="text-decoration: none;">Stok opname : {{ $stockOpname }}</a>
-                    </p>
 
                     <p><span class="t">_</span>recorded in SiBisma on id:<span class="t">_</span> <br> <span class="t">_</span>{{ $reportId }}<span class="t">_</span></p>
                 </div>
@@ -161,6 +176,8 @@
                             <th class="full">Out</th>
                             <th class="full">Sale</th>
                             <th class="full">Last Stock</th>
+                            <th class="full">Faktur</th>
+                            <th class="full">Service</th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -172,6 +189,8 @@
                             <th>Out</th>
                             <th>Sale</th>
                             <th>Last Stock</th>
+                            <th>Faktur</th>
+                            <th>Service</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -183,15 +202,17 @@
                                 </a>
                             </td>
                             <td class="ctr">{{ $o->dealer_code }}</td>
-                            <td class="ctr">{{ $o->first_stock }}</td>
+                            <td class="ctr" style="background-color: #fcba0350">{{ $o->first_stock }}</td>
                             <td class="ctr">{{ $o->in_qty }}</td>
                             <td class="ctr">{{ $o->out_qty }}</td>
                             <td class="ctr">{{ $o->sale_qty }}</td>
-                            <td class="ctr">{{ $o->last_stock }}</td>
+                            <td class="ctr" style="background-color: #00b00050;">{{ $o->last_stock }}</td>
+                            <td class="ctr">{{ $o->faktur }}</td>
+                            <td class="ctr">{{ $o->service }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" style="text-align: center;">No data available</td>
+                            <td colspan="9" style="text-align: center;">No data available</td>
                         </tr>
                         @endforelse
                     </tbody>

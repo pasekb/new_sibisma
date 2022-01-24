@@ -16,9 +16,11 @@
     @elseif(Route::is('report.send-report'))
         {{ route('report.stock-history') }}
     @elseif(Route::is('report.stock-history'))
-        {{ route('report.send-report') }}
-    @elseif(Route::is('report.send-group'))
-        {{ url('report/group/all') }}
+        @if(Auth::user()->dealer_code == 'group')
+            {{ url('report/group/all') }}
+        @else
+            {{ route('report.send-report') }}
+        @endif
     @else
         #
     @endif

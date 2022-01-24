@@ -23,7 +23,7 @@
             })
             .datasets(['bar', 'bar', {
                 type: 'line',
-                fill: false
+                fill: false,
             }])
             .tooltip(true)
     });

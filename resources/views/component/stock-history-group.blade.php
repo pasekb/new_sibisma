@@ -45,6 +45,8 @@
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
                             <th>Opname Stock</th>
+                            <th>Faktur</th>
+                            <th>Service</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                         </tr>
@@ -59,6 +61,8 @@
                             <th>Sale Stock</th>
                             <th>Last Stock</th>
                             <th>Opname Stock</th>
+                            <th>Faktur</th>
+                            <th>Service</th>
                             <th>Created By</th>
                             <th>Updated By</th>
                         </tr>
@@ -79,6 +83,8 @@
                             <td>{{ $o->sale_qty }}</td>
                             <td>{{ $o->last_stock }}</td>
                             <td>{{ $o->opname }}</td>
+                            <td>{{ $o->faktur }}</td>
+                            <td>{{ $o->service }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>{{ $o->updatedBy->first_name }}</td>
                         </tr>
