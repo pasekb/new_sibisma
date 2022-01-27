@@ -53,11 +53,11 @@
                     <tbody>
                         @forelse($data as $o)
                         <tr>
-                            <td>{{ $o->unit->model_name }}</td>
-                            <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
-                            {{ $o->unit->color->color_name }}</td>
-                            <td>{{ $o->unit->year_mc }}</td>
-                            <td>{{ $o->dealer->dealer_name }}</td>
+                            <td>{{ $o->model_name }}</td>
+                            <td style="background-color: <?php echo $o->color_code ?>50 ;">
+                            {{ $o->color_name }}</td>
+                            <td>{{ $o->year_mc }}</td>
+                            <td>{{ $o->dealer_name }}</td>
                             <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif >{{ $o->qty }}</td>
                             <td>
                                 <div class="form-button-action">
