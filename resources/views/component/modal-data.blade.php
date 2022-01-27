@@ -1,14 +1,3 @@
-@push('after-css')
-<style>
-    .modal-content {
-        background-color: #1a2035;
-    }
-
-    .modal-content .close{
-        text-shadow: none;
-    }
-</style>
-@endpush
 <div class="modal fade modalData" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -17,7 +6,7 @@
                 <h5 class="modal-title">@yield('modal-title')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">
-                        <i style="color: pink;" class="fas fa-times-circle"></i>
+                        <i style="color: red;" class="fas fa-times"></i>
                     </span>
                 </button>
             </div>
@@ -98,6 +87,8 @@
                                 data-color="{{ $o->unit->color->color_name }}"
                                 data-colorcode="{{ $o->unit->color->color_code }}" data-yearmc="{{ $o->unit->year_mc }}"
                                 data-onhand="{{ $o->qty }}"
+                                data-dealercode="{{ $o->dealer->dealer_code }}"
+                                data-dealername="{{ $o->dealer->dealer_name }}"
                                 class="klik">
                                 <td>{{ $o->unit->model_name }}</td>
                                 <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
@@ -105,7 +96,7 @@
                                 </td>
                                 <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
                                 <td>{{ $o->unit->year_mc }}</td>
-                                @if(Auth::user()->access == 'master')
+                                @if(Auth::user()->dealer_code == 'group')
                                 <td>{{ $o->dealer->dealer_code }}</td>
                                 @endif
                             </tr>
@@ -261,6 +252,8 @@
         $('#color').val($(this).attr('data-color'));
         $('#year_mc').val($(this).attr('data-yearmc'));
         $('#on_hand').val($(this).attr('data-onhand'));
+        $('#dealer_code').val($(this).attr('data-dealercode'));
+        $('#dealer').val($(this).attr('data-dealername'));
         $('.modalData').modal('hide');
         
         $('#color_code').css('background', code);

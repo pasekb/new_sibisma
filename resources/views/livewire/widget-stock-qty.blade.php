@@ -1,12 +1,19 @@
 @push('after-css')
 <style>
+    :root{
+        --bg-gold: #d68c0b;
+        --bg-blue: #270082;
+        --bg-tosca: #24A19C;
+        --bg-olive: #519259;
+        --bg-red-heart: #B91646;
+    }
     .widget-stock{
         position: absolute;
         top: 0;
         right: 0;
         z-index: 9;
 
-        background-color: #d68c0b;
+        background-color: var(--bg-red-heart);
         color: #fff;
         padding: 5px 12px;
         text-align: center;

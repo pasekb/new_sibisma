@@ -24,4 +24,4 @@
     @else
         #
     @endif
-" class="btn btn-default btn-round" style="margin-bottom: 20px;"><i class="{{ Route::is('report.stock-history') ? 'fas fa-paper-plane' : 'fas fa-hourglass-half' }}"></i>&nbsp;&nbsp; <strong>@yield('button-title')</strong> </a>
+" class="btn btn-warning btn-round" style="margin-bottom: 20px;"><i class="{{ Route::is('report.stock-history') ? 'fas fa-paper-plane' : 'fas fa-hourglass-half' }}"></i>&nbsp;&nbsp; <strong>@yield('button-title')</strong> </a>

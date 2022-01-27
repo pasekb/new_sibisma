@@ -32,24 +32,8 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('sale.store') }}" method="post">
+            <form action="{{ route('sale.store') }}" method="post" id="form">
                 @csrf
-
-                @if(Auth::user()->dealer_code == 'group')
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
-                            <input id="dealer" type="text" class="form-control input-border-bottom"
-                                name="dealer" value="{{ old('dealer') }}" data-toggle="modal"
-                                data-target=".modalMasterDealer" required>
-                            <label for="dealer" class="placeholder">Select Dealer *</label>
-                        </div>
-                    </div>
-                </div>
-                @else
-                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
-                @endif
 
                 <div class="row">
                     <div class="col-md-3">
@@ -163,6 +147,20 @@
                         </div>
                     </div>
                 </div>
+                @if(Auth::user()->dealer_code == 'group')
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group form-floating-label">
+                            <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}" required>
+                            <input id="dealer" type="text" class="form-control input-border-bottom"
+                                name="dealer" value="{{ old('dealer') }}" required>
+                            <label for="dealer" class="placeholder">Dealer *</label>
+                        </div>
+                    </div>
+                </div>
+                @else
+                <input type="hidden" id="dealer_code" name="dealer_code" value="{{ $dealerCode }}" required>
+                @endif
 
                 <button class="btn btn-success"><i class="fa fa-check"></i>&nbsp;&nbsp;Save</button>
                 <button type="reset" class="btn btn-default"><i class="fas fa-undo"></i>&nbsp;&nbsp;Reset</button>
@@ -175,12 +173,11 @@
 @include('component.modal-data')
 @include('component.modal-leasing')
 @include('component.modal-dealer')
-@include('component.modal-master-dealer')
 
 @push('after-script')
 <script>
     $(document).ready(function(){
-        $('form').submit(function(e){
+        $('#form').submit(function(e){
             let onHand = $('#on_hand').val();
             let stock = onHand - 1;
             console.log(onHand);
@@ -190,7 +187,7 @@
                 $('#on_hand').addClass('is-invalid');
                 $('#error-msg').text('out of stock!');
             } else {
-                $('form').submit();
+                $('#form').submit();
             }
         });
     });

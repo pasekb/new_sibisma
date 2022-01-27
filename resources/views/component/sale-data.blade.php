@@ -27,10 +27,14 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            @if(Auth::user()->dealer_code == 'group')
+                            <th>Dealer</th>
+                            @endif
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
                             <th>Frame No</th>
+                            <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -38,10 +42,14 @@
                     <tfoot>
                         <tr>
                             <th>No</th>
+                            @if(Auth::user()->dealer_code == 'group')
+                            <th>Dealer</th>
+                            @endif
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Year</th>
                             <th>Frame No</th>
+                            <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -51,12 +59,16 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
+                            @if(Auth::user()->dealer_code == 'group')
+                            <td>{{ $o->stock->dealer->dealer_code }}</td>
+                            @endif
                             <td>{{ $o->stock->unit->model_name }}</td>
                             <td style="background-color: <?php echo $o->stock->unit->color->color_code ?>50 ;">
                                 {{ $o->stock->unit->color->color_name }}
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
                             <td>{{ $o->frame_no }}</td>
+                            <td>{{ $o->sale_qty }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">

@@ -109,9 +109,9 @@
                             <input type="hidden" id="dealer_code" name="dealer_code" value="{{ old('dealer_code') }}"
                                 required>
                             <input id="dealer" type="text" class="form-control input-border-bottom" name="dealer"
-                                value="{{ old('dealer') }}" data-toggle="modal" data-target=".modalMasterDealer"
+                                value="{{ old('dealer') }}"
                                 required>
-                            <label for="dealer" class="placeholder">Select Dealer *</label>
+                            <label for="dealer" class="placeholder">Dealer *</label>
                         </div>
                     </div>
                     @else
@@ -129,7 +129,6 @@
 @section('modal-title','Data Stock')
 @include('component.modal-data')
 @include('component.modal-dealer')
-@include('component.modal-master-dealer')
 
 @push('after-script')
 <script>
