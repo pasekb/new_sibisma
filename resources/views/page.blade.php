@@ -213,6 +213,13 @@
     <!-- Faktur Service Page -->
     @elseif(Route::is('stock-history.*'))
         @include('component.fns-create')
+
+    <!-- Search Page -->
+    @elseif(Route::is('search'))
+        @include('component.search-data')
+        @if(Route::is('stock.show'))
+            @include('component.stock-show')
+        @endif
         
     @endif
     

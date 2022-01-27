@@ -48,7 +48,7 @@
 
         @livewireStyles
     </head>
-    <body data-background-color="dark">
+    <body>
         <div class="wrapper">
             <!-- Header -->
             <livewire:header>
@@ -58,7 +58,7 @@
             
             <div class="main-panel">
 			    <div class="content">
-                    <div class="panel-header bg-secondary-gradient text-white bubble-shadow">
+                    <div class="panel-header bg-primary-gradient text-white bubble-shadow">
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>

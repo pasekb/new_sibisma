@@ -103,7 +103,7 @@
                                 <td style="background-color: <?php echo $o->unit->color->color_code ?>50 ;">
                                     {{ $o->unit->color->color_name }}
                                 </td>
-                                <td>{{ $o->qty }}</td>
+                                <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
                                 <td>{{ $o->unit->year_mc }}</td>
                                 @if(Auth::user()->access == 'master')
                                 <td>{{ $o->dealer->dealer_code }}</td>

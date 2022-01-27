@@ -88,7 +88,7 @@
                                     {{ $o->unit->color->color_name }}
                                 </td>
                                 <td>{{ $o->unit->year_mc }}</td>
-                                <td>{{ $o->qty }}</td>
+                                <td @if($o->qty == 0) style="background-color: maroon; color: #fff;" @endif>{{ $o->qty }}</td>
                                 <td>{{ $o->dealer->dealer_name }}</td>
                                 <td>{{ $o->createdBy->first_name }}</td>
                                 <td>{{ $o->updatedBy->first_name }}</td>
