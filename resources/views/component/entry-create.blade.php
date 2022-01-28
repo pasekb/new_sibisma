@@ -128,7 +128,7 @@
 
 @section('modal-title','Data Stock')
 @include('component.modal-data')
-@include('component.modal-dealer')
+<livewire:modal-dealer/>
 
 @push('after-script')
 <script>

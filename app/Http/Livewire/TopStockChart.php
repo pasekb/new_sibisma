@@ -32,6 +32,7 @@ class TopStockChart extends Component
         if ($dc == 'group') {
             $data = Stock::join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(qty) as sum_qty, units.model_name, units.category')
+            ->where('stocks.qty','>',0)
             ->groupBy('units.model_name')
             ->orderBy('sum_qty','desc')
             ->limit(5)
@@ -40,6 +41,7 @@ class TopStockChart extends Component
             $data = Stock::join('units','stocks.unit_id','units.id')
             ->selectRaw('sum(qty) as sum_qty, units.model_name, units.category')
             ->where('stocks.dealer_id',$did)
+            ->where('stocks.qty','>',0)
             ->groupBy('units.model_name')
             ->orderBy('sum_qty','desc')
             ->limit(5)

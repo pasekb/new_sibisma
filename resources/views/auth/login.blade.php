@@ -16,8 +16,9 @@
             @csrf
 
             <div>
-                <x-jet-label for="auth" value="{{ __('Username/Email') }}" />
-                <x-jet-input id="auth" class="block mt-1 w-full" type="text" name="auth" :value="old('auth')" required autofocus />
+                <x-jet-label for="auth" value="{{ __('Username / Email') }}" />
+                <x-jet-input id="auth" class="block mt-1 w-full" type="text" name="auth" :value="old('auth')" required autofocus 
+                autocomplete="off"/>
             </div>
 
             <div class="mt-4">
@@ -44,5 +45,9 @@
                 </x-jet-button>
             </div>
         </form>
+
+        <center>
+            <p>&copy;CRM Bisma</p>
+        </center>
     </x-jet-authentication-card>
 </x-guest-layout>

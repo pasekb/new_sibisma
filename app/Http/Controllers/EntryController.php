@@ -26,13 +26,12 @@ class EntryController extends Controller
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
         
-        $dealer = Dealer::orderBy('id','asc')->get();
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
         if ($dc == 'group') {
             $stock = Stock::all();
             $data = Entry::where('entry_date',$today)->orderBy('id','desc')->get();
-            return view('page', compact('stock','dealer','today','data'));
+            return view('page', compact('stock','today','data'));
         } else {
             $stock = Stock::where('dealer_id',$did)->get('stocks.*');
             $dealerCode = $dc;
@@ -42,7 +41,7 @@ class EntryController extends Controller
             ->select('dealers.dealer_name','stocks.*','entries.*')->get();
             // dd($data);
 
-            return view('page', compact('stock','today','data','dealerCode','dealer'));
+            return view('page', compact('stock','today','data','dealerCode'));
         }
         
         

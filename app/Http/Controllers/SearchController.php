@@ -15,6 +15,7 @@ class SearchController extends Controller
         ->join('colors','units.color_id','colors.id')
         ->join('dealers','stocks.dealer_id','dealers.id')
         ->where('units.model_name','like','%'.$search.'%')
+        ->where('stocks.qty','>',0)
         ->select('units.model_name','colors.color_name','colors.color_code','units.year_mc','dealers.dealer_name','stocks.qty','stocks.id')
         ->get();
 
