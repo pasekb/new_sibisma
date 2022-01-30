@@ -84,7 +84,7 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('sale', SaleController
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale/delete/{id}', [SaleController::class, 'delete'])->name('sale.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleController::class, 'deleteall'])->name('sale.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history/{date?}', [SaleController::class, 'history'])->name('sale.history');
-Route::middleware(['auth:sanctum', 'verified'])->get('/sale-ach/{param}', [SaleController::class, 'achievment'])->name('sale.ach');
+Route::middleware(['auth:sanctum', 'verified'])->get('/sale-ach/{param}', [SaleController::class, 'achievment'])->name('info.sale-ach');
 // END SALE
 
 // ENTRY
@@ -92,7 +92,7 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('entry', EntryControll
 Route::middleware(['auth:sanctum', 'verified'])->get('/entry/delete/{id}', [EntryController::class, 'delete'])->name('entry.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/entry/deleteall', [EntryController::class, 'deleteall'])->name('entry.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/entry-history/{date?}', [EntryController::class, 'history'])->name('entry.history');
-Route::middleware(['auth:sanctum', 'verified'])->get('/entry-ach/{param}', [EntryController::class, 'achievment'])->name('entry.ach');
+Route::middleware(['auth:sanctum', 'verified'])->get('/entry-ach/{param}', [EntryController::class, 'achievment'])->name('info.entry-ach');
 // END ENTRY
 
 // OUT
@@ -100,11 +100,11 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('out', OutController::
 Route::middleware(['auth:sanctum', 'verified'])->get('/out/delete/{id}', [OutController::class, 'delete'])->name('out.delete');
 Route::middleware(['auth:sanctum', 'verified'])->post('/out/deleteall', [OutController::class, 'deleteall'])->name('out.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/out-history/{date?}', [OutController::class, 'history'])->name('out.history');
-Route::middleware(['auth:sanctum', 'verified'])->get('/out-ach/{param}', [OutController::class, 'achievment'])->name('out.ach');
+Route::middleware(['auth:sanctum', 'verified'])->get('/out-ach/{param}', [OutController::class, 'achievment'])->name('info.out-ach');
 // END OUT
 
 // HISTORY
-Route::middleware(['auth:sanctum', 'verified'])->post('/stock/ratio', [StockController::class, 'ratio'])->name('stock.ratio');
+Route::middleware(['auth:sanctum', 'verified'])->get('stock-ratio', [StockController::class, 'ratio'])->name('info.stock-ratio');
 // END HISTORY
 
 // OPNAME

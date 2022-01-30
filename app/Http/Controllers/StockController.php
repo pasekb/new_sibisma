@@ -190,4 +190,8 @@ class StockController extends Controller
         toast('Data stock berhasil dihapus','success');
         return redirect()->back();
     }
+
+    public function ratio(){
+        return view('page');
+    }
 }

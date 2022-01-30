@@ -420,4 +420,368 @@ class EntryController extends Controller
         }
         return view('page', compact('data','start','end'));
     }
+
+    // PAGE Show All Achievment
+    public function achievment($param){
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $month = Carbon::now('GMT+8')->format('m');
+        $year = Carbon::now('GMT+8')->format('Y');
+        $tgl = Carbon::now('GMT+8');
+        $lastMonth = $tgl->subMonth()->format('Y-m');
+        $lastYear = $year - 1;
+
+        $sentral = Dealer::where('dealer_code','AA0101')->sum('id');
+        $cokro = Dealer::where('dealer_code','AA0102')->sum('id');
+        $ud = Dealer::where('dealer_code','AA0104')->sum('id');
+        $tts = Dealer::where('dealer_code','AA0105')->sum('id');
+        $imbo = Dealer::where('dealer_code','AA0106')->sum('id');
+        $mandiri = Dealer::where('dealer_code','AA0107')->sum('id');
+        $wr = Dealer::where('dealer_code','AA0108')->sum('id');
+        $sr = Dealer::where('dealer_code','AA0109')->sum('id');
+        $fss = Dealer::where('dealer_code','AA0104F')->sum('id');
+        $dalung = Dealer::where('dealer_code','AA0104-01')->sum('id');
+
+        if ($param == 'lm') {
+            // Sentral
+            $last_01 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sentral)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_01 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sentral)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+            
+            // Cokro
+            $last_02 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_02 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // UD
+            $last_04 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $ud)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_04 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $ud)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // TTS
+            $last_05 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $tts)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_05 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $tts)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // Imbo
+            $last_06 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_06 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $imbo)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // Mandiri
+            $last_07 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $mandiri)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_07 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $mandiri)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // WR
+            $last_08 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $wr)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_08 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $wr)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // SR
+            $last_09 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sr)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_09 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sr)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // Dalung
+            $last_0401 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $dalung)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_0401 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $dalung)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // FSS
+            $last_04F = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $fss)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data_04F = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $fss)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+            
+            // Bisma Group
+            $last = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id','!=', $fss)
+            ->where('entry_date','like', $lastMonth.'%')
+            ->sum('in_qty');
+            $data = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id','!=', $fss)
+            ->whereMonth('entry_date', $month)
+            ->sum('in_qty');
+
+            // Bisma Group + FSS
+            $lastPlus = Entry::where('entry_date','like', $lastMonth.'%')->sum('in_qty');
+            $dataPlus = Entry::whereMonth('entry_date', $month)->sum('in_qty');
+            
+        } else {
+            // Sentral
+            $last_01 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sentral)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_01 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sentral)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+            
+            // Cokro
+            $last_02 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_02 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // UD
+            $last_04 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $ud)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_04 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $ud)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // TTS
+            $last_05 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $tts)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_05 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $tts)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // Imbo
+            $last_06 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $cokro)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_06 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $imbo)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // Mandiri
+            $last_07 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $mandiri)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_07 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $mandiri)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // WR
+            $last_08 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $wr)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_08 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $wr)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // SR
+            $last_09 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sr)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_09 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $sr)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // Dalung
+            $last_0401 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $dalung)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_0401 = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $dalung)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // FSS
+            $last_04F = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $fss)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data_04F = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id', $fss)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+            
+            // Bisma Group
+            $last = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id','!=', $fss)
+            ->where('entry_date','like', $lastYear.'%')
+            ->sum('in_qty');
+            $data = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('stocks.dealer_id','!=', $fss)
+            ->whereYear('entry_date', $year)
+            ->sum('in_qty');
+
+            // Bisma Group + FSS
+            $lastPlus = Entry::whereYear('entry_date', $lastYear)->sum('in_qty');
+            $dataPlus = Entry::whereYear('entry_date', $year)->sum('in_qty');
+        }
+
+        // Sentral
+        if ($last_01 == 0) {
+            $vs_01 = 0*100;
+        } else {
+            $vs_01 = ($data_01 / $last_01)*100;
+        }
+
+        // Cokro
+        if ($last_02 == 0) {
+            $vs_02 = 0*100;
+        } else {
+            $vs_02 = ($data_02 / $last_02)*100;
+        }
+
+        // UD
+        if ($last_04 == 0) {
+            $vs_04 = 0*100;
+        } else {
+            $vs_04 = ($data_04 / $last_04)*100;
+        }
+
+        // TTS
+        if ($last_05 == 0) {
+            $vs_05 = 0*100;
+        } else {
+            $vs_05 = ($data_05 / $last_05)*100;
+        }
+
+        // Imbo
+        if ($last_06 == 0) {
+            $vs_06 = 0*100;
+        } else {
+            $vs_06 = ($data_06 / $last_06)*100;
+        }
+
+        // Mandiri
+        if ($last_07 == 0) {
+            $vs_07 = 0*100;
+        } else {
+            $vs_07 = ($data_07 / $last_07)*100;
+        }
+
+        // WR
+        if ($last_08 == 0) {
+            $vs_08 = 0*100;
+        } else {
+            $vs_08 = ($data_08 / $last_08)*100;
+        }
+
+        // SR
+        if ($last_09 == 0) {
+            $vs_09 = 0*100;
+        } else {
+            $vs_09 = ($data_09 / $last_09)*100;
+        }
+
+        // Dalung
+        if ($last_0401 == 0) {
+            $vs_0401 = 0*100;
+        } else {
+            $vs_0401 = ($data_0401 / $last_0401)*100;
+        }
+
+        // FSS
+        if ($last_04F == 0) {
+            $vs_04F = 0*100;
+        } else {
+            $vs_04F = ($data_04F / $last_04F)*100;
+        }
+
+        // Bisma Group
+        if ($last == 0) {
+            $vs = 0*100;
+        } else {
+            $vs = ($data / $last)*100;
+        }
+
+        // Bisma Group + FSS
+        if ($lastPlus == 0) {
+            $vsPlus = 0*100;
+        } else {
+            $vsPlus = ($dataPlus / $lastPlus)*100;
+        }
+
+        $vs_01 = number_format($vs_01, 1);
+        $vs_02 = number_format($vs_02, 1);
+        $vs_04 = number_format($vs_04, 1);
+        $vs_05 = number_format($vs_05, 1);
+        $vs_06 = number_format($vs_06, 1);
+        $vs_07 = number_format($vs_07, 1);
+        $vs_08 = number_format($vs_08, 1);
+        $vs_09 = number_format($vs_09, 1);
+        $vs_0401 = number_format($vs_0401, 1);
+        $vs_04F = number_format($vs_04F, 1);
+        $vs = number_format($vs, 1);
+        $vsPlus = number_format($vsPlus, 1);
+        return view('page', compact(
+            'param',
+            'last_01','data_01','vs_01',
+            'last_02','data_02','vs_02',
+            'last_04','data_04','vs_04',
+            'last_05','data_05','vs_05',
+            'last_06','data_06','vs_06',
+            'last_07','data_07','vs_07',
+            'last_08','data_08','vs_08',
+            'last_09','data_09','vs_09',
+            'last_0401','data_0401','vs_0401',
+            'last_04F','data_04F','vs_04F',
+            'last','data','vs',
+            'lastPlus','dataPlus','vsPlus'
+        ));
+    }
 }

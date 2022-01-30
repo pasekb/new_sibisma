@@ -1,22 +1,22 @@
-@section('title','Sales Achievement')
-@section('page-title','Sales Achievement')
+@section('title','Out Achievement')
+@section('page-title','Out Achievement')
 
 @push('link-bread')
 <li class="nav-item">
-    <a href="{{ route('dashboard') }}">Dashboard </a>
+    <a href="{{ route('out.index') }}">Out Unit</a>
 </li>
 <li class="separator">
     <i class="flaticon-right-arrow"></i>
 </li>
 <li class="nav-item">
-    <a href="#">Sales Achievement</a>
+    <a href="#">Out Achievement</a>
 </li>
 @endpush
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Sales Achievement Data</h4>
+            <h4 class="card-title">Out Achievement Data</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">

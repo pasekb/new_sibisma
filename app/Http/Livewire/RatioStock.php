@@ -89,7 +89,7 @@ class RatioStock extends Component
             if ($monthSaleOut <= 0) {
                 $ratio = $stockQty/$stockQty;
             } else {
-                $ratio = $monthSaleOut/$monthSaleOut;
+                $ratio = $stockQty/$monthSaleOut;
             }
         } else {
             $ratio = $stockQty/$monthSaleOut;

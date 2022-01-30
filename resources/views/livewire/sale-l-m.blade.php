@@ -13,7 +13,7 @@
                     aria-valuenow="{{ $vsLMach }}" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $vsLMach ?>%"></div>
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <p class="text-muted mb-0"><a href="{{ route('sale.ach', 'lm') }}" class="text-success" id="vsLM" style="text-decoration: none;">Achievement</a></p>
+                <p class="text-muted mb-0"><a href="{{ route('info.sale-ach', 'lm') }}" class="text-success" id="vsLM" style="text-decoration: none;">Achievement</a></p>
                 <p class="text-muted mb-0">{{ number_format($vsLMach,1) }}%</p>
             </div>
         </div>

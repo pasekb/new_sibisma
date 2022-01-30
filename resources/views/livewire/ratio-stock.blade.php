@@ -13,7 +13,7 @@
                     aria-valuenow="{{ $ratioPercent }}" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $ratioPercent ?>%"></div>
             </div>
             <div class="d-flex justify-content-between mt-2">
-                <p class="text-muted mb-0"><a href="{{ route('stock.ratio') }}" class="text-info" id="stockRatio" style="text-decoration: none;">Stock Ratio</a></p>
+                <p class="text-muted mb-0"><a href="{{ route('info.stock-ratio') }}" class="text-info" id="stockRatio" style="text-decoration: none;">Stock Ratio</a></p>
                 <p class="text-muted mb-0">{{ $ratio }}</p>
             </div>
         </div>

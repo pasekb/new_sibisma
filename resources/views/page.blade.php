@@ -99,8 +99,6 @@
             <livewire:sale-l-y>
             @include('component.search-box')
             @include('component.sale-history')
-        @elseif(Route::is('sale.ach'))
-            @include('component.sale-ach')
         @else
             @include('component.sale-create')
             <livewire:ratio-stock>
@@ -219,6 +217,18 @@
         @include('component.search-data')
         @if(Route::is('stock.show'))
             @include('component.stock-show')
+        @endif
+
+    <!-- Detail Stock Ratio Page -->
+    @elseif(Route::is('info.*'))
+        @if(Route::is('info.stock-ratio'))
+            <livewire:stock-ratio-detail>
+        @elseif(Route::is('info.sale-ach'))
+            @include('component.sale-ach')
+        @elseif(Route::is('info.entry-ach'))
+            @include('component.entry-ach')
+        @elseif(Route::is('info.out-ach'))
+            @include('component.out-ach')
         @endif
         
     @endif
