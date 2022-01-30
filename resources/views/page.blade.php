@@ -10,6 +10,7 @@
             <a href="{{ route('dashboard') }}">Dashboard</a>
         </li>
         @endpush
+        <livewire:rank>
         <livewire:sale-chart>
         <livewire:ratio-stock>
         <livewire:sale-l-m>
@@ -18,6 +19,7 @@
         <livewire:top-product-chart>
         <livewire:top-stock-chart>
         <livewire:psi-chart>
+        <livewire:modal-ranking>
 
     <!-- Dealer Page -->
     @elseif(Route::is('dealer.*'))
