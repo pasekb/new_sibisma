@@ -100,7 +100,11 @@
             @include('component.search-box')
             @include('component.sale-history')
         @else
-            @include('component.sale-create')
+            @if(Auth::user()->crud == 'simple')
+                @include('component.sale-simple-create')
+            @else
+                @include('component.sale-create')
+            @endif
             <livewire:ratio-stock>
             <livewire:sale-l-m>
             <livewire:sale-l-y>
@@ -132,7 +136,11 @@
             @include('component.search-box')
             @include('component.out-history')
         @else
-            @include('component.out-create')
+            @if(Auth::user()->crud == 'simple')
+                @include('component.out-simple-create')
+            @else
+                @include('component.out-create')
+            @endif
             <livewire:ratio-stock>
             <livewire:out-l-m>
             <livewire:out-l-y>

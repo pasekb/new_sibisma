@@ -11,7 +11,6 @@ use App\Models\Dealer;
 use App\Models\Out;
 use App\Models\Sale;
 use App\Models\Opname;
-use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -148,12 +147,19 @@ class ReportController extends Controller
                 ->where('stocks.dealer_id',$did)
                 ->groupBy('dealers.id','stock_id')->get();
                 
-                $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
-                ->join('stocks','sales.stock_id','stocks.id')
-                ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
-                ->where('sale_date',$today)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('stock_id','leasing_id')->get();
+                if(Auth::user()->crud == 'simple')
+                    $dataSale = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id')
+                    ->where('sale_date',$today)
+                    ->where('stocks.dealer_id',$did)->get();
+                else{
+                    $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+                    ->join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+                    ->where('sale_date',$today)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('stock_id','leasing_id')->get();
+                }
 
                 $dataFaktur = StockHistory::where('history_date',$today)
                 ->where('dealer_code',$dc)
@@ -224,12 +230,20 @@ class ReportController extends Controller
                 ->where('out_date',$date)
                 ->where('stocks.dealer_id',$did)
                 ->groupBy('dealers.id','stock_id')->get();
-                $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
-                ->join('stocks','sales.stock_id','stocks.id')
-                ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
-                ->where('sale_date',$date)
-                ->where('stocks.dealer_id',$did)
-                ->groupBy('stock_id','leasing_id')->get();
+
+                if(Auth::user()->crud == 'simple')
+                    $dataSale = Sale::join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id')
+                    ->where('sale_date',$date)
+                    ->where('stocks.dealer_id',$did)->get();
+                else{
+                    $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+                    ->join('stocks','sales.stock_id','stocks.id')
+                    ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+                    ->where('sale_date',$date)
+                    ->where('stocks.dealer_id',$did)
+                    ->groupBy('stock_id','leasing_id')->get();
+                }
 
                 $dataFaktur = StockHistory::where('history_date',$date)
                 ->where('dealer_code',$dc)
@@ -315,12 +329,20 @@ class ReportController extends Controller
             ->where('out_date',$date)
             ->where('stocks.dealer_id',$did)
             ->groupBy('dealers.id','stock_id')->get();
-            $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
-            ->join('stocks','sales.stock_id','stocks.id')
-            ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
-            ->where('sale_date',$date)
-            ->where('stocks.dealer_id',$did)
-            ->groupBy('stock_id','leasing_id')->get();
+
+            if(Auth::user()->crud == 'simple')
+                $dataSale = Sale::join('stocks','sales.stock_id','stocks.id')
+                ->selectRaw('SUM(sale_qty) as qty ,stock_id')
+                ->where('sale_date',$date)
+                ->where('stocks.dealer_id',$did)->get();
+            else{
+                $dataSale = Sale::join('leasings','sales.leasing_id','=','leasings.id')
+                ->join('stocks','sales.stock_id','stocks.id')
+                ->selectRaw('SUM(sale_qty) as qty ,stock_id, leasing_id')
+                ->where('sale_date',$date)
+                ->where('stocks.dealer_id',$did)
+                ->groupBy('stock_id','leasing_id')->get();
+            }
 
             $dataFaktur = StockHistory::where('history_date',$date)
             ->where('dealer_code',$dealer)

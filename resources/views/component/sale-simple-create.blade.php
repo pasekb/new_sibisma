@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('sale.store') }}" method="post" id="form">
+            <form action="{{ route('sale.simple-store') }}" method="post" id="form">
                 @csrf
 
                 <div class="row">
@@ -86,67 +86,12 @@
 
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
-                            <input type="hidden" id="leasing_id" name="leasing_id" value="{{ old('leasing_id') }}" required>
-                            <input id="leasing_code" type="text" class="form-control input-border-bottom"
-                                name="leasing_code" value="{{ old('leasing_code') }}" data-toggle="modal"
-                                data-target=".modalLeasing" required>
-                            <label for="leasing_code" class="placeholder">Select Leasing *</label>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="frame_no" type="text" class="form-control input-border-bottom {{ Session::has('auto') ? 'is-invalid' : '' }}" name="frame_no" value="{{ old('frame_no') }}" @if(Session::has('auto')) autofocus="autofocus" onclick="this.select()" @endif style="text-transform: uppercase;" required>
-                            <label for="frame_no" class="placeholder">Frame No. *</label>
-                            @if(Session::has('auto'))
-                                <span class="invalid-feedback">
-                                    <strong>frame no. already sold!</strong>
-                                </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="engine_no" type="text" class="form-control input-border-bottom" name="engine_no" value="{{ old('engine_no') }}" placeholder="Engine No.">
-                            <label for="engine_no" class="placeholder"></label>
+                            <input id="sale_qty" type="number" class="form-control input-border-bottom" name="sale_qty" value="{{ old('sale_qty') }}" required>
+                            <label for="sale_qty" class="placeholder">Qty*</label>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="nik" type="number" class="form-control input-border-bottom" name="nik" value="{{ old('nik') }}"
-                                placeholder="Customer's NIK">
-                            <label for="nik" class="placeholder"></label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="customer_name" type="text" class="form-control input-border-bottom" name="customer_name" value="{{ old('customer_name') }}"
-                                placeholder="Customer's Name">
-                            <label for="customer_name" class="placeholder"></label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="phone" type="text" class="form-control input-border-bottom" name="phone" value="{{ old('phone') }}"
-                                placeholder="Customer's Phone">
-                            <label for="phone" class="placeholder"></label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group form-floating-label">
-                            <input id="address" type="text" class="form-control input-border-bottom" name="address" value="{{ old('address') }}"
-                                placeholder="Customer's Address">
-                            <label for="address" class="placeholder"></label>
-                        </div>
-                    </div>
-                </div>
                 @if(Auth::user()->dealer_code == 'group')
                 <div class="row">
                     <div class="col-md-3">

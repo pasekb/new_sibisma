@@ -45,6 +45,7 @@
                                 <th>Dealer</th>
                                 <th>Access</th>
                                 <th>Status</th>
+                                <th>Mode</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -63,6 +64,7 @@
                                 <th>Dealer</th>
                                 <th>Access</th>
                                 <th>Status</th>
+                                <th>Mode</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -95,6 +97,7 @@
                                         @endif
                                     </a>
                                 </td>
+                                <td>{{ $o->crud }}</td>
                                 <td>
                                     <div class="form-button-action">
                                         <a href="{{ route('user.show', $o->id) }}"
@@ -112,7 +115,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="7" style="text-align: center;">No data available</td>
+                                <td colspan="8" style="text-align: center;">No data available</td>
                             </tr>
                             @endforelse
                         </tbody>

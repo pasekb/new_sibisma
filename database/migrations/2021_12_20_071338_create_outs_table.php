@@ -19,7 +19,7 @@ class CreateOutsTable extends Migration
             $table->unsignedInteger('stock_id');
             $table->unsignedInteger('dealer_id');
             $table->integer('out_qty');
-            $table->string('frame_no');
+            $table->string('frame_no')->nullable();
             $table->string('engine_no')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('updated_by')->nullable();

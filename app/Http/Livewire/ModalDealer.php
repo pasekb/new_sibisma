@@ -15,10 +15,15 @@ class ModalDealer extends Component
 
         if ($dc == 'group') {
             $dealer = Dealer::orderBy('id','asc')->get();
+            $dealerOut = Dealer::where('dealer_code','!=','YIMM')
+            ->orderBy('id','asc')->get();
         }else{
             $dealer = Dealer::orderBy('id','asc')->where('id','!=',$did)->get();
+            $dealerOut = Dealer::orderBy('id','asc')
+            ->where('dealer_code','!=','YIMM')
+            ->where('id','!=',$did)->get();
         }
 
-        return view('livewire.modal-dealer', compact('dealer'));
+        return view('livewire.modal-dealer', compact('dealer','dealerOut'));
     }
 }

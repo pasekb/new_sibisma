@@ -22,7 +22,7 @@ class CreateSalesTable extends Migration
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->integer('sale_qty');
-            $table->string('frame_no');
+            $table->string('frame_no')->nullable();
             $table->string('engine_no')->nullable();
             $table->enum('status',['pending','delivered']);
             $table->unsignedInteger('leasing_id');

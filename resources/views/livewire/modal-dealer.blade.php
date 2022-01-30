@@ -42,6 +42,18 @@
                                     <td colspan="2" style="text-align: center;">No data available</td>
                                 </tr>
                                 @endforelse
+                            @elseif(Route::is('out.*'))
+                                @forelse($dealerOut as $o)
+                                <tr data-id="{{ $o->id }}" data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilihDealer" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
+                                    <td>{{ $o->id }}</td>
+                                    <td>{{ $o->dealer_code }}</td>
+                                    <td>{{ $o->dealer_name }}</td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">No data available</td>
+                                </tr>
+                                @endforelse
                             @else
                                 @forelse($dealer as $o)
                                 <tr data-id="{{ $o->id }}" data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilihDealer" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">

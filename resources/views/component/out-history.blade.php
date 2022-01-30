@@ -40,7 +40,10 @@
                             <th>Color</th>
                             <th>Year</th>
                             <th>Destination</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
+                            @endif
+                            <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -54,7 +57,10 @@
                             <th>Color</th>
                             <th>Year</th>
                             <th>Destination</th>
+                            @if(Auth::user()->crud == 'normal')
                             <th>Frame No</th>
+                            @endif
+                            <th>Qty</th>
                             <th>Created By</th>
                             <th>Action</th>
                         </tr>
@@ -72,7 +78,10 @@
                             </td>
                             <td>{{ $o->stock->unit->year_mc }}</td>
                             <td>{{ $o->dealer->dealer_name }}</td>
+                            @if(Auth::user()->crud == 'normal')
                             <td>{{ $o->frame_no }}</td>
+                            @endif
+                            <td>{{ $o->out_qty }}</td>
                             <td>{{ $o->createdBy->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
@@ -85,7 +94,11 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="9" style="text-align: center;">No data available</td>
+                        @if(Auth::user()->crud == 'normal')
+                            <td colspan="11" style="text-align: center;">No data available</td>
+                        @else
+                            <td colspan="10" style="text-align: center;">No data available</td>
+                        @endif
                         </tr>
                         @endforelse
                     </tbody>

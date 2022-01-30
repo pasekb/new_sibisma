@@ -20,6 +20,8 @@ use App\Http\Controllers\BranchDeliveryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\SimpleSaleController;
+use App\Http\Controllers\SimpleOutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +87,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/sale/delete/{id}', [SaleC
 Route::middleware(['auth:sanctum', 'verified'])->post('/sale/deleteall', [SaleController::class, 'deleteall'])->name('sale.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale-history/{date?}', [SaleController::class, 'history'])->name('sale.history');
 Route::middleware(['auth:sanctum', 'verified'])->get('/sale-ach/{param}', [SaleController::class, 'achievment'])->name('info.sale-ach');
+Route::middleware(['auth:sanctum', 'verified'])->post('/sale-simple', [SimpleSaleController::class, 'store'])->name('sale.simple-store');
 // END SALE
 
 // ENTRY
@@ -101,6 +104,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/out/delete/{id}', [OutCon
 Route::middleware(['auth:sanctum', 'verified'])->post('/out/deleteall', [OutController::class, 'deleteall'])->name('out.deleteall');
 Route::middleware(['auth:sanctum', 'verified'])->get('/out-history/{date?}', [OutController::class, 'history'])->name('out.history');
 Route::middleware(['auth:sanctum', 'verified'])->get('/out-ach/{param}', [OutController::class, 'achievment'])->name('info.out-ach');
+Route::middleware(['auth:sanctum', 'verified'])->post('/out-simple', [SimpleOutController::class, 'store'])->name('out.simple-store');
 // END OUT
 
 // HISTORY
@@ -160,3 +164,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/user/change/{id}/{status}
 // SEARCH
 Route::middleware(['auth:sanctum', 'verified'])->get('/search', [SearchController::class, 'search'])->name('search');
 // END SEARCH
+
+// CRUD MODE
+Route::middleware(['auth:sanctum', 'verified'])->post('update-crud/{id}/{crud}', [UserController::class, 'updateCrud']);
+// END CRUD MODE

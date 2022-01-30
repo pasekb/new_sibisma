@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Unit;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Dealer;
@@ -133,6 +132,18 @@ class UserController extends Controller
     public function deleteall(Request $req){
         User::whereIn('id',$req->pilih)->delete();
         toast('Data user berhasil dihapus','success');
+        return redirect()->back();
+    }
+
+    public function updateCrud($id, $crud){
+        $data = User::where('id',$id)->first();
+        if ($crud == 'simple') {
+            $data->crud = 'simple';
+        } else {
+            $data->crud = 'normal';
+        }
+        
+        $data->save();
         return redirect()->back();
     }
 }

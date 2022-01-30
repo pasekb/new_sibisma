@@ -15,7 +15,6 @@ use App\Models\Log;
 use App\Models\StockHistory;
 use Carbon\Carbon;
 use Auth;
-use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {

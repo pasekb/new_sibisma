@@ -1,4 +1,4 @@
-<li class="nav-item {{ Route::is('sale-delivery.*') || Route::is('branch-delivery.*') ? 'active' : '' }}">
+<li class="nav-item {{ Route::is('sale-delivery.*') || Route::is('branch-delivery.*') ? 'active' : '' }}" @if(Auth::user()->crud == 'simple') hidden @endif>
     <a data-toggle="collapse" href="#delivery">
         <i class="fas fa-shipping-fast"></i>
         <p>Delivery</p>
