@@ -60,8 +60,8 @@
                         @forelse($data as $o)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $o->sale->customer_name }}</td>
-                            <td>{{ $o->sale->stock->unit->model_name }}</td>
+                            <td>{{ $o->customer_name }}</td>
+                            <td>{{ $o->model_name }}</td>
                             
                                 @if($o->stck < 1)
                                 <td style="background-color:#eb343480">
@@ -93,8 +93,8 @@
                                 </td>
                                 @endif
 
-                            <td>{{ $o->sale->frame_no }}</td>
-                            <td>{{ $o->createdBy->first_name }}</td>
+                            <td>{{ $o->frame_no }}</td>
+                            <td>{{ $o->first_name }}</td>
                             <td>
                                 <div class="form-button-action">
                                     <a href="{{ route('document.show', $o->id) }}" class="btnAction"

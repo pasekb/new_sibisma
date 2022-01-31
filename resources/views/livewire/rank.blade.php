@@ -1,5 +1,5 @@
 <div class="col-md-4" data-toggle="modal" data-target=".modalRanking">
-    <div class="card card-dark bg-dark-gradient curves-shadow">
+    <div class="card card-dark bg-info-gradient curves-shadow">
         <div class="card-body pb-0">
             <div class="h1 fw-bold float-right"><img src="{{ asset('img/1st.png') }}" alt="1st"></div>
             @foreach($rank1 as $o)
@@ -11,7 +11,7 @@
 </div>
 
 <div class="col-md-4" data-toggle="modal" data-target=".modalRanking">
-    <div class="card card-dark bg-dark-gradient skew-shadow">
+    <div class="card card-dark bg-info-gradient skew-shadow">
         <div class="card-body pb-0">
             <div class="h1 fw-bold float-right"><img src="{{ asset('img/2nd.png') }}" alt="1st"></div>
             @foreach($rank2 as $o)
@@ -23,7 +23,7 @@
 </div>
 
 <div class="col-md-4" data-toggle="modal" data-target=".modalRanking">
-    <div class="card card-dark bg-dark-gradient">
+    <div class="card card-dark bg-info-gradient">
         <div class="card-body pb-0">
             <div class="h1 fw-bold float-right"><img src="{{ asset('img/3rd.png') }}" alt="1st"></div>
             @foreach($rank3 as $o)

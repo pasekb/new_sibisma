@@ -26,7 +26,10 @@ class DokumenController extends Controller
         if ($dc == 'group') {
             $sale = Sale::orderBy('sale_date','desc')->get();
             $data = Document::join('sales','documents.sale_id','sales.id')
-            ->join('stocks','sales.stock_id','stocks.id')->get();
+            ->join('stocks','sales.stock_id','stocks.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('users','documents.created_by','users.id')
+            ->select('sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name')->get();
             return view('page', compact('data','today','sale'));
         }else{
             $sale = Sale::join('stocks','sales.stock_id','stocks.id')
@@ -34,6 +37,9 @@ class DokumenController extends Controller
             ->orderBy('sale_date','desc')->get();
             $data = Document::join('sales','documents.sale_id','sales.id')
             ->join('stocks','sales.stock_id','stocks.id')
+            ->join('units','stocks.unit_id','units.id')
+            ->join('users','documents.created_by','users.id')
+            ->select('sales.customer_name', 'units.model_name', 'documents.stck', 'documents.stnk', 'documents.bpkb', 'sales.frame_no', 'documents.id as id', 'users.first_name')
             ->where('stocks.dealer_id',$did)->get();
             return view('page', compact('data','today','sale'));
         }
@@ -71,8 +77,9 @@ class DokumenController extends Controller
             $data->updated_by = Auth::user()->id;
             $data->save();
 
-            // Update Stock Table
+            // Update Sale Table
             $sale = Sale::where('id',$saleId)->first();
+            $sale->nik = $req->nik;
             $sale->customer_name = $req->customer_name;
             $sale->phone = $req->phone;
             $sale->frame_no = $req->frame_no;
@@ -150,6 +157,7 @@ class DokumenController extends Controller
         $saleId = $req->sale_id;
 
         $sale = Sale::where('id',$saleId)->first();
+        $sale->nik = $req->nik;
         $sale->customer_name = $req->customer_name;
         $sale->phone = $req->phone;
         $sale->frame_no = $req->frame_no;

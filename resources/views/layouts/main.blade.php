@@ -58,7 +58,7 @@
             
             <div class="main-panel">
 			    <div class="content">
-                    <div class="panel-header bg-dark-gradient text-white bubble-shadow">
+                    <div class="panel-header @if(Route::is('entry.*')) bg-info-gradient @elseif(Route::is('sale.*')) bg-success-gradient @elseif(Route::is('out.*')) bg-danger-gradient @elseif(Route::is('stock.*')) bg-secondary-gradient @else bg-dark-gradient @endif text-white bubble-shadow">
                         <div class="page-inner py-5">
                             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                                 <div>

@@ -47,7 +47,9 @@
         </form>
 
         <center>
-            <p>&copy;CRM Bisma</p>
+            <strong>
+                <p>&copy;CRM Bisma</p>
+            </strong>
         </center>
     </x-jet-authentication-card>
 </x-guest-layout>
