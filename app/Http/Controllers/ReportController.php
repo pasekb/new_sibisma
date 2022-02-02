@@ -86,19 +86,37 @@ class ReportController extends Controller
         $date = $req->date;
         $today = Carbon::now('GMT+8')->format('Y-m-d');
 
-        $faktur = StockHistory::where('history_date',$today)
-        ->where('dealer_code',$dc)
-        ->orderBy('history_date', 'desc')
-        ->sum('faktur');
-
-        $service = StockHistory::where('history_date',$today)
-        ->where('dealer_code',$dc)
-        ->orderBy('history_date', 'desc')
-        ->sum('service');
-
         $fns = StockHistory::where('history_date',$today)
         ->where('dealer_code',$dc)
         ->first();
+
+        if ($fns == null) {
+            $fns = StockHistory::where('dealer_code',$dc)
+            ->orderBy('history_date','desc')
+            ->first();
+
+            $faktur = StockHistory::where('dealer_code',$dc)
+            ->orderBy('history_date', 'desc')
+            ->pluck('faktur');
+
+            $service = StockHistory::where('dealer_code',$dc)
+            ->orderBy('history_date', 'desc')
+            ->pluck('service');
+
+            $faktur = $faktur[0];
+            $service = $service[0];
+        }else{
+            $faktur = StockHistory::where('history_date',$today)
+            ->where('dealer_code',$dc)
+            ->orderBy('history_date', 'desc')
+            ->sum('faktur');
+
+            $service = StockHistory::where('history_date',$today)
+            ->where('dealer_code',$dc)
+            ->orderBy('history_date', 'desc')
+            ->sum('service');
+        }
+        
 
         if ($date == null) {
                 // Stock Report

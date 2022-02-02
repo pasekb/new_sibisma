@@ -9,6 +9,8 @@
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Out</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Sale</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Last Stock</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Faktur</th>
+            <th style="color: white; background-color: #0f5abc; font-weight: bold;">Service</th>
             <th style="color: white; background-color: #0f5abc; font-weight: bold;">Updated By</th>
         </tr>
     </thead>
@@ -23,11 +25,13 @@
             <td>{{ $o->out_qty }}</td>
             <td>{{ $o->sale_qty }}</td>
             <td>{{ $o->last_stock }}</td>
+            <td>{{ $o->faktur }}</td>
+            <td>{{ $o->service }}</td>
             <td>{{ $o->updatedBy->first_name }}</td>
         </tr>
         @empty
         <tr>
-            <td colspan="9" style="text-align: center;">No data available</td>
+            <td colspan="11" style="text-align: center;">No data available</td>
         </tr>
         @endforelse
     </tbody>

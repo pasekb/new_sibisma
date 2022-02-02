@@ -11,6 +11,7 @@ use App\Models\Document;
 use App\Models\StockHistory;
 use App\Models\Dealer;
 use App\Models\Log;
+use App\Models\Opname;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
