@@ -22,7 +22,7 @@ class StockController extends Controller
     {
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
-        $dealer = Dealer::all();
+        $dealer = Dealer::where('dealer_code','!=','YIMM')->get();
 
         if ($dc == 'group') {
             $unit = Unit::orderBy('model_name', 'desc')->get();

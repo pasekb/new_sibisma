@@ -71,6 +71,7 @@ class OutController extends Controller
 
         $dc = Auth::user()->dealer_code;
         $did = Dealer::where('dealer_code',$dc)->sum('id');
+        $dealerId = Dealer::where('dealer_code',$req->dealer_code)->sum('id');
 
         // Get Stok ID from Input
         $stockId = $req->stock_id;
@@ -86,17 +87,29 @@ class OutController extends Controller
 
         /** ============== Create Or Update Stock History ============== */ 
         if($dc == 'group'){
-            $isSale = Sale::where('sale_date',$req->out_date)->count();
-            $isOut = Out::where('out_date',$req->out_date)->count();
-            $isEntry = Entry::where('entry_date',$req->out_date)->count();
+            $isSale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->count();
+            $isOut = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->count();
+            $isEntry = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->count();
     
             // Count first stock
-            $stock = Stock::sum('qty');
-            $in = Entry::where('entry_date',$req->out_date)->sum('in_qty');
+            $stock = Stock::where('dealer_id',$dealerId)->sum('qty');
+            $in = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('in_qty');
             $in = ($in == 0) ? $in = 0 : (int)$in ;
-            $out = Out::where('out_date',$req->out_date)->sum('out_qty');
+            $out = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('out_qty');
             $out = ($out == 0) ? $out = 0 : (int)$out ;
-            $sale = Sale::where('sale_date',$req->out_date)->sum('sale_qty');
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$req->out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('sale_qty');
             $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
             $firstStock = $stock - ($in + $out + $sale);
         }else{
@@ -167,8 +180,10 @@ class OutController extends Controller
 
             // Get QTY after update
             if ($dc == 'group') {
-                $out_qty = Out::where('out_date',$req->out_date)->sum('out_qty');
-                $lastStock = Stock::sum('qty');
+                $out_qty = Out::join('stocks','outs.stock_id','stocks.id')
+                ->where('out_date',$req->out_date)
+                ->where('stocks.dealer_id',$dealerId)->sum('out_qty');
+                $lastStock = Stock::where('dealer_id',$dealerId)->sum('qty');
             }else{
                 $out_qty = Out::join('stocks','outs.stock_id','stocks.id')
                 ->where('out_date',$req->out_date)
@@ -180,7 +195,8 @@ class OutController extends Controller
             if ($isEntry > 0 && $isOut > 0 && $isSale > 0) {
                 // If that variables has records -> Update History
                 if ($dc == 'group') {
-                    $his = StockHistory::where('history_date',$req->out_date)->first();
+                    $his = StockHistory::where('history_date',$req->out_date)
+                    ->where('dealer_code',$dealer_code)->first();
                 }else{
                     $his = StockHistory::where('history_date',$req->out_date)
                     ->where('dealer_code',$dc)->first();
@@ -195,7 +211,8 @@ class OutController extends Controller
             } elseif($isEntry > 0 || $isOut > 0 || $isSale > 0) {
                 // If one of them have records -> Update History
                 if ($dc == 'group') {
-                    $his = StockHistory::where('history_date',$req->out_date)->first();
+                    $his = StockHistory::where('history_date',$req->out_date)
+                    ->where('dealer_code',$dealer_code)->first();
                 }else{
                     $his = StockHistory::where('history_date',$req->out_date)
                     ->where('dealer_code',$dc)->first();
@@ -209,7 +226,8 @@ class OutController extends Controller
             } else {
                 // If no record by input date in DB -> Create History
                 if ($dc == 'group') {
-                    $cek = StockHistory::where('history_date',$req->out_date)->count();
+                    $cek = StockHistory::where('history_date',$req->out_date)
+                    ->where('dealer_code',$dealer_code)->count();
                 }else{
                     $cek = StockHistory::where('history_date',$req->out_date)
                     ->where('dealer_code',$dc)->count();
@@ -218,7 +236,8 @@ class OutController extends Controller
                 if ($cek > 0) {
                     // if Stock history's table contain data with the same date -> Update History
                     if ($dc == 'group') {
-                        $his = StockHistory::where('history_date',$req->out_date)->first();
+                        $his = StockHistory::where('history_date',$req->out_date)
+                        ->where('dealer_code',$dealer_code)->first();
                     }else{
                         $his = StockHistory::where('history_date',$req->out_date)
                         ->where('dealer_code',$dc)->first();
@@ -322,15 +341,29 @@ class OutController extends Controller
 
         /** ============== Create Or Update Stock History ============== */
         $out_date = Out::where('id',$id)->pluck('out_date');
+        $dealer_code = Entry::join('stocks','entries.stock_id','stocks.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->where('entries.id',$id)
+        ->pluck('dealers.dealer_code');
+        $dealerId = Entry::join('stocks','entries.stock_id','stocks.id')
+        ->join('dealers','stocks.dealer_id','dealers.id')
+        ->where('entries.id',$id)
+        ->pluck('dealers.id');
 
         if($dc == 'group'){
             // Count first stock
-            $stock = Stock::sum('qty');
-            $in = Entry::where('entry_date',$out_date)->sum('in_qty');
+            $stock = Stock::where('dealer_id',$dealerId)->sum('qty');
+            $in = Entry::join('stocks','entries.stock_id','stocks.id')
+            ->where('entry_date',$out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('in_qty');
             $in = ($in == 0) ? $in = 0 : (int)$in ;
-            $out = Out::where('out_date',$out_date)->sum('out_qty');
+            $out = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('out_qty');
             $out = ($out == 0) ? $out = 0 : (int)$out ;
-            $sale = Sale::where('sale_date',$out_date)->sum('sale_qty');
+            $sale = Sale::join('stocks','sales.stock_id','stocks.id')
+            ->where('sale_date',$out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('sale_qty');
             $sale = ($sale == 0) ? $sale = 0 : (int)$sale ;
         }else{
             // Count first stock
@@ -364,9 +397,11 @@ class OutController extends Controller
 
         // Get QTY after update
         if ($dc == 'group') {
-            $out_qty = Out::where('out_date',$out_date)->sum('out_qty');
+            $out_qty = Out::join('stocks','outs.stock_id','stocks.id')
+            ->where('out_date',$out_date)
+            ->where('stocks.dealer_id',$dealerId)->sum('out_qty');
             $out_qty = ($out_qty == 0) ? $out_qty = 0 : (int)$out_qty ;
-            $lastStock = Stock::sum('qty');
+            $lastStock = Stock::where('dealer_id',$dealerId)->sum('qty');
         }else{
             $out_qty = Out::join('stocks','outs.stock_id','stocks.id')
             ->where('out_date',$out_date)
@@ -378,7 +413,8 @@ class OutController extends Controller
 
         // Update Stock History
         if ($dc == 'group') {
-            $his = StockHistory::where('history_date',$out_date)->first();
+            $his = StockHistory::where('history_date',$out_date)
+            ->where('dealer_code',$dealer_code)->first();
         }else{
             $his = StockHistory::where('history_date',$out_date)
             ->where('dealer_code',$dc)->first();

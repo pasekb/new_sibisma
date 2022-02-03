@@ -39,7 +39,7 @@
                     <div class="col-md-3">
                         <div class="form-group form-floating-label">
                             <input id="sale_date" type="date" class="form-control input-border-bottom"
-                                name="sale_date" value="{{ Session::has('input') ? Session::get('input.sale_date') : $today }}" value="{{ old('sale_date') }}" required>
+                                name="sale_date" value="{{ old('sale_date') }}" required>
                             <label for="sale_date" class="placeholder">Date *</label>
                         </div>
                     </div>

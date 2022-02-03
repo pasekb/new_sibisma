@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ColorSeeder::class,
             LeasingSeeder::class,
             UnitSeeder::class,
+            StockSeeder::class,
         ]);
     }
 }
