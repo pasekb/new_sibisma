@@ -12,7 +12,8 @@
                 </a>
             </li>
             <li class="{{ Route::is('report.send-report') || Route::is('stock-history.edit') ? 'active' : '' }}">
-                <a href="{{ Auth::user()->dealer_code == 'group' ? url('report/group/all') : route('report.send-report') }}">
+                <a
+                    href="{{ Auth::user()->dealer_code == 'group' ? url('report/group/all') : route('report.send-report') }}">
                     <span class="sub-item">Send Report</span>
                 </a>
             </li>
@@ -23,6 +24,11 @@
                 </a>
             </li>
             @endif
+            <li class="{{ Route::is('report.adjust') ? 'active' : '' }}">
+                <a href="{{ route('report.adjust') }}">
+                    <span class="sub-item">Adjust Report</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

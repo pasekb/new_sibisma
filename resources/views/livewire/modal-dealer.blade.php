@@ -42,7 +42,7 @@
                                     <td colspan="2" style="text-align: center;">No data available</td>
                                 </tr>
                                 @endforelse
-                            @elseif(Route::is('out.*'))
+                            @elseif(Route::is('out.*') || Route::is('report.adjust'))
                                 @forelse($dealerOut as $o)
                                 <tr data-id="{{ $o->id }}" data-code="{{ $o->dealer_code }}" data-name="{{ $o->dealer_name }}" class="pilihDealer" style="background-color: <?php echo $o->dealer_code == 'YIMM' ? '#297bff50' : '' ?>;">
                                     <td>{{ $o->id }}</td>
@@ -80,7 +80,7 @@
 </div>
 
 @push('after-script')
-    @if(Route::is('user.*'))
+    @if(Route::is('user.*') || Route::is('report.adjust'))
     <script>
         $(document).on('click', '.pilihDealer', function (e) {
             $('#dealer_code').val($(this).attr('data-code'));

@@ -172,6 +172,8 @@
         @elseif(Route::is('report.search-id'))
             @include('component.search-report-id')
             @include('component.search-report-id-data')
+        @elseif(Route::is('report.adjust'))
+            @include('component.adjust-report')
         @endif
 
     <!-- Log Page -->

@@ -405,4 +405,132 @@ class ReportController extends Controller
         }
         return view('page', compact('data'));
     }
+
+    public function adjustReport(){
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+        $dc = Auth::user()->dealer_code;
+        if ($dc != 'group') {
+            $dealer_name = Dealer::where('dealer_code',$dc)->get();
+            $dealer_name = $dealer_name[0];
+            return view('page', compact('today','dc','dealer_name'));
+        }else{
+            return view('page', compact('today'));
+        }
+    }
+
+    public function adjustReportStore(Request $req){
+        $dc = Auth::user()->dealer_code;
+        $today = Carbon::now('GMT+8')->format('Y-m-d');
+
+        if ($dc == 'group') {
+            $cek = StockHistory::where('history_date',$req->date)
+            ->where('dealer_code',$req->dealer_code)->count();
+
+            // Get lastStock
+            $date = Carbon::parse($req->date)->format('Y-m-d');
+            if ($date != $today) {
+                $yesterday = $date->subDay();
+                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->where('history_date',$yesterday)
+                ->orderBy('history_date','desc')->count();
+                if ($cekStock > 0) {
+                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                    ->where('history_date',$yesterday)
+                    ->orderBy('history_date','desc')->pluck('last_stock');
+                    $lastStock = $lastStock[0];
+                } else {
+                    $lastStock = 0;
+                }
+            } else {
+                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->orderBy('history_date','desc')->count();
+                if ($cekStock > 0) {
+                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                    ->orderBy('history_date','desc')->pluck('last_stock');
+                    $lastStock = $lastStock[0];
+                } else {
+                    $lastStock = 0;
+                }
+            }
+
+            if ($cek > 0) {
+                alert()->warning('Warning','Report date already recorded!');
+                return redirect()->back()->withInput($req->input());
+            } else {
+                $data = new StockHistory;
+                $data->history_date = $req->date;
+                $data->faktur = $req->faktur;
+                $data->service = $req->service;
+                $data->id_key = Carbon::now('GMT+8')->format('H').'sh'.$req->dealer_code.Carbon::now('GMT+8')->format('Y').Carbon::now('GMT+8')->format('i').Carbon::now('GMT+8')->format('m').'b'.Carbon::now('GMT+8')->format('d').Carbon::now('GMT+8')->format('s');
+                $data->dealer_code = $req->dealer_code;
+                $data->first_stock = $lastStock;
+                $data->in_qty = 0;
+                $data->out_qty = 0;
+                $data->sale_qty = 0;
+                $data->last_stock = $lastStock;
+                $data->status = 'completed';
+                $data->created_by = Auth::user()->id;
+                $data->updated_by = Auth::user()->id;
+                $data->save();
+
+                toast('Adjust stok berhasil disimpan','success');
+                return redirect()->back()->withInput();
+            }
+            
+        } else {
+            $cek = StockHistroy::where('history_date',$req->date)
+            ->where('dealer_code',$dc)->count();
+            
+            // Get lastStock
+            $date = Carbon::parse($req->date)->format('Y-m-d');
+            if ($date != $today) {
+                $yesterday = $date->subDay();
+                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->where('history_date',$yesterday)
+                ->orderBy('history_date','desc')->count();
+                if ($cekStock > 0) {
+                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                    ->where('history_date',$yesterday)
+                    ->orderBy('history_date','desc')->pluck('last_stock');
+                    $lastStock = $lastStock[0];
+                } else {
+                    $lastStock = 0;
+                }
+            } else {
+                $cekStock = StockHistory::where('dealer_code',$req->dealer_code)
+                ->orderBy('history_date','desc')->count();
+                if ($cekStock > 0) {
+                    $lastStock = StockHistory::where('dealer_code',$req->dealer_code)
+                    ->orderBy('history_date','desc')->pluck('last_stock');
+                    $lastStock = $lastStock[0];
+                } else {
+                    $lastStock = 0;
+                }
+            }
+
+            if ($cek > 0) {
+                alert()->warning('Warning','Report date already recorded!');
+                return redirect()->back()->withInput($req->input());
+            } else {
+                $data = new StockHistory;
+                $data->faktur;
+                $data->service;
+                $data->id_key = Carbon::now('GMT+8')->format('H').'sh'.$dc.Carbon::now('GMT+8')->format('Y').Carbon::now('GMT+8')->format('i').Carbon::now('GMT+8')->format('m').'b'.Carbon::now('GMT+8')->format('d').Carbon::now('GMT+8')->format('s');
+                $data->dealer_code = $dc;
+                $data->first_stock = $lastStock;
+                $data->in_qty = 0;
+                $data->out_qty = 0;
+                $data->sale_qty = 0;
+                $data->last_stock = $lastStock;
+                $data->status = 'completed';
+                $data->created_by = Auth::user()->id;
+                $data->updated_by = Auth::user()->id;
+                $data->save();
+
+                toast('Adjust stok berhasil disimpan','success');
+                return redirect()->back();
+            }
+        }
+        
+    }
 }
